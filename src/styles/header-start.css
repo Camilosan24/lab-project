@@ -1,0 +1,29 @@
+.header-nav-dad{
+    display: flex;
+    flex-direction: column;
+    background-color: #BA181B;
+    height: 100vh;
+    width: 20vw;
+    font-size: 16px;
+    color: white;
+}
+
+.header-nav-children{
+    width: 100%;
+    height: 100%;
+    padding-left: 10%;
+}
+
+#header-name{
+    font-size: 2.5em;
+}
+#header-buttons{
+    font-size: 1.5em;
+    text-decoration: none;
+    flex: 1;
+}
+
+#header-buttons a{
+    text-decoration: none;
+    color: white;
+}
