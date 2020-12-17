@@ -1,14 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/header-start.css";
 
 const Header = (props) => {
   return (
     <div className="header-nav-dad">
       <div className="header-nav-children">
-        <div id="header-name">Laboratorios</div>
+        <button className="burger-button"></button>
+        <div id="header-name">
+          <span>Laboratorios</span>
+        </div>
         <div id="header-buttons">
-          <Link to="/add-user">Agregar Usuario</Link>
+          <div className="button">
+            <Link to="/add-user">Agregar Usuario</Link>
+          </div>
+          <div className="button">
+            <Link to="/add-user">Ver Reporte</Link>
+          </div>
+          <div className="button">
+            <Link to="/add-user">Buscar Usuario</Link>
+          </div>
         </div>
       </div>
     </div>
