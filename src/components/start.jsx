@@ -1,12 +1,12 @@
 import React from "react";
-import Header from './header'
+import Header from "./header";
 
-const Start = () => {
-  return (
-    <div className="start-nav">
-      <Header order="start"/>
-    </div>
-  );
-};
+class Start extends React.Component {
+	render() {
+		return (
+      <div></div>
+		);
+	}
+}
 
 export default Start;

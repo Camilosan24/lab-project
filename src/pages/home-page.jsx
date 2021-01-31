@@ -1,10 +1,10 @@
 import React from "react";
-import Header from '../components/header'
+import Header from "../components/header";
 
-const Home_page = () => {
-  return (
-    <Header/>
-  );
-};
+class Home_page extends React.Component {
+	render() {
+		return <Header />;
+	}
+}
 
 export default Home_page;
