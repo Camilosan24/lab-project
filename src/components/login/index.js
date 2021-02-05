@@ -2,6 +2,7 @@ import React from "react";
 import "./styles.css";
 import { Row, Col, Card, Form, Button } from "react-bootstrap";
 import CarouselComponent from "./Carousel";
+import axios from "axios";
 
 class Login extends React.Component {
 	constructor(props) {
@@ -13,14 +14,14 @@ class Login extends React.Component {
 				password: "",
 			},
 		};
+		this.url = "http://localhost:3001/api/login";
 	}
 
-	fetchAll = (e) => {
-		fetch(
-			`http://localhost:3001/api?user=${this.state.user}&pass=${this.state.password}`
-		)
-			.then((res) => res.json())
-			.then((data) => console.log(data));
+	fetchAll = async (e) => {
+		e.preventDefault();
+		axios.post(this.url,this.state.userData)
+		.then((res) => console.log(res.data));
+		this.setState({ userData: { user: "", password: "" } });
 	};
 
 	handleClick = (e) => {
@@ -41,7 +42,9 @@ class Login extends React.Component {
 	render() {
 		return (
 			<Row>
-				<CarouselComponent />
+				<Col>
+					<CarouselComponent />
+				</Col>
 				<Col
 					className="background-login-2"
 					style={{
@@ -100,7 +103,7 @@ class Login extends React.Component {
 											variant="secondary
 											"
 											type="submit"
-											onClick={this.handleClick}
+											onClick={this.fetchAll}
 										>
 											Entrar
 										</Button>
