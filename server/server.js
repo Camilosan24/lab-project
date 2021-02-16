@@ -1,21 +1,40 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
 const app = express();
-const router = require("./routes/index.js");
 
-app.set("port", process.env.PORT || 3001);
+const userRouter = require("./routes/user.js");
+const customerRouter = require("./routes/customer.js");
+const config = require("./config/config").get(process.env.NODE_ENV);
 
-app.use(bodyParser.json());
-
-if(!process.env.NODE_ENV){
-	app.use((req,res,next)=>{
-		res.header("Access-Control-Allow-Origin", "http://localhost:3000")
-		res.header("Access-Control-Allow-Headers", "Origin,X-Requested-With,Content-Type,Accept")
-		next()
-	})
+try {
+	mongoose.connect(config.DATABASE, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+		useCreateIndex: true,
+		useFindAndModify: false,
+	});
+} catch (error) {
+	console.error(error);
 }
 
-app.use('/api',router);
+//MIDDLEWARES
+app.set("port", process.env.PORT || 3001);
+app.use(cookieParser());
+app.use(bodyParser.json());
+
+app.use("/api/user", userRouter);
+app.use("/api/customer", customerRouter);
+
+app.use(express.static("client/build"));
+
+const path = require("path");
+app.get("/*", (req, res) => {
+	console.log("Works");
+	res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
+});
+
 
 app.listen(app.get("port"), () => {
 	console.log(`Server on port ${app.get("port")}`);
