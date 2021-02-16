@@ -1,7 +1,7 @@
 import React from "react";
 import "./styles.css";
 import { Row, Col, Card, Form, Button } from "react-bootstrap";
-import CarouselComponent from "./Carousel";
+import CarouselComponent from "../carousel";
 import axios from "axios";
 
 class Login extends React.Component {
@@ -10,18 +10,32 @@ class Login extends React.Component {
 		this.state = {
 			error: false,
 			userData: {
-				user: "",
+				email: "",
 				password: "",
 			},
 		};
-		this.url = "http://localhost:3001/api/login";
 	}
 
-	fetchAll = async (e) => {
+	login = async (e) => {
 		e.preventDefault();
-		axios.post(this.url,this.state.userData)
-		.then((res) => console.log(res.data));
-		this.setState({ userData: { user: "", password: "" } });
+		axios.post(`/api/user/login`, this.state.userData).then((res) => {
+			console.log(res.data);
+			if (res.data.auth) {
+				this.props.history.push('/home')
+			}
+		});
+		this.setState({ userData: { email: "", password: "" } });
+	};
+
+	logout = async (e) => {
+		e.preventDefault();
+		axios.get(`/api/user/logout`).then((res) => console.log(res.data));
+		this.setState({ userData: { email: "", password: "" } });
+	};
+
+	auth = async (e) => {
+		e.preventDefault();
+		axios.get(`/api/user/auth`).then((res) => console.log(res.data));
 	};
 
 	handleClick = (e) => {
@@ -29,7 +43,7 @@ class Login extends React.Component {
 		this.setState({ error: !this.state.error });
 	};
 	handleChange = (e) => {
-		if (e.target.name === "user" || "password") {
+		if (e.target.name === "email" || "password") {
 			this.setState({
 				userData: {
 					...this.state.userData,
@@ -46,19 +60,6 @@ class Login extends React.Component {
 					<CarouselComponent />
 				</Col>
 				<Col
-					className="background-login-2"
-					style={{
-						position: "absolute",
-						height: "100vh",
-						width: "100vw",
-						margin: "0",
-						padding: "0",
-						left: "0.0002%",
-						backgroundColor: "black",
-						opacity: "0.7",
-					}}
-				></Col>
-				<Col
 					style={{ position: "absolute", top: "25%" }}
 					md={{ offset: "4", span: "4" }}
 					xs={{ offset: "1", span: "10" }}
@@ -72,13 +73,13 @@ class Login extends React.Component {
 								<Card.Body>
 									<Form>
 										<Form.Group>
-											<Form.Label>Usuario:</Form.Label>
+											<Form.Label>E-mail:</Form.Label>
 											<Form.Control
 												type="text"
 												placeholder="Ingresar Usuario"
 												onChange={this.handleChange}
-												value={this.state.userData.user}
-												name="user"
+												value={this.state.userData.email}
+												name="email"
 												autoComplete="off"
 											></Form.Control>
 										</Form.Group>
@@ -103,7 +104,7 @@ class Login extends React.Component {
 											variant="secondary
 											"
 											type="submit"
-											onClick={this.fetchAll}
+											onClick={this.login}
 										>
 											Entrar
 										</Button>
