@@ -1,7 +1,7 @@
 import React from "react";
 import { Col } from "react-bootstrap";
-import Carousel from "../../components/carousel/index";
-import getAuth from "../../components/utilComponents/getAuth";
+import Carousel from "../carousel/index";
+import getAuth from "../utilComponents/getAuth";
 
 class Home extends React.Component {
 	componentDidMount() {
