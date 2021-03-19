@@ -1,10 +1,10 @@
 # lab-project
 
 
-Este proyecto esta elabora usando React.js y Node.js para un laboratorio
+Este proyecto esta elabora usando React.js y Node.js para la elaboracion de pdfs y administracion de registros de un cliente
 
 
-para correr el proyecto ejecutar:
+Para correr el proyecto ejecutar:
 
     $ git clone https://github.com/Camilosan24/lab-project.git
     $ cd lab-project
