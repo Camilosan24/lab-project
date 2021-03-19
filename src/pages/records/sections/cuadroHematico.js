@@ -1,6 +1,5 @@
 import React from "react";
 import { Col, Row, Card, Form, FormControl } from "react-bootstrap";
-import minusSolid from "../../../../icons/minus-solid.svg";
 import "../styles.css";
 
 class CuadroHematico extends React.Component {
@@ -23,7 +22,6 @@ class CuadroHematico extends React.Component {
 			<Row className="mt-3">
 				<Card className="p-4 col-12">
 					<div
-						src={minusSolid}
 						onClick={() => {
 							this.props.deleteComp(this, "cuadroHematico");
 							this.props.changeData(2, {});

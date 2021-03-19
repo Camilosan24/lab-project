@@ -1,6 +1,4 @@
 import React from 'react'
-import Icon from '../../../icons/pdf.svg'
-// import {Button} from 'react-bootstrap'
 
 class Fields extends React.Component{
 

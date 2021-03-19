@@ -1,8 +1,8 @@
 import React from "react";
 import { Col, Form, FormControl, Card, Button, Table } from "react-bootstrap";
-import Field from "./field";
-import axios from "axios";
-import getAuth from "../../utilComponents/getAuth";
+// import Field from "../../components/utilComponents/field";
+// import axios from "axios";
+import getAuth from "../../components/utilComponents/getAuth";
 
 class SearchCustomer extends React.Component {
 	constructor(props) {

@@ -2,7 +2,6 @@ import React from "react";
 import { Navbar, Row, Nav, Col, Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import logOutImg from "../../icons/logout.svg";
 import "./styles.css";
 
 class NavLayout extends React.Component {

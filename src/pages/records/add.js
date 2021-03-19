@@ -3,7 +3,7 @@ import Serologicas from "./sections/serologicas";
 import CuadroHematico from "./sections/cuadroHematico";
 import { Form, FormControl, Col, Card, Row, Button } from "react-bootstrap";
 import axios from "axios";
-import SpinnerComponent from "../../utilComponents/spinner";
+import SpinnerComponent from "../../components/utilComponents/spinner";
 import "./styles.css";
 
 class AddRecord extends React.Component {

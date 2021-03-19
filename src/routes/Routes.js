@@ -3,10 +3,10 @@ import { Route, Switch, BrowserRouter } from "react-router-dom";
 import Login from "../components/login/index";
 import Home from "../components/home/index";
 import NavLayout from "../components/nav/index";
-import AddCustomer from "../components/customer/add/index";
-import SearchCustomer from "../components/customer/search/index";
-import AddRecord from "../components/customer/records/add";
-import List from "../components/customer/list/index";
+import AddCustomer from "../pages/addCustomer/index";
+import SearchCustomer from "../pages/searchRecords/index";
+import AddRecord from "../pages/records/add";
+import List from "../pages/listCustomers/index";
 import { Container } from "react-bootstrap";
 
 class Routes extends React.Component {

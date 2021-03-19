@@ -1,8 +1,8 @@
 import React from "react";
 import { Form, FormControl, Col, Card, Button } from "react-bootstrap";
 import axios from "axios";
-import SpinnerComponent from "../../utilComponents/spinner";
-import getAuth from "../../utilComponents/getAuth";
+import SpinnerComponent from "../../components/utilComponents/spinner";
+import getAuth from "../../components/utilComponents/getAuth";
 
 class AddCustomer extends React.Component {
 	constructor(props) {

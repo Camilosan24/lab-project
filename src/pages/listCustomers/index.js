@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Table, Card } from "react-bootstrap";
 import Field from "./field";
 import axios from "axios";
-import getAuth from '../../utilComponents/getAuth'
+import getAuth from '../../components/utilComponents/getAuth'
 
 class List extends React.Component {
 	constructor(props){
