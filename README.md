@@ -19,4 +19,4 @@ para correr el proyecto ejecutar:
     
 
 El proyecto corre sobre el puerto 3001, si deseas ver el codigo del lado del cliente, abrirlo en la rama *client*
-![Fork button](https://github.com/Camilosan24/lab-project/tree/client)
+![CLIENT](https://github.com/Camilosan24/lab-project/tree/client)
