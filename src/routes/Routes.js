@@ -3,8 +3,10 @@ import { Route, Switch, BrowserRouter } from "react-router-dom";
 import Login from "../components/login/index";
 import Home from "../components/home/index";
 import NavLayout from "../components/nav/index";
-import AddCustomer from '../components/customer/add/index'
-import SearchCustomer from '../components/customer/search/index'
+import AddCustomer from "../components/customer/add/index";
+import SearchCustomer from "../components/customer/search/index";
+import AddRecord from "../components/customer/records/add";
+import List from "../components/customer/list/index";
 import { Container } from "react-bootstrap";
 
 class Routes extends React.Component {
@@ -18,6 +20,8 @@ class Routes extends React.Component {
 							<Route exact path="/home" component={Home} />
 							<Route exact path="/add" component={AddCustomer} />
 							<Route exact path="/search" component={SearchCustomer} />
+							<Route exact path="/addrecord" component={AddRecord} />
+							<Route exact path="/list" component={List} />
 						</NavLayout>
 					</Switch>
 				</BrowserRouter>

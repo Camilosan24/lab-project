@@ -1,16 +1,8 @@
 import React from "react";
-import {
-	Col,
-	Form,
-	Row,
-	FormControl,
-	Card,
-	Button,
-	Table,
-} from "react-bootstrap";
-import Data from "./data";
-import Icon from "../../../icons/pdf.svg";
+import { Col, Form, FormControl, Card, Button, Table } from "react-bootstrap";
+import Field from "./field";
 import axios from "axios";
+import getAuth from "../../utilComponents/getAuth";
 
 class SearchCustomer extends React.Component {
 	constructor(props) {
@@ -18,39 +10,22 @@ class SearchCustomer extends React.Component {
 
 		this.state = {
 			searchInput: "",
-			info: null,
+			info: true,
 			message: "",
 		};
-		this.info = [
-			{
-				cc: 10058592225,
-				name: "Camilo sanchez",
-				date: "24/10/2001",
-				icon: Icon,
-			},
-			{
-				cc: 10058592225,
-				name: "daniel sanchez",
-				date: "24/10/2001",
-				icon: Icon,
-			},
-			{
-				cc: 10058592225,
-				name: "hello sanchez",
-				date: "24/10/2001",
-				icon: Icon,
-			},
-		];
+		this.info = {};
 	}
 
-	onClickSearch = (e) => {
-		e.preventDefault()
-		let searchInput = this.state.searchInput;
-		if (searchInput.length >= 8 && searchInput.length <= 10) {
-			return axios
-				.get(`/getRecords/${this.state.searchInput}`)
-				.then((res) => this.setState({ info: res }));
-		}
+	componentDidMount() {
+		getAuth(this.props);
+	}
+
+	onClickSearch = () => {
+		// axios
+		// 	.post("/api/customer/addrecord", {cc: this.state.searchInput})
+		// 	.then((res) => {
+		// 		console.log(res.data);
+		// 	});
 	};
 
 	handleInputOnChange = (e) => {
@@ -59,7 +34,7 @@ class SearchCustomer extends React.Component {
 	render() {
 		return (
 			<>
-				<Col xs={{ span: 4 }} className="p-5">
+				<Col xs={{ span: 4 }} className="p-5 pb-5">
 					<Card>
 						<Card.Header>
 							<h2>Buscar Registros</h2>
@@ -82,16 +57,18 @@ class SearchCustomer extends React.Component {
 									</Form.Text>
 								</Form.Group>
 								<Form.Group>
-									<Button onClick={this.onClickSearch} block>Buscar</Button>
+									<Button onClick={this.onClickSearch} block>
+										Buscar
+									</Button>
 								</Form.Group>
 							</Form>
 						</Card.Body>
 					</Card>
 				</Col>
 				<Col xs={{ span: 7 }} className="mt-5">
-					<Table striped bordered hover size="sm">
+					<Table striped bordered hover size="sm" variant="light">
 						<thead>
-							<tr>
+							<tr className="bg-info">
 								<th>#</th>
 								<th>Cedula</th>
 								<th>Nombre</th>
@@ -100,11 +77,11 @@ class SearchCustomer extends React.Component {
 							</tr>
 						</thead>
 						<tbody>
-							{this.state.info
+							{/* {this.state.info
 								? this.info.map((info, index) => (
-										<Data info={info} key={index} number={index} />
+										<Field info={info} key={index} number={index} />
 								  ))
-								: null}
+								: null} */}
 						</tbody>
 					</Table>
 				</Col>

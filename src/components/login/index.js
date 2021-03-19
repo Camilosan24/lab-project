@@ -19,9 +19,13 @@ class Login extends React.Component {
 	login = async (e) => {
 		e.preventDefault();
 		axios.post(`/api/user/login`, this.state.userData).then((res) => {
-			console.log(res.data);
 			if (res.data.auth) {
 				this.props.history.push('/home')
+			} else{
+				this.setState({error: true})
+				setTimeout(()=>{
+					this.setState({error: false})
+				},2000)
 			}
 		});
 		this.setState({ userData: { email: "", password: "" } });

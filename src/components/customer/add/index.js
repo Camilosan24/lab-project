@@ -2,6 +2,7 @@ import React from "react";
 import { Form, FormControl, Col, Card, Button } from "react-bootstrap";
 import axios from "axios";
 import SpinnerComponent from "../../utilComponents/spinner";
+import getAuth from "../../utilComponents/getAuth";
 
 class AddCustomer extends React.Component {
 	constructor(props) {
@@ -10,16 +11,20 @@ class AddCustomer extends React.Component {
 			customerData: {
 				name: "",
 				lastname: "",
-				CC: "",
+				cc: "",
 				direction: "",
 				email: "",
 				phone: "",
-				birthday: "",
+				birthdate: "",
+				genre: ""
 			},
 			message: "",
 			submitingData: false,
 			buttonVariant: "primary",
 		};
+	}
+	componentDidMount() {
+		getAuth(this.props);
 	}
 
 	handleInputOnChange = (e) => {
@@ -40,19 +45,20 @@ class AddCustomer extends React.Component {
 			this.setState({ buttonVariant: "danger" });
 		}
 		setTimeout(() => {
-			this.setState({ buttonVariant: "primary", message: '' });
-		},3000);
+			this.setState({ buttonVariant: "primary", message: "" });
+		}, 3000);
 
 		this.setState({
 			submitingData: false,
-			formData: {
+			customerData: {
 				name: "",
 				lastname: "",
-				CC: "",
+				cc: "",
 				direction: "",
 				email: "",
 				phone: "",
-				birthday: "",
+				birthdate: "",
+				genre: ""
 			},
 		});
 	};
@@ -60,16 +66,14 @@ class AddCustomer extends React.Component {
 	handleOnSubmit = (e) => {
 		e.preventDefault();
 		this.setState({ submitingData: true });
-
 		axios.post("/api/customer/add", this.state.customerData).then((res) => {
 			this.showMessageAndClean(res);
 		});
 	};
 
 	render() {
-
 		return (
-			<Col md={{ span: 4, offset: 4 }} className="mt-5">
+			<Col md={{ span: 4, offset: 4 }} className="mt-5 pb-5">
 				<Card>
 					<Card.Header>
 						<h2 className="">FORMULARIO DE REGISTRO DE NUEVO CLIENTE</h2>
@@ -107,11 +111,28 @@ class AddCustomer extends React.Component {
 								</Form.Label>
 								<FormControl
 									type="text"
-									name="CC"
+									name="cc"
 									onChange={this.handleInputOnChange}
-									value={this.state.customerData.CC}
+									value={this.state.customerData.cc}
 									required
 								/>
+							</Form.Group>
+							<Form.Group>
+								<Form.Label>
+									Genero <span className="text-danger">*</span>
+								</Form.Label>
+								<Form.Control
+									as="select"
+									name="genre"
+									onChange={this.handleInputOnChange}
+									value={this.state.customerData.genre}
+									defaultValue="Default..."
+									required
+								>
+									<option>Default...</option>
+									<option>Mujer</option>
+									<option>Hombre</option>
+								</Form.Control>
 							</Form.Group>
 							<Form.Group>
 								<Form.Label>
@@ -156,14 +177,15 @@ class AddCustomer extends React.Component {
 								</Form.Label>
 								<FormControl
 									type="date"
-									name="birthday"
+									name="birthdate"
 									onChange={this.handleInputOnChange}
-									value={this.state.customerData.birthday}
+									value={this.state.customerData.birthdate}
 									required
 								/>
 							</Form.Group>
+
 							<Form.Group>
-								<Form.Text className={`text-${this.state.buttonVariant}`} >
+								<Form.Text className={`text-${this.state.buttonVariant}`}>
 									{this.state.message}
 								</Form.Text>
 							</Form.Group>

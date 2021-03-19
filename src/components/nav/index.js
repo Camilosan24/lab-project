@@ -1,8 +1,17 @@
 import React from "react";
 import { Navbar, Row, Nav, Col, Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import logOutImg from "../../icons/logout.svg";
+import "./styles.css";
 
 class NavLayout extends React.Component {
+	logOut = () => {
+		axios.get("/api/user/logout").then((res) => {
+			console.log(res);
+			this.props.history.push("/");
+		});
+	};
 	render() {
 		return (
 			<>
@@ -10,7 +19,7 @@ class NavLayout extends React.Component {
 					<Col className="p-0">
 						<Navbar bg="dark" variant="dark" className="p-4">
 							<Link to="/home" className="navbar navbar-brand">
-								Laboratorios Marisol
+								Lab Clinico M.G.L.
 							</Link>
 							<Nav className="ml-auto">
 								<Dropdown className="mr-5">
@@ -37,19 +46,22 @@ class NavLayout extends React.Component {
 										<Link className="mr-5 dropdown-item" to="/search">
 											Buscar
 										</Link>
-										<Link className="mr-5 dropdown-item" to="/addRegister">
+										<Link className="mr-5 dropdown-item" to="/addRecord">
 											Añadir nuevo
 										</Link>
 									</Dropdown.Menu>
 								</Dropdown>
-								<Nav.Link className="mr-5" href="/contact">
-									Contacto
-								</Nav.Link>
+								<li className="nav-item">
+									<Link className="mr-5 nav-link " to="/" onClick={this.logOut}>
+										<span className="mr-2 coloresAdentro"> Salir</span>
+										<i class="fas fa-sign-out-alt"></i>
+									</Link>
+								</li>
 							</Nav>
 						</Navbar>
 					</Col>
 				</Row>
-				<Row>{this.props.children}</Row>
+				<Row className="backgroundSpace">{this.props.children}</Row>
 			</>
 		);
 	}
