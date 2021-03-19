@@ -6,13 +6,12 @@ const customerSchema = mongoose.Schema({
       required: true,
       trim: true
    },
-
    lastname: {
       type: String,
       required: true,
       trim: true
    },
-   CC:{
+   cc:{
       type: Number,
       required: true,
       trim: true,
@@ -34,8 +33,20 @@ const customerSchema = mongoose.Schema({
 		required: true,
 		trim: true
    },
+   birthdate:{
+      type: String,
+      required: true
+   },
+   genre:{
+      type: String,
+      required: true
+   },
+   age: {
+      type: String,
+      required: true
+   },
    records: {
-      type: Object
+      type: Array
    }
 });
 

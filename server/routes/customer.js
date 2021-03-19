@@ -6,9 +6,10 @@ const router = express.Router();
 
 //POST ROUTES
 router.post('/add', customerControler.add)
-router.post('/addRecord', customerControler.addRecord)
+router.post('/getcustomers', customerControler.getCustomers)
+router.post('/addrecord', customerControler.addRecord)
 
 
 //GET ROUTES
-router.get('/getRecords/:cc', customerControler.getRecords)
+// router.get('/getrecords/:cc', customerControler.getRecords)
 module.exports = router

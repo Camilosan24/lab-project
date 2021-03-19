@@ -28,7 +28,6 @@ userControler.login = (req, res) => {
 
 			user.generateToken((err, user) => {
 				if (err) return res.status(400).send(err);
-            console.log(user)
 				return res.cookie("auth", user.token).json({
 					auth: true,
 					message: "ok",
@@ -53,7 +52,7 @@ userControler.auth = (req,res)=>{
  userControler.logout = (req,res)=>{
    req.user.deleteToken(req.token,(err,user)=>{
        if(err) return res.status(400).send(err);
-       res.status(200).send('goodbye');
+		 return res.status(200)
    })
  }
 

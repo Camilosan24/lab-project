@@ -21,8 +21,8 @@ try {
 
 //MIDDLEWARES
 app.set("port", process.env.PORT || 3001);
-app.use(cookieParser());
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.use("/api/user", userRouter);
 app.use("/api/customer", customerRouter);
@@ -31,7 +31,6 @@ app.use(express.static("client/build"));
 
 const path = require("path");
 app.get("/*", (req, res) => {
-	console.log("Works");
 	res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
 });
 
