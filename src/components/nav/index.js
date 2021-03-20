@@ -1,10 +1,17 @@
 import React from "react";
 import { Navbar, Row, Nav, Col, Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Carousel from "../carousel/index";
 import axios from "axios";
 import "./styles.css";
 
 class NavLayout extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			logoAnimation: false,
+		};
+	}
 	logOut = () => {
 		axios.get("/api/user/logout").then((res) => {
 			console.log(res);
@@ -13,12 +20,27 @@ class NavLayout extends React.Component {
 	};
 	render() {
 		return (
-			<>
+			<div className="main-layout">
 				<Row className="d-block">
 					<Col className="p-0">
 						<Navbar bg="dark" variant="dark" className="p-4">
-							<Link to="/home" className="navbar navbar-brand">
+							<Link
+								to="/home"
+								className="navbar navbar-brand"
+								onMouseEnter={() => {
+									this.setState({ logoAnimation: true });
+								}}
+								onMouseLeave={() => {
+									this.setState({ logoAnimation: false });
+								}}
+							>
 								Lab Clinico M.G.L.
+								<i
+									class={`fas fa-vial ${
+										this.state.logoAnimation ? "logo-animation" : null
+									}`}
+								></i>
+								{/* </div> */}
 							</Link>
 							<Nav className="ml-auto">
 								<Dropdown className="mr-5">
@@ -60,8 +82,13 @@ class NavLayout extends React.Component {
 						</Navbar>
 					</Col>
 				</Row>
-				<Row className="backgroundSpace">{this.props.children}</Row>
-			</>
+				<Row className="backgroundSpace" style={{ margin: 0 }}>
+					<Carousel />
+					<Col md={{ span: 12 }} className="childrens-space mt-1 p-0">
+						{this.props.children}
+					</Col>
+				</Row>
+			</div>
 		);
 	}
 }

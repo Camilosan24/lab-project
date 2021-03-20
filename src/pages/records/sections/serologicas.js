@@ -24,7 +24,7 @@ class Serologicas extends React.Component {
 	render() {
 		return (
 			<Row className="mt-3">
-				<Card className="p-4">
+				<Card className="p-4 col-6 offset-3">
 					<div
 						onClick={() => {
 							this.props.deleteComp(this, "serologicas");

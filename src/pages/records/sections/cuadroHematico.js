@@ -20,16 +20,13 @@ class CuadroHematico extends React.Component {
 	render() {
 		return (
 			<Row className="mt-3">
-				<Card className="p-4 col-12">
+				<Card className="p-4 col-6 offset-3">
 					<div
 						onClick={() => {
 							this.props.deleteComp(this, "cuadroHematico");
 							this.props.changeData(2, {});
 						}}
 						className="delete-exam rounded-circle"
-						width="20"
-						height="20"
-						alt=""
 					>
 						<i class="fas fa-minus"></i>
 					</div>

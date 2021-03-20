@@ -1,0 +1,39 @@
+
+thead tr th{
+   background-color: rgba(0, 0, 0, 0.116);
+   font-size: small;
+   margin-left: 5px;
+}
+.form-inputGroup{
+   border: 2px solid rgba(87, 87, 87, 0.575);
+   border-radius: 5px;
+}
+
+.form-inputGroup input{
+   border: none;
+   border-radius: 5px;
+}
+
+.form-inputGroup input:active{
+   border: none;
+   border-radius: 5px;
+}
+
+.fa-file-pdf{
+   transition-duration: .2s;
+   font-size: 20px;
+}
+
+.fa-file-pdf:hover{
+   transition-duration: .2s;
+   transform: scale(1.5);
+   cursor: pointer;
+}
+
+.fa-check{
+   color: rgba(0, 255, 0, 0.548);
+}
+
+.fa-times{
+   color: rgba(255, 0, 0, 0.548);
+}

@@ -4,6 +4,7 @@ import CuadroHematico from "./sections/cuadroHematico";
 import { Form, FormControl, Col, Card, Row, Button } from "react-bootstrap";
 import axios from "axios";
 import SpinnerComponent from "../../components/utilComponents/spinner";
+import ButtonSave from "../../components/utilComponents/buttonSave";
 import "./styles.css";
 
 class AddRecord extends React.Component {
@@ -20,6 +21,7 @@ class AddRecord extends React.Component {
 			addSection: false,
 			showSections: false,
 			sections: [],
+			saveSection: false,
 			noExams: 0,
 			message: "",
 			customerData: {
@@ -75,9 +77,9 @@ class AddRecord extends React.Component {
 		}
 	};
 
-	add = () => {
+	addRecord = () => {
 		axios
-			.post("/api/customer/addrecord", { cc: this.state.searchInput })
+			.post("/api/customer/addrecord", {"cc": this.state.finder, "newRecord":this.state.dataComponents})
 			.then((res) => {
 				console.log(res.data);
 			});
@@ -205,12 +207,11 @@ class AddRecord extends React.Component {
 
 	render() {
 		return (
-			<Col md={{ span: 6, offset: 3 }} className="mt-5 pb-5">
+			<Col md={{ span: 12 }} className="mt-5 pb-5 mainRecords">
 				<Row>
-					<Card>
-						<Card.Header>
-							<h2 className="">FORMULARIO DE REGISTRO</h2>
-						</Card.Header>
+					<Card className="p-4 offset-3 col-6">
+						<h2>FORMULARIO DE REGISTRO</h2>
+						<hr />
 
 						<Card.Body>
 							<Form onSubmit={this.handleOnSubmit}>
@@ -302,7 +303,7 @@ class AddRecord extends React.Component {
 				{this.state.sections}
 				{this.state.showSections && (
 					<Row className="mt-3">
-						<Card className="col-12">
+						<Card className="col-6 offset-3">
 							<Card.Header className="m-auto">
 								<h4>EXAMENES</h4>
 							</Card.Header>
@@ -387,6 +388,7 @@ class AddRecord extends React.Component {
 						)
 					)}
 				</Row>
+				{this.state.sections.length === 0 ? null : <ButtonSave clearState={this.changeOrClearState} addRecord={this.addRecord}/> }
 			</Col>
 		);
 	}

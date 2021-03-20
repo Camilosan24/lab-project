@@ -73,11 +73,10 @@ class AddCustomer extends React.Component {
 
 	render() {
 		return (
-			<Col md={{ span: 4, offset: 4 }} className="mt-5 pb-5">
-				<Card>
-					<Card.Header>
-						<h2 className="">FORMULARIO DE REGISTRO DE NUEVO CLIENTE</h2>
-					</Card.Header>
+			<Col md={{ span: 4, offset:4  }} className="mt-5 pb-5">
+				<Card className="p-3">
+					<h2>FORMULARIO DE REGISTRO DE NUEVO CLIENTE</h2>
+					<hr />
 
 					<Card.Body>
 						<Form onSubmit={this.handleOnSubmit}>

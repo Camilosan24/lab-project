@@ -1,9 +1,9 @@
 .addSection-button {
-	border: solid 7px #003036e0;
+	border: solid 7px #2ee7ff6e;
 	border-radius: 50%;
 	height: 50px;
 	width: 50px;
-	color: #003036e0;
+	color: #2ee7ff6e;
 	text-align: center;
 }
 
@@ -39,4 +39,29 @@
 	cursor: pointer;
 	transition-duration: 0.5s;
 	transform: scale(1.2);
+}
+
+.buttonSave {
+	position: fixed;
+	bottom: 5vh;
+	opacity: .8;
+}
+
+.buttonSave button{
+	margin: 0;
+	padding: 10px 10px;
+}
+
+.mainRecords{
+	height: 80vh;
+	overflow: scroll;
+}
+
+.mainRecords::-webkit-scrollbar{
+   display: none;
+}
+
+
+.childrens-space::-webkit-scrollbar{
+   display: none;
 }
