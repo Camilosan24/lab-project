@@ -1,7 +1,7 @@
 # lab-project
 
 
-Este proyecto esta elabora usando React.js y Node.js para la elaboracion de pdfs y administracion de registros de un cliente
+Este proyecto esta elabora usando React.js y Node.js para la elaboracion de pdfs y administracion de registros de un cliente, tambien estamos haciendo uso de mongodb como base de datos
 
 
 Para correr el proyecto ejecutar:
