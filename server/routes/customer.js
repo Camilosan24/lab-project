@@ -11,5 +11,6 @@ router.post('/addrecord', customerControler.addRecord)
 
 
 //GET ROUTES
-// router.get('/getrecords/:cc', customerControler.getRecords)
+router.get('/getrecords/:cc', customerControler.getRecords)
+
 module.exports = router

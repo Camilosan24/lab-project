@@ -10,6 +10,31 @@ let getAge = (birthdate) => {
 	return age;
 };
 
+function isObjEmpty(obj) {
+	for (var prop in obj) {
+		if (obj.hasOwnProperty(prop)) return true;
+	}
+
+	return false;
+}
+
+const record = (id, data) => {
+	let time = new Date(Date.now());
+	if (data) {
+		return {
+			id: id,
+			date: time.toLocaleDateString(),
+			time: `${time.getHours()}:${time.getMinutes()}`,
+			serologicas: isObjEmpty(data.serologicas),
+			cuadroHematico: isObjEmpty(data.cuadroHematico),
+			coprologico: isObjEmpty(data.coprologico),
+			parcialOrina: isObjEmpty(data.parcialOrina),
+			quimicaSanguinea: isObjEmpty(data.quimicaSanguinea),
+		};
+	}
+	return {};
+};
+
 customerControler.add = (req, res) => {
 	let dataCustomer = {
 		name: req.body.name,
@@ -69,28 +94,32 @@ customerControler.getCustomers = (req, res) => {
 };
 
 customerControler.addRecord = (req, res) => {
-	let record = {
-		id: Date.now(),
-		date: new Date(Date.now()).toLocaleDateString(),
-		serologica: req.body.serologicas,
-		cuadroHematico: req.body.cuadroHematico,
-		parcialOrina: req.body.parcialOrina,
-		coprologico: req.body.coprologico,
-		quimicaSanguinea: req.body.quimicaSanguinea
-	};
-
 	Customer.findOne({ cc: req.body.cc }, (err, customer) => {
-		const newRecord = [ ...customer.records, record ];
+		if (err) console.log(err);
+		const newRecord = [
+			...customer.records,
+			record(customer.records.length, req.body.newRecord),
+		];
 		Customer.findOneAndUpdate(
 			{ cc: req.body.cc },
 			{ records: newRecord },
 			{ new: true },
 			(err, data) => {
-				if (err) res.json({ res: data.records });
+				if (err) res.json({ res: err });
 
 				return res.send(data.records);
 			}
 		);
+	});
+};
+
+customerControler.getRecords = (req, res) => {
+	Customer.findOne({ cc: req.params.cc}, (err, customer) => {
+		if (err) {
+			console.log(err);
+			return res.json({ message: "error" });
+		}
+		return res.json({ customer: customer, message: "ok" });
 	});
 };
 
