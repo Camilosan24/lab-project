@@ -37,3 +37,7 @@ thead tr th{
 .fa-times{
    color: rgba(255, 0, 0, 0.548);
 }
+
+.centrando{
+   text-align: center;
+}

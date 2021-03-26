@@ -1,8 +1,11 @@
 import React from "react";
 import Serologicas from "./sections/serologicas";
+import Coprologico from "./sections/coprologico";
 import CuadroHematico from "./sections/cuadroHematico";
+import ParcialOrina from "./sections/parcialOrina";
 import { Form, FormControl, Col, Card, Row, Button } from "react-bootstrap";
-import axios from "axios";
+import PdfGenerator from "../pdfGenerator/index";
+import requests from "../../components/utilComponents/requests";
 import SpinnerComponent from "../../components/utilComponents/spinner";
 import ButtonSave from "../../components/utilComponents/buttonSave";
 import "./styles.css";
@@ -10,6 +13,7 @@ import "./styles.css";
 class AddRecord extends React.Component {
 	constructor(props) {
 		super(props);
+		this.requests = requests();
 		this.state = {
 			finder: "",
 			loading: false,
@@ -18,6 +22,7 @@ class AddRecord extends React.Component {
 				let fechaActual = new Date(now);
 				return fechaActual.toLocaleDateString();
 			},
+			pdfGenerator: true,
 			addSection: false,
 			showSections: false,
 			sections: [],
@@ -42,6 +47,10 @@ class AddRecord extends React.Component {
 				quimicaSanguinea: {},
 			},
 		};
+	}
+
+	componentDidMount() {
+		// return getAuth(this.props);
 	}
 
 	changeOrClearState = (
@@ -78,10 +87,13 @@ class AddRecord extends React.Component {
 	};
 
 	addRecord = () => {
-		axios
-			.post("/api/customer/addrecord", {"cc": this.state.finder, "newRecord":this.state.dataComponents})
+		this.requests
+			.addRecord({
+				cc: this.state.finder,
+				newRecord: this.state.dataComponents,
+			})
 			.then((res) => {
-				console.log(res.data);
+				console.log(res);
 			});
 	};
 
@@ -100,28 +112,37 @@ class AddRecord extends React.Component {
 					dataComponents: actualState,
 				});
 				break;
+			case 3:
+				actualState.coprologico = datos;
+				this.setState({
+					dataComponents: actualState,
+				});
+				break;
+			case 4:
+				actualState.parcialOrina = datos;
+				this.setState({
+					dataComponents: actualState,
+				});
+				break;
+
 			default:
 				break;
 		}
 	};
 
 	requestCustomer = () => {
-		axios
-			.post("/api/customer/getcustomers", {
-				cc: this.state.finder,
-			})
-			.then((res) => {
-				const customer = res.data.customer;
-				if (customer) {
-					this.changeOrClearState(false, true, {
-						completeName: `${customer.name} ${customer.lastname}`,
-						age: customer.age,
-						genre: customer.genre,
-					});
-				} else {
-					this.changeOrClearState(false, false, false, res.data.message, []);
-				}
-			});
+		this.requests.getCustomerByCc(this.state.finder).then((res) => {
+			const customer = res.data.customer;
+			if (customer) {
+				this.changeOrClearState(false, true, {
+					completeName: `${customer.name} ${customer.lastname}`,
+					age: customer.age,
+					genre: customer.genre,
+				});
+			} else {
+				this.changeOrClearState(false, false, false, res.data.message, []);
+			}
+		});
 	};
 
 	chooseSection = (value) => {
@@ -152,6 +173,34 @@ class AddRecord extends React.Component {
 					],
 					noExams: this.state.noExams + 1,
 					cuadroHematico: true,
+				});
+
+			case "coprologico":
+				return this.setState({
+					sections: [
+						...this.state.sections,
+						<Coprologico
+							deleteComp={this.onClickDelete}
+							key={this.state.noExams}
+							changeData={this.changeData}
+						/>,
+					],
+					noExams: this.state.noExams + 1,
+					coprologico: true,
+				});
+
+			case "parcialOrina":
+				return this.setState({
+					sections: [
+						...this.state.sections,
+						<ParcialOrina
+							deleteComp={this.onClickDelete}
+							key={this.state.noExams}
+							changeData={this.changeData}
+						/>,
+					],
+					noExams: this.state.noExams + 1,
+					parcialOrina: true,
 				});
 			default:
 				break;
@@ -206,170 +255,165 @@ class AddRecord extends React.Component {
 	};
 
 	render() {
-		return (
-			<Col md={{ span: 12 }} className="mt-5 pb-5 mainRecords">
-				<Row>
-					<Card className="p-4 offset-3 col-6">
-						<h2>FORMULARIO DE REGISTRO</h2>
-						<hr />
-
+		return !this.state.pdfGenerator ? (
+			<Col md={{ span: 6, offset: 3 }} className="mt-5 pb-5 mainRecords">
+				<Card className="p-2">
+					<h2>FORMULARIO DE REGISTRO</h2>
+					<hr />
+					<Card.Body>
+						<Form onSubmit={this.handleOnSubmit}>
+							<Row>
+								<Col xs={{ span: 12, order: 2 }} md={6}>
+									<Form.Group>
+										<Form.Label>
+											Nombre Completo: <span className="text-danger">*</span>
+										</Form.Label>
+										<FormControl
+											type="text"
+											name="name"
+											value={this.state.customerData.completeName}
+											disabled
+										/>
+									</Form.Group>
+								</Col>
+								<Col xs={{ span: 12, order: 1 }} md={{ span: 6, order: 2 }}>
+									<Form.Group>
+										<Form.Label>
+											Nº Documento: <span className="text-danger">*</span>
+										</Form.Label>
+										<FormControl
+											type="text"
+											name="name"
+											onChange={this.onChangeFinder}
+											value={this.state.finder}
+											autoComplete="off"
+											maxLength="10"
+										/>
+									</Form.Group>
+								</Col>
+							</Row>
+							<Row>
+								<Col xs={{ span: 12, order: 2 }} md={{ span: 6, order: 1 }}>
+									<Row>
+										<Col>
+											<Form.Group>
+												<Form.Label>
+													Edad: <span className="text-danger">*</span>
+												</Form.Label>
+												<FormControl
+													type="text"
+													name="name"
+													value={this.state.customerData.age}
+													disabled
+												/>
+											</Form.Group>
+										</Col>
+										<Col>
+											<Form.Group>
+												<Form.Label>
+													Sexo: <span className="text-danger">*</span>
+												</Form.Label>
+												<FormControl
+													type="text"
+													name="name"
+													value={this.state.customerData.genre}
+													disabled
+												/>
+											</Form.Group>
+										</Col>
+									</Row>
+								</Col>
+								<Col xs={{ span: 12, order: 1 }} md={6}>
+									<Form.Group>
+										<Form.Label>
+											Fecha: <span className="text-danger">*</span>
+										</Form.Label>
+										<FormControl
+											type="text"
+											name="name"
+											onChange={this.handleInputOnChange}
+											value={this.state.date()}
+											disabled
+										/>
+									</Form.Group>
+								</Col>
+							</Row>
+							<Row>
+								<Form.Label className="m-auto">
+									<span className="text-danger">{this.state.message}</span>
+								</Form.Label>
+							</Row>
+						</Form>
+					</Card.Body>
+				</Card>
+				{this.state.sections})
+				{this.state.showSections && (
+					<Card className="mt-3">
+						<Card.Header className="m-auto">
+							<h4>EXAMENES</h4>
+						</Card.Header>
 						<Card.Body>
-							<Form onSubmit={this.handleOnSubmit}>
-								<Row>
-									<Col>
-										<Form.Group>
-											<Form.Label>
-												Nombre Completo: <span className="text-danger">*</span>
-											</Form.Label>
-											<FormControl
-												type="text"
-												name="name"
-												value={this.state.customerData.completeName}
-												disabled
-											/>
-										</Form.Group>
-									</Col>
-									<Col>
-										<Form.Group>
-											<Form.Label>
-												Nº Documento: <span className="text-danger">*</span>
-											</Form.Label>
-											<FormControl
-												type="text"
-												name="name"
-												onChange={this.onChangeFinder}
-												value={this.state.finder}
-												autoComplete="off"
-												maxLength="10"
-											/>
-										</Form.Group>
-									</Col>
-								</Row>
-								<Row>
-									<Col>
-										<Row>
-											<Col>
-												<Form.Group>
-													<Form.Label>
-														Edad: <span className="text-danger">*</span>
-													</Form.Label>
-													<FormControl
-														type="text"
-														name="name"
-														value={this.state.customerData.age}
-														disabled
-													/>
-												</Form.Group>
-											</Col>
-											<Col>
-												<Form.Group>
-													<Form.Label>
-														Sexo: <span className="text-danger">*</span>
-													</Form.Label>
-													<FormControl
-														type="text"
-														name="name"
-														value={this.state.customerData.genre}
-														disabled
-													/>
-												</Form.Group>
-											</Col>
-										</Row>
-									</Col>
-									<Col>
-										<Form.Group>
-											<Form.Label>
-												Fecha: <span className="text-danger">*</span>
-											</Form.Label>
-											<FormControl
-												type="text"
-												name="name"
-												onChange={this.handleInputOnChange}
-												value={this.state.date()}
-												disabled
-											/>
-										</Form.Group>
-									</Col>
-								</Row>
-								<Row>
-									<Form.Label className="m-auto">
-										<span className="text-danger">{this.state.message}</span>
-									</Form.Label>
-								</Row>
-							</Form>
+							<Row>
+								<Col xs={12} md={4} className="mt-3 mt-md-0">
+									<Button
+										onClick={this.onClickAddSection}
+										disabled={this.state.serologicas}
+										variant="danger"
+										name="serologicas"
+										block
+									>
+										Serologicas
+									</Button>
+								</Col>
+								<Col xs={12} md={4} className="mt-3 mt-md-0">
+									<Button
+										onClick={this.onClickAddSection}
+										variant="info"
+										name="cuadroHematico"
+										disabled={this.state.cuadroHematico}
+										block
+									>
+										Cuadro Hematico
+									</Button>
+								</Col>
+								<Col xs={12} md={4} className="mt-3 mt-md-0">
+									<Button
+										onClick={this.onClickAddSection}
+										name="coprologico"
+										variant="success"
+										disabled={this.state.coprologico}
+										block
+									>
+										Coprologico
+									</Button>
+								</Col>
+							</Row>
+							<Row className="mt-0 mt-md-3">
+								<Col xs={12} md={6} className="mt-3 mt-md-0">
+									<Button
+										onClick={this.onClickAddSection}
+										name="parcialOrina"
+										variant="dark"
+										disabled={this.state.parcialOrina}
+										block
+									>
+										Parcial de Orina
+									</Button>
+								</Col>
+								<Col xs={12} md={6} className="mt-3 mt-md-0">
+									<Button
+										onClick={this.onClickAddSection}
+										name="quimicaSanguinea"
+										variant="warning"
+										disabled={this.state.quimicaSanguinea}
+										block
+									>
+										Quimica sanguinea
+									</Button>
+								</Col>
+							</Row>
 						</Card.Body>
 					</Card>
-				</Row>
-				{this.state.sections}
-				{this.state.showSections && (
-					<Row className="mt-3">
-						<Card className="col-6 offset-3">
-							<Card.Header className="m-auto">
-								<h4>EXAMENES</h4>
-							</Card.Header>
-							<Card.Body>
-								<Row>
-									<Col>
-										<Button
-											onClick={this.onClickAddSection}
-											disabled={this.state.serologicas}
-											variant="danger"
-											name="serologicas"
-											block
-										>
-											Serologicas
-										</Button>
-									</Col>
-									<Col>
-										<Button
-											onClick={this.onClickAddSection}
-											variant="info"
-											name="cuadroHematico"
-											disabled={this.state.cuadroHematico}
-											block
-										>
-											Cuadro Hematico
-										</Button>
-									</Col>
-									<Col>
-										<Button
-											onClick={this.onClickAddSection}
-											name="coprologico"
-											variant="success"
-											disabled={this.state.coprologico}
-											block
-										>
-											Coprologico
-										</Button>
-									</Col>
-								</Row>
-								<Row className="mt-3">
-									<Col>
-										<Button
-											onClick={this.onClickAddSection}
-											name="parcialOrina"
-											variant="dark"
-											disabled={this.state.parcialOrina}
-											block
-										>
-											Parcial de Orina
-										</Button>
-									</Col>
-									<Col>
-										<Button
-											onClick={this.onClickAddSection}
-											name="quimicaSanguinea"
-											variant="warning"
-											disabled={this.state.quimicaSanguinea}
-											block
-										>
-											Quimica sanguinea
-										</Button>
-									</Col>
-								</Row>
-							</Card.Body>
-						</Card>
-					</Row>
 				)}
 				<Row className="justify-content-center mt-3">
 					{this.state.loading ? (
@@ -382,13 +426,27 @@ class AddRecord extends React.Component {
 								onClick={this.onClickAddSection}
 							>
 								<span name="button-addSection">
-									<i class="fas fa-plus" name="button-addSection"></i>
+									<i className="fas fa-plus" name="button-addSection"></i>
 								</span>
 							</div>
 						)
 					)}
 				</Row>
-				{this.state.sections.length === 0 ? null : <ButtonSave clearState={this.changeOrClearState} addRecord={this.addRecord}/> }
+				{this.state.sections.length === 0 ? null : (
+					<ButtonSave
+						action="/pdf"
+						clearState={this.changeOrClearState}
+						addRecord={this.addRecord}
+					/>
+				)}
+			</Col>
+		) : (
+			<Col md={{ span: 6, offset: 3 }} className="mt-5 pb-5 mainRecords">
+				<iframe
+					src="http://localhost:3000/pdf"
+					frameborder="5"
+					style={{ width: "100%", height: "80vh" }}
+				></iframe>
 			</Col>
 		);
 	}

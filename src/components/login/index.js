@@ -2,11 +2,12 @@ import React from "react";
 import "./styles.css";
 import { Row, Col, Card, Form, Button } from "react-bootstrap";
 import CarouselComponent from "../carousel";
-import axios from "axios";
+import requests from "../utilComponents/requests";
 
 class Login extends React.Component {
 	constructor(props) {
 		super();
+		this.requests = requests();
 		this.state = {
 			error: false,
 			userData: {
@@ -16,30 +17,24 @@ class Login extends React.Component {
 		};
 	}
 
-	login = async (e) => {
+	login = (e) => {
 		e.preventDefault();
-		axios.post(`/api/user/login`, this.state.userData).then((res) => {
+		this.requests.login(this.state.userData).then((res) => {
 			if (res.data.auth) {
-				this.props.history.push('/home')
-			} else{
-				this.setState({error: true})
-				setTimeout(()=>{
-					this.setState({error: false})
-				},2000)
+				this.props.history.push("/home");
+			} else {
+				this.setState({ error: true });
+				setTimeout(() => {
+					this.setState({ error: false });
+				}, 2000);
 			}
 		});
-		this.setState({ userData: { email: "", password: "" } });
 	};
 
-	logout = async (e) => {
+	logout = (e) => {
 		e.preventDefault();
-		axios.get(`/api/user/logout`).then((res) => console.log(res.data));
+		this.requests.logout().then((res) => console.log(res.data));
 		this.setState({ userData: { email: "", password: "" } });
-	};
-
-	auth = async (e) => {
-		e.preventDefault();
-		axios.get(`/api/user/auth`).then((res) => console.log(res.data));
 	};
 
 	handleClick = (e) => {
@@ -104,10 +99,9 @@ class Login extends React.Component {
 											)}
 										</Form.Group>
 										<Button
-											className="btn-block"
-											variant="secondary
-											"
 											type="submit"
+											className="btn-block"
+											variant="secondary"
 											onClick={this.login}
 										>
 											Entrar

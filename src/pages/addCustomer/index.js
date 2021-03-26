@@ -1,12 +1,13 @@
 import React from "react";
 import { Form, FormControl, Col, Card, Button } from "react-bootstrap";
-import axios from "axios";
+import requests from '../../components/utilComponents/requests'
 import SpinnerComponent from "../../components/utilComponents/spinner";
-import getAuth from "../../components/utilComponents/getAuth";
+// import getAuth from "../../components/utilComponents/getAuth";
 
 class AddCustomer extends React.Component {
 	constructor(props) {
 		super(props);
+		this.requests = requests()
 		this.state = {
 			customerData: {
 				name: "",
@@ -23,9 +24,9 @@ class AddCustomer extends React.Component {
 			buttonVariant: "primary",
 		};
 	}
-	componentDidMount() {
-		getAuth(this.props);
-	}
+	// componentDidMount() {
+	// 	return getAuth(this.props);
+	// }
 
 	handleInputOnChange = (e) => {
 		let value = e.target.value;
@@ -66,7 +67,7 @@ class AddCustomer extends React.Component {
 	handleOnSubmit = (e) => {
 		e.preventDefault();
 		this.setState({ submitingData: true });
-		axios.post("/api/customer/add", this.state.customerData).then((res) => {
+		this.requests.addCustomer(this.state.customerData).then((res) => {
 			this.showMessageAndClean(res);
 		});
 	};

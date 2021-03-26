@@ -23,8 +23,8 @@ class Serologicas extends React.Component {
 	};
 	render() {
 		return (
-			<Row className="mt-3">
-				<Card className="p-4 col-6 offset-3">
+
+				<Card className="p-4 mt-3">
 					<div
 						onClick={() => {
 							this.props.deleteComp(this, "serologicas");
@@ -78,7 +78,7 @@ class Serologicas extends React.Component {
 											</Col>
 										</Row>
 									</Col>
-									<Col md="5">
+									<Col md="5" className="mt-2 mt-md-0">
 										<Row>
 											<Col>
 												<Form.Control
@@ -106,7 +106,7 @@ class Serologicas extends React.Component {
 											</Col>
 										</Row>
 									</Col>
-									<Col md="3">
+									<Col md="3" >
 										<Row>
 											<Col>
 												<FormControl
@@ -118,7 +118,7 @@ class Serologicas extends React.Component {
 											</Col>
 										</Row>
 									</Col>
-									<Col md="5">
+									<Col md="5" className="mt-2 mt-md-0">
 										<Row>
 											<Col>
 												<Form.Control
@@ -158,7 +158,7 @@ class Serologicas extends React.Component {
 											</Col>
 										</Row>
 									</Col>
-									<Col md="5">
+									<Col md="5" className="mt-2 mt-md-0">
 										<Row>
 											<Col>
 												<Form.Control
@@ -180,7 +180,7 @@ class Serologicas extends React.Component {
 						</Form>
 					</Card.Body>
 				</Card>
-			</Row>
+
 		);
 	}
 }

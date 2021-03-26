@@ -1,31 +1,31 @@
 import React from "react";
 import { Col, Table, Card } from "react-bootstrap";
 import Field from "./field";
-import axios from "axios";
-import getAuth from "../../components/utilComponents/getAuth";
+import requests from "../../components/utilComponents/requests";
+// import getAuth from "../../components/utilComponents/getAuth";
 
 class List extends React.Component {
 	constructor(props) {
 		super(props);
+		this.requests = requests();
 		this.state = {
 			fields: [],
 		};
 	}
 	componentDidMount() {
-		getAuth(this.props);
-		axios
-			.post("/api/customer/getcustomers")
+		// return getAuth(this.props);
+		this.requests
+			.getCustomers()
 			.then((res) => this.setState({ fields: res.data.customers }));
 	}
 	render() {
 		return (
-			<Col xs={{ span: 8, offset: 2 }} className="mt-5 pb-5">
-				<Card className="p-5">
+			<Col md={{ span: 8, offset: 2 }} xs={{ span: 12 }} className="mt-5 pb-5">
+				<Card className="p-md-5 p-2">
 					<h2>Listado de Clientes</h2>
 					<hr />
-
-					<Card.Body>
-						<Table striped bordered hover size="sm">
+					<Card.Body className="p-1 p-md-2">
+						<Table striped bordered hover size="lg" responsive={true}>
 							<thead>
 								<tr>
 									<th>#</th>
