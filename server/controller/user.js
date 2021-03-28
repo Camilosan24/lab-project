@@ -10,11 +10,11 @@ userControler.register = (req,res)=>{
  }
 
 userControler.login = (req, res) => {
-	User.findOne({ email: req.body.email }, (err, user) => {
+	User.findOne({ email: req.body.user }, (err, user) => {
 		if (!user)
 			return res.json({
 				auth: false,
-				message: "Auth failed, email not found",
+				message: "No existe el usuario",
 				userData: false,
 			});
 
@@ -22,7 +22,7 @@ userControler.login = (req, res) => {
 			if (!isMatch)
 				return res.json({
 					auth: false,
-					message: "Wrong password",
+					message: "Contraseña incorrecta",
 					userData: false,
 				})
 

@@ -35,7 +35,7 @@ const record = (id, data) => {
 	return {};
 };
 
-customerControler.add = (req, res) => {
+customerControler.addCustomer = (req, res) => {
 	let dataCustomer = {
 		name: req.body.name,
 		lastname: req.body.lastname,
@@ -46,6 +46,7 @@ customerControler.add = (req, res) => {
 		birthdate: req.body.birthdate,
 		genre: req.body.genre,
 		age: getAge(req.body.birthdate),
+		records: []
 	};
 	const newCustomer = new Customer(dataCustomer);
 	Customer.findOne({ cc: req.body.cc }, (err, customer) => {
@@ -53,45 +54,58 @@ customerControler.add = (req, res) => {
 		if (!customer) {
 			newCustomer.save((err, doc) => {
 				if (err) {
-					res.json({ success: false, message: "Datos invalidos" });
+					res.json({ success: false, message: "Datos invalidos", data: null });
 				}
 				return res
 					.status(200)
-					.json({ success: true, message: "Cliente añadido correctamente" });
+					.json({ success: true, message: "Cliente añadido correctamente", data: customer });
 			});
 		} else {
-			return res.json({ success: false, message: "El cliente ya existe" });
+			return res.json({ success: false, message: "El cliente ya existe", data: null });
 		}
 	});
 };
 
 customerControler.getCustomers = (req, res) => {
-	if (req.body.cc) {
-		return Customer.findOne({ cc: req.body.cc }, (err, customer) => {
-			if (err) res.json({ message: "there is an error" });
-			if (customer) {
-				return res
-					.json({
-						customer: customer,
-					})
-					.status(200);
-			}
-			return res.json({
-				success: false,
-				message: "Lo sentimos, el cliente no existe",
-			});
-		});
-	}
-
-	Customer.find((err, doc) => {
-		if (err) res.json({ success: false, message: "Datos invalidos" });
-		if (doc) {
-			return res.status(200).json({ success: true, customers: doc });
+	Customer.find((err, customer) => {
+		if (err) res.json({ success: false, message: "Hubo un error en la petición" });
+		if (customer) {
+			return res.status(200).json({ success: true, customers: customer, message: "" });
 		} else {
-			return res.status(404).json({ success: false, customers: null });
+			return res.status(404).json({ success: false, message: "No existen clientes", customers: null });
 		}
 	});
 };
+
+customerControler.getCustomer = (req, res)=>{
+	if(req.params.cc){
+		return Customer.findOne({ cc: req.params.cc }, (err, customer) => {
+			if (err) res.json({ message: "Hubo un error en la petición" });
+			if (customer) {
+				return res
+					.json({
+						success: true,
+						customer: customer,
+						records: customer.records,
+					})
+					.status(200);
+			}
+
+			return res
+			.json({
+				success: false,
+				customer: customer,
+				message:'Lo sentimos, el cliente no existe'
+			})
+			.status(200);
+		});
+	}
+	return res.json({
+		success: false,
+		message: "Por favor llene todos los campos",
+	});
+
+}
 
 customerControler.addRecord = (req, res) => {
 	Customer.findOne({ cc: req.body.cc }, (err, customer) => {
@@ -113,14 +127,5 @@ customerControler.addRecord = (req, res) => {
 	});
 };
 
-customerControler.getRecords = (req, res) => {
-	Customer.findOne({ cc: req.params.cc}, (err, customer) => {
-		if (err) {
-			console.log(err);
-			return res.json({ message: "error" });
-		}
-		return res.json({ customer: customer, message: "ok" });
-	});
-};
 
 module.exports = customerControler;
