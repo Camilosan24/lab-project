@@ -76,7 +76,7 @@ class NavLayout extends React.Component {
 											<LinkContainer to="/addclient" >
 												<NavDropdown.Item className="pr-2">Añadir Nuevo</NavDropdown.Item>
 											</LinkContainer>
-											<LinkContainer to="/listclients">
+											<LinkContainer to="/listcustomers">
 												<NavDropdown.Item>Listar Todos</NavDropdown.Item>
 											</LinkContainer>
 										</NavDropdown>

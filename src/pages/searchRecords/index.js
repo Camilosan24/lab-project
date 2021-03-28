@@ -1,18 +1,9 @@
 import React from "react";
 import requests from "../../components/utilComponents/requests";
-import {
-	Col,
-	Row,
-	Form,
-	FormControl,
-	Card,
-	Table,
-	InputGroup,
-	FormLabel,
-} from "react-bootstrap";
+import { Col, Row, Form, Card, Table, FormLabel } from "react-bootstrap";
 import "./styles.css";
 import Field from "../../components/utilComponents/field";
-// import getAuth from "../../components/utilComponents/getAuth";
+import NoData from "../../components/utilComponents/noData";
 
 class SearchCustomer extends React.Component {
 	constructor(props) {
@@ -22,6 +13,7 @@ class SearchCustomer extends React.Component {
 			searchInput: "",
 			infoFields: [],
 			name: "",
+			message: "",
 		};
 	}
 
@@ -31,11 +23,18 @@ class SearchCustomer extends React.Component {
 
 	getCustomer = () => {
 		this.requests.getCustomerByCc(this.state.searchInput).then((res) => {
-			if (res.data.customer)
+			if (res.data.success) {
 				this.setState({
-					infoFields: res.data.customer.records,
 					name: `${res.data.customer.name} ${res.data.customer.lastname}`,
 				});
+				if (res.data.records.length === 0) {
+					this.setState({ infoFields: null });
+				} else {
+					this.setState({ infoFields: res.data.customer.records });
+				}
+			} else {
+				this.setState({ message: res.data.message });
+			}
 		});
 	};
 
@@ -44,7 +43,7 @@ class SearchCustomer extends React.Component {
 			if (this.state.searchInput.length === 10) {
 				this.getCustomer();
 			} else {
-				this.setState({ name: "", infoFields: [] });
+				this.setState({ name: "", infoFields: [], message: "" });
 			}
 		});
 	};
@@ -57,22 +56,25 @@ class SearchCustomer extends React.Component {
 					<Card.Body>
 						<Row>
 							<Col md={{ span: 4, offset: 8 }}>
-								<Form.Group className="form-inputGroup">
-									<InputGroup>
-										<InputGroup.Text
-											style={{ background: "none", border: "none" }}
-										>
-											<i className="fas fa-search"></i>
-										</InputGroup.Text>
-
-										<FormControl
-											type="text"
-											placeholder="Buscar"
-											onChange={this.handleInputOnChange}
-											value={this.state.searchInput}
-											className="searchInput"
-										/>
-									</InputGroup>
+								<Form.Group className="d-flex mt-3">
+									<i className="fas fa-search icon"></i>
+									<Form.Control
+										type="text"
+										placeholder="Buscar"
+										onChange={this.handleInputOnChange}
+										value={this.state.searchInput}
+										autoComplete="off"
+										maxLength="10"
+										className="icon-input"
+										ref={this.password}
+									></Form.Control>
+								</Form.Group>
+								<Form.Group>
+									<Row>
+										<Form.Label className="text-danger m-auto">
+											{this.state.message}
+										</Form.Label>
+									</Row>
 								</Form.Group>
 							</Col>
 						</Row>
@@ -96,16 +98,20 @@ class SearchCustomer extends React.Component {
 											<th>Coprologico</th>
 											<th>P. Orina</th>
 											<th>Q. Sanquinea</th>
-											<th>FECHA</th>
-											<th>HORA</th>
-											<th>ARCHIVO</th>
+											<th>Fecha</th>
+											<th>Hora</th>
+											<th>Archivo</th>
 										</tr>
 									</thead>
 									<tbody>
-										{this.state.infoFields &&
+										{this.state.infoFields == null ? (
+											<NoData cols="10" />
+										) : (
+											this.state.infoFields &&
 											this.state.infoFields.map((info, index) => (
 												<Field info={info} key={index} number={index} />
-											))}
+											))
+										)}
 									</tbody>
 								</Table>
 							</Col>

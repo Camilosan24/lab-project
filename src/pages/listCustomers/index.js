@@ -2,6 +2,7 @@ import React from "react";
 import { Col, Table, Card } from "react-bootstrap";
 import Field from "./field";
 import requests from "../../components/utilComponents/requests";
+import NoData from "../../components/utilComponents/noData";
 // import getAuth from "../../components/utilComponents/getAuth";
 
 class List extends React.Component {
@@ -13,10 +14,11 @@ class List extends React.Component {
 		};
 	}
 	componentDidMount() {
-		// return getAuth(this.props);
-		this.requests
-			.getCustomers()
-			.then((res) => this.setState({ fields: res.data.customers }));
+		this.requests.getCustomers().then((res) => {
+			if (res.data.customers)
+				return this.setState({ fields: res.data.customers });
+			return this.setState({ fields: null });
+		});
 	}
 	render() {
 		return (
@@ -38,11 +40,13 @@ class List extends React.Component {
 								</tr>
 							</thead>
 							<tbody>
-								{this.state.fields
-									? this.state.fields.map((info, index) => (
-											<Field info={info} key={index} number={index + 1} />
-									  ))
-									: null}
+								{this.state.fields !== null ? (
+									this.state.fields.map((info, index) => (
+										<Field info={info} key={index} number={index + 1} />
+									))
+								) : (
+									<NoData cols="7" />
+								)}
 							</tbody>
 						</Table>
 					</Card.Body>

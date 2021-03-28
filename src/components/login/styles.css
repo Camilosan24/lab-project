@@ -1,4 +1,85 @@
-body::-webkit-scrollbar{
-   display: none;
+body::-webkit-scrollbar {
+	display: none;
+}
+body {
+	padding: 0;
+	margin: 0;
 }
 
+.wrongField {
+	box-shadow: 0px 0px 5px 0px red;
+	animation: wrongField 0.3s;
+	animation-timing-function: linear;
+	animation-iteration-count: 1;
+}
+
+@keyframes wrongField {
+	0% {
+		transform: translateX(0px);
+		box-shadow: 0px 0px 5px 0px red;
+	}
+	25% {
+		transform: translateX(-10px);
+		box-shadow: 0px 0px 5px 0px red;
+	}
+	50% {
+		transform: translateX(0px);
+		box-shadow: 0px 0px 5px 0px red;
+	}
+	75% {
+		transform: translateX(10px);
+		box-shadow: 0px 0px 5px 0px red;
+	}
+	100% {
+		transform: translateX(0px);
+		box-shadow: 0px 0px 5px 0px red;
+	}
+}
+
+.icon {
+	position: absolute;
+	z-index: 1000;
+	padding: 10px;
+	opacity: 0.5;
+}
+.loginLogo {
+	display: flex;
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	background-color: rgba(52, 53, 54, 0.678);
+	align-self: center;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0px 0px 20px 0px black;
+	border: 1px solid black;
+	transition-duration: .5s;
+}
+.loginLogo .fa-vial {
+	color: black;
+	font-size: 120px;
+	animation-name: logoAnimation;
+	animation-duration: 5s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	animation-delay: 1s;
+}
+
+.loginLogo:hover{
+	transition-duration: .5s;
+	transform: scale(1.1);
+}
+
+@keyframes logoAnimation {
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.btn:hover {
+	transform: translateY(-2px);
+}
+
+.icon-input{
+	text-indent: 20px;
+}

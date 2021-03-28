@@ -17,8 +17,6 @@ class CarouselComponent extends React.Component {
 						position: "absolute",
 						height: "100vh",
 						width: "100vw",
-						margin: 0,
-						padding: 0,
 					}}
 				>
 					<Carousel controls={false} indicators={false}>
@@ -69,7 +67,7 @@ class CarouselComponent extends React.Component {
 						</Carousel.Item>
 					</Carousel>
 					<Col
-						className="background-login-2"
+						className="background-login-2 p-0"
 						style={{
 							position: "absolute",
 							height: "100vh",

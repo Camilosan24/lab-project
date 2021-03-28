@@ -4,7 +4,6 @@ import Coprologico from "./sections/coprologico";
 import CuadroHematico from "./sections/cuadroHematico";
 import ParcialOrina from "./sections/parcialOrina";
 import { Form, FormControl, Col, Card, Row, Button } from "react-bootstrap";
-import PdfGenerator from "../pdfGenerator/index";
 import requests from "../../components/utilComponents/requests";
 import SpinnerComponent from "../../components/utilComponents/spinner";
 import ButtonSave from "../../components/utilComponents/buttonSave";
@@ -22,6 +21,7 @@ class AddRecord extends React.Component {
 				let fechaActual = new Date(now);
 				return fechaActual.toLocaleDateString();
 			},
+
 			pdfGenerator: true,
 			addSection: false,
 			showSections: false,
@@ -255,7 +255,7 @@ class AddRecord extends React.Component {
 	};
 
 	render() {
-		return !this.state.pdfGenerator ? (
+		return (
 			<Col md={{ span: 6, offset: 3 }} className="mt-5 pb-5 mainRecords">
 				<Card className="p-2">
 					<h2>FORMULARIO DE REGISTRO</h2>
@@ -439,14 +439,6 @@ class AddRecord extends React.Component {
 						addRecord={this.addRecord}
 					/>
 				)}
-			</Col>
-		) : (
-			<Col md={{ span: 6, offset: 3 }} className="mt-5 pb-5 mainRecords">
-				<iframe
-					src="http://localhost:3000/pdf"
-					frameborder="5"
-					style={{ width: "100%", height: "80vh" }}
-				></iframe>
 			</Col>
 		);
 	}

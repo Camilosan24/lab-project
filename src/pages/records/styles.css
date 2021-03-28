@@ -52,11 +52,6 @@
 	padding: 10px 10px;
 }
 
-.mainRecords{
-	height: 80vh;
-	overflow: scroll;
-}
-
 .mainRecords::-webkit-scrollbar{
    display: none;
 }
