@@ -1,0 +1,66 @@
+
+.header-nav-dad {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  position: fixed;
+  font-size: 1em;
+  background-color: red;
+  text-align: center;
+  justify-content: center;
+  color: white;
+}
+
+
+.fa-bars {
+  padding: 2px;
+  background-color: rgb(197, 0, 0);
+  color: white;
+}
+
+#header-name {
+  display: flex;
+  height: 20vh;
+  width: 100vw;
+  font-size: 2.5em;
+  padding: 17%;
+}
+
+#header-buttons {
+  display: flex;
+  width: 100vw;
+  height: 80vh;
+  font-size: 1.1em;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.burger-button {
+  display: flex;
+  position: fixed;
+  border-radius: 16px;
+  width: 40px;
+  height: 40px;
+  top: 2%;
+  left: 5%;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  z-index: 10;
+}
+
+
+.button {
+  width: 60vw;
+  margin-bottom: 10%;
+  padding-bottom: 2%;
+  border-bottom: 1px solid white;
+  border-radius: 5px;
+}
+
+.button a {
+  margin-bottom: 10%;
+  text-decoration: none;
+  color: white;
+}

@@ -1,0 +1,5 @@
+.backgroundSpace{
+   background: linear-gradient(to left, rgb(0, 119, 255), rgb(4, 247, 255));
+   min-height: 100vh;
+}
+

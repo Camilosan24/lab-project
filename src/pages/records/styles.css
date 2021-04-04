@@ -1,0 +1,42 @@
+.addSection-button {
+	border: solid 7px #003036e0;
+	border-radius: 50%;
+	height: 50px;
+	width: 50px;
+	color: #003036e0;
+	text-align: center;
+}
+
+.fa-plus {
+	font-size: 35px;
+}
+
+.addSection-button:hover {
+	cursor: pointer;
+	transition-duration: 0.5s;
+	transform: scale(1.2);
+}
+
+.delete-exam {
+	border: 3px solid #ff0000;
+	color: #ff0000;
+	position: absolute;
+	right: 3%;
+	display: flex;
+	width: 25px;
+	height: 25px;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+}
+
+.fa-minus {
+	font-size: 18px;
+	padding-top: 0;
+}
+
+.delete-exam:hover {
+	cursor: pointer;
+	transition-duration: 0.5s;
+	transform: scale(1.2);
+}
