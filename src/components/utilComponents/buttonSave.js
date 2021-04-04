@@ -1,6 +1,16 @@
 import React from "react";
 import { Row, Col, Button } from "react-bootstrap";
+import Spinner from "./spinner";
 class ButtonSave extends React.Component {
+	state = {
+		loading: false,
+	};
+
+	sendData = async () => {
+		this.setState({ loading: !this.state.loading });
+		await this.props.addRecord();
+		this.setState({ loading: !this.state.loading });
+	};
 	render() {
 		return (
 			<Row className="">
@@ -19,7 +29,7 @@ class ButtonSave extends React.Component {
 							if (option) this.props.clearState(false, false, true, "", []);
 						}}
 					>
-						<i class="fas fa-times"></i>
+						<i className="fas fa-times"></i>
 					</Button>
 				</Col>
 				<Col
@@ -27,8 +37,12 @@ class ButtonSave extends React.Component {
 					md={{ span: 3, offset: 6 }}
 					className="d-flex justify-content-center"
 				>
-					<Button variant="dark" block onClick={() => this.props.addRecord()}>
-						<i class="fas fa-check"></i>
+					<Button variant="dark" block onClick={this.sendData}>
+						{!this.state.loading ? (
+							<i className="fas fa-check"></i>
+						) : (
+							<Spinner variant="success" />
+						)}
 					</Button>
 				</Col>
 			</Row>

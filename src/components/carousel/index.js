@@ -2,11 +2,12 @@ import React from "react";
 import "./styles.css";
 import { Carousel, Col } from "react-bootstrap";
 
-import Image1 from '../../images/image-1.jpg'
-import Image2 from '../../images/image-2.jpg'
-import Image3 from '../../images/image-3.jpg'
-import Image4 from '../../images/image-4.jpg'
-import Image5 from '../../images/image-5.jpg'
+import Image1 from "../../images/image-1.jpg";
+import Image2 from "../../images/image-2.jpg";
+import Image3 from "../../images/image-3.jpg";
+import Image4 from "../../images/image-4.jpg";
+import Image5 from "../../images/image-5.jpg";
+
 class CarouselComponent extends React.Component {
 	render() {
 		return (

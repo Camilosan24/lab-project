@@ -1,13 +1,13 @@
 import React from "react";
 import { Form, FormControl, Col, Card, Button } from "react-bootstrap";
-import requests from '../../components/utilComponents/requests'
+import requests from "../../components/utilComponents/requests";
 import SpinnerComponent from "../../components/utilComponents/spinner";
-// import getAuth from "../../components/utilComponents/getAuth";
+import { Toast } from "../../components/alerts/alert";
 
 class AddCustomer extends React.Component {
 	constructor(props) {
 		super(props);
-		this.requests = requests()
+		this.requests = requests();
 		this.state = {
 			customerData: {
 				name: "",
@@ -17,18 +17,18 @@ class AddCustomer extends React.Component {
 				email: "",
 				phone: "",
 				birthdate: "",
-				genre: ""
+				genre: "Default...",
 			},
 			message: "",
 			submitingData: false,
 			buttonVariant: "primary",
 		};
 	}
-	// componentDidMount() {
-	// 	return getAuth(this.props);
-	// }
+	async componentDidMount(){
+		return await requests().auth(this.props)
+	}
 
-	handleInputOnChange = (e) => {
+	changeState = (e) => {
 		let value = e.target.value;
 		this.setState({
 			customerData: {
@@ -38,11 +38,30 @@ class AddCustomer extends React.Component {
 		});
 	};
 
+	handleInputOnChange = (e) => {
+		if (e.target.value === "") {
+			this.changeState(e);
+		}
+		if (e.target.name === "cc" || e.target.name === "phone") {
+			if (!Number(e.target.value)) {
+				return;
+			}
+		}
+		this.changeState(e);
+	};
+
 	showMessageAndClean = (res) => {
-		this.setState({ message: res.data.message });
 		if (res.data.success) {
+			Toast.fire({
+				icon: "success",
+				title: "Cliente añadido correctamente",
+			});
 			this.setState({ buttonVariant: "success" });
 		} else {
+			Toast.fire({
+				icon: "error",
+				title: res.data.message,
+			});
 			this.setState({ buttonVariant: "danger" });
 		}
 		setTimeout(() => {
@@ -59,22 +78,34 @@ class AddCustomer extends React.Component {
 				email: "",
 				phone: "",
 				birthdate: "",
-				genre: ""
+				genre: "",
 			},
 		});
 	};
 
 	handleOnSubmit = (e) => {
 		e.preventDefault();
-		this.setState({ submitingData: true });
-		this.requests.addCustomer(this.state.customerData).then((res) => {
-			this.showMessageAndClean(res);
-		});
+		let confirmation = window.confirm("¿Estas seguro de guardar estos datos?");
+		if (confirmation) {
+			if (this.state.customerData.genre === "Default...") {
+				this.setState({
+					message: "Por favor elija un genero",
+					buttonVariant: "danger",
+				});
+				setTimeout(() => {
+					this.setState({ message: "", buttonVariant: "primary" });
+				}, 2000);
+			} else {
+				this.setState({ submitingData: true });
+				this.requests.addCustomer(this.state.customerData).then((res) => {
+					this.showMessageAndClean(res);
+				});
+			}
+		}
 	};
-
 	render() {
 		return (
-			<Col md={{ span: 4, offset:4  }} className="mt-5 pb-5">
+			<Col md={{ span: 4, offset: 4 }} className="mt-5 pb-5">
 				<Card className="p-3">
 					<h2>FORMULARIO DE REGISTRO DE NUEVO CLIENTE</h2>
 					<hr />
@@ -115,6 +146,7 @@ class AddCustomer extends React.Component {
 									onChange={this.handleInputOnChange}
 									value={this.state.customerData.cc}
 									required
+									maxLength="10"
 								/>
 							</Form.Group>
 							<Form.Group>
@@ -126,12 +158,11 @@ class AddCustomer extends React.Component {
 									name="genre"
 									onChange={this.handleInputOnChange}
 									value={this.state.customerData.genre}
-									defaultValue="Default..."
 									required
 								>
 									<option>Default...</option>
-									<option>Mujer</option>
-									<option>Hombre</option>
+									<option>MUJER</option>
+									<option>HOMBRE</option>
 								</Form.Control>
 							</Form.Group>
 							<Form.Group>
@@ -163,7 +194,7 @@ class AddCustomer extends React.Component {
 									Telefono: <span className="text-danger">*</span>
 								</Form.Label>
 								<FormControl
-									type="text"
+									type="tel"
 									name="phone"
 									onChange={this.handleInputOnChange}
 									maxLength="10"
@@ -183,12 +214,12 @@ class AddCustomer extends React.Component {
 									required
 								/>
 							</Form.Group>
+							{this.state.message && (
+								<Form.Group>
+									<span className="text-danger">{this.state.message}</span>
+								</Form.Group>
+							)}
 
-							<Form.Group>
-								<Form.Text className={`text-${this.state.buttonVariant}`}>
-									{this.state.message}
-								</Form.Text>
-							</Form.Group>
 							<Form.Group>
 								<Button type="submit" variant={this.state.buttonVariant} block>
 									{this.state.submitingData ? <SpinnerComponent /> : "Enviar"}

@@ -6,13 +6,13 @@ class Coprologico extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			color: '',
-			consistencia: '',
-			leucocitos: '',
-			almidon: '',
-			floraBacteriana: '',
-			celulosa: '',
-			parasitos: ''
+			color: "",
+			consistencia: "",
+			leucocitos: "",
+			almidon: "",
+			floraBacteriana: "",
+			celilosa: "",
+			parasitos: "",
 		};
 	}
 
@@ -32,7 +32,7 @@ class Coprologico extends React.Component {
 					}}
 					className="delete-exam rounded-circle"
 				>
-					<i class="fas fa-minus"></i>
+					<i className="fas fa-minus"></i>
 				</div>
 
 				<Card.Header className="m-auto">
@@ -65,14 +65,13 @@ class Coprologico extends React.Component {
 									<FormControl
 										as="select"
 										name="color"
-										defaultValue="Default..."
 										value={this.state.color}
 										onChange={this.onChangeValues}
 										required
 									>
-										<option>Default...</option>
-										<option>Amarillo</option>
-										<option>Rojo</option>
+										<option defaultValue="Default...">Default...</option>
+										<option defaultValue="AMARILLO">AMARILLO</option>
+										<option defaultValue="ROJO">ROJO</option>
 									</FormControl>
 								</Col>
 							</Row>
@@ -85,7 +84,6 @@ class Coprologico extends React.Component {
 								<Col md={{ span: 4, offset: 3 }}>
 									<FormControl
 										name="consistencia"
-										defaultValue="Default..."
 										value={this.state.consistencia}
 										onChange={this.onChangeValues}
 										required
@@ -149,13 +147,13 @@ class Coprologico extends React.Component {
 						<Form.Group>
 							<Row>
 								<Col md="4">
-									<Form.Label>Celulosa:</Form.Label>
+									<Form.Label>Celilosa:</Form.Label>
 								</Col>
 								<Col md={{ span: 4, offset: 3 }}>
 									<FormControl
 										type="text"
-										name="celulosa"
-										value={this.state.celulosa}
+										name="celilosa"
+										value={this.state.celilosa}
 										onChange={this.onChangeValues}
 									/>
 								</Col>

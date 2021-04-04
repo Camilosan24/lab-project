@@ -33,7 +33,7 @@ class Login extends React.Component {
 					messages: { user: "No existe el usuario", password: "" },
 				});
 				setTimeout(() => {
-					this.user.current.className = "form-control";
+					this.user.current.className = "form-control icon-input";
 					this.setState({ messages: { user: "", password: "" } });
 					this.setState({ error: false });
 				}, 1000);
@@ -43,25 +43,15 @@ class Login extends React.Component {
 					messages: { user: "", password: "Contraseña incorrecta" },
 				});
 				setTimeout(() => {
-					this.password.current.className = "form-control";
+					this.password.current.className = "form-control icon-input";
 					this.setState({ messages: { user: "", password: "" } });
 					this.setState({ error: false });
 				}, 1000);
 			}
-			this.setState({ userData: { email: "", password: "" } });
+			this.setState({ userData: { user: "", password: "" } });
 		});
 	};
 
-	logout = (e) => {
-		e.preventDefault();
-		this.requests.logout().then((res) => console.log(res.data));
-		this.setState({ userData: { email: "", password: "" } });
-	};
-
-	handleClick = (e) => {
-		e.preventDefault();
-		this.setState({ error: !this.state.error });
-	};
 	handleChange = (e) => {
 		if (e.target.name === "email" || "password") {
 			this.setState({
@@ -92,7 +82,7 @@ class Login extends React.Component {
 								</div>
 								<Card.Body>
 									<Form>
-										<Form.Group className="">
+										<Form.Group className="loginForm">
 											<i className="fas fa-user icon" ref={this.user}></i>
 											<Form.Control
 												type="text"

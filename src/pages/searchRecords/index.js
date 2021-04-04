@@ -1,6 +1,15 @@
 import React from "react";
 import requests from "../../components/utilComponents/requests";
-import { Col, Row, Form, Card, Table, FormLabel } from "react-bootstrap";
+import {
+	Col,
+	Row,
+	Form,
+	Card,
+	Table,
+	FormLabel,
+	Button,
+	InputGroup,
+} from "react-bootstrap";
 import "./styles.css";
 import Field from "../../components/utilComponents/field";
 import NoData from "../../components/utilComponents/noData";
@@ -17,8 +26,8 @@ class SearchCustomer extends React.Component {
 		};
 	}
 
-	componentDidMount() {
-		// return getAuth(this.props);
+	async componentDidMount() {
+		return await requests().auth(this.props);
 	}
 
 	getCustomer = () => {
@@ -26,6 +35,7 @@ class SearchCustomer extends React.Component {
 			if (res.data.success) {
 				this.setState({
 					name: `${res.data.customer.name} ${res.data.customer.lastname}`,
+					message: "",
 				});
 				if (res.data.records.length === 0) {
 					this.setState({ infoFields: null });
@@ -33,19 +43,35 @@ class SearchCustomer extends React.Component {
 					this.setState({ infoFields: res.data.customer.records });
 				}
 			} else {
-				this.setState({ message: res.data.message });
+				this.setState({
+					message: res.data.message,
+					infoFields: [],
+					name: "",
+					searchInput: "",
+				});
+				setTimeout(() => {
+					this.setState({ message: "" });
+				}, 2000);
 			}
 		});
 	};
 
 	handleInputOnChange = (e) => {
-		this.setState({ searchInput: e.target.value }, () => {
-			if (this.state.searchInput.length === 10) {
-				this.getCustomer();
-			} else {
-				this.setState({ name: "", infoFields: [], message: "" });
-			}
-		});
+		if (e.target.value === "") {
+			this.setState({
+				searchInput: e.target.value,
+				name: "",
+				infoFields: [],
+				message: "",
+			});
+		}
+		if (!Number(e.target.value)) {
+			return;
+		}
+		this.setState({ searchInput: e.target.value });
+	};
+	onClickSearch = () => {
+		this.getCustomer();
 	};
 	render() {
 		return (
@@ -56,8 +82,7 @@ class SearchCustomer extends React.Component {
 					<Card.Body>
 						<Row>
 							<Col md={{ span: 4, offset: 8 }}>
-								<Form.Group className="d-flex mt-3">
-									<i className="fas fa-search icon"></i>
+								<InputGroup className="d-flex mt-3">
 									<Form.Control
 										type="text"
 										placeholder="Buscar"
@@ -65,11 +90,15 @@ class SearchCustomer extends React.Component {
 										value={this.state.searchInput}
 										autoComplete="off"
 										maxLength="10"
-										className="icon-input"
 										ref={this.password}
 									></Form.Control>
-								</Form.Group>
-								<Form.Group>
+									<InputGroup.Prepend>
+										<Button variant="secondary" onClick={this.onClickSearch}>
+											<i className="fas fa-search"></i>
+										</Button>
+									</InputGroup.Prepend>
+								</InputGroup>
+								<Form.Group className="pt-1">
 									<Row>
 										<Form.Label className="text-danger m-auto">
 											{this.state.message}
@@ -109,7 +138,12 @@ class SearchCustomer extends React.Component {
 										) : (
 											this.state.infoFields &&
 											this.state.infoFields.map((info, index) => (
-												<Field info={info} key={index} number={index} />
+												<Field
+													info={info}
+													key={index}
+													number={index}
+													openPdf={this.openPdf}
+												/>
 											))
 										)}
 									</tbody>

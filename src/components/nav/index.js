@@ -73,7 +73,7 @@ class NavLayout extends React.Component {
 									<hr/>
 									<Nav className="m-auto">
 										<NavDropdown title="Clientes" id="collasible-nav-dropdown" className="pr-3">
-											<LinkContainer to="/addclient" >
+											<LinkContainer to="/addcustomer" >
 												<NavDropdown.Item className="pr-2">Añadir Nuevo</NavDropdown.Item>
 											</LinkContainer>
 											<LinkContainer to="/listcustomers">

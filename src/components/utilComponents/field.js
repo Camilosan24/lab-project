@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 class Fields extends React.Component {
 	render() {
@@ -43,8 +44,10 @@ class Fields extends React.Component {
 				<td>{this.props.info.date}</td>
 				<td>{this.props.info.time}</td>
 
-				<td style={{ paddingLeft: "30px" }}>
-					<i className="fas fa-file-pdf"></i>
+				<td className="justify-content-center">
+					<Link to={this.props.info.url} target="_blank" >
+						<i className="fas fa-file-pdf"></i>
+					</Link>
 				</td>
 			</tr>
 		);

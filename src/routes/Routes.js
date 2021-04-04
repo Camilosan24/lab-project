@@ -7,6 +7,7 @@ import AddCustomer from "../pages/addCustomer/index";
 import SearchCustomer from "../pages/searchRecords/index";
 import AddRecord from "../pages/records/add";
 import List from "../pages/listCustomers/index";
+import NotFound from "../pages/notFound/NotFound";
 import { Container } from "react-bootstrap";
 
 class Routes extends React.Component {
@@ -18,7 +19,7 @@ class Routes extends React.Component {
 						<Route exact path="/" component={Login} />
 						<NavLayout>
 							<Route exact path="/home" component={Home} />
-							<Route exact path="/addclient" component={AddCustomer} />
+							<Route exact path="/addcustomer" component={AddCustomer} />
 							<Route exact path="/listcustomers" component={List} />
 							<Route exact path="/searchrecord" component={SearchCustomer} />
 							<Route exact path="/addrecord" component={AddRecord} />

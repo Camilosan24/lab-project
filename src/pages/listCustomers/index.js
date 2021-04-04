@@ -13,12 +13,15 @@ class List extends React.Component {
 			fields: [],
 		};
 	}
-	componentDidMount() {
-		this.requests.getCustomers().then((res) => {
-			if (res.data.customers)
-				return this.setState({ fields: res.data.customers });
-			return this.setState({ fields: null });
-		});
+	async componentDidMount() {
+		let response = await requests().auth(this.props);
+		if (response) {
+			this.requests.getCustomers().then((res) => {
+				if (res.data.customers.length > 0)
+					return this.setState({ fields: res.data.customers });
+				return this.setState({ fields: null });
+			});
+		}
 	}
 	render() {
 		return (

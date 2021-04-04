@@ -7,6 +7,8 @@ import { Form, FormControl, Col, Card, Row, Button } from "react-bootstrap";
 import requests from "../../components/utilComponents/requests";
 import SpinnerComponent from "../../components/utilComponents/spinner";
 import ButtonSave from "../../components/utilComponents/buttonSave";
+import QuimicaSanguinea from "./sections/quimicaSanguinea";
+import { Toast } from "../../components/alerts/alert";
 import "./styles.css";
 
 class AddRecord extends React.Component {
@@ -25,14 +27,16 @@ class AddRecord extends React.Component {
 			pdfGenerator: true,
 			addSection: false,
 			showSections: false,
-			sections: [],
+
 			saveSection: false,
 			noExams: 0,
 			message: "",
+			sections: [],
 			customerData: {
 				completeName: "",
 				age: "",
 				genre: "",
+				cc: "",
 			},
 			serologicas: false,
 			cuadroHematico: false,
@@ -49,8 +53,8 @@ class AddRecord extends React.Component {
 		};
 	}
 
-	componentDidMount() {
-		// return getAuth(this.props);
+	async componentDidMount() {
+		return await requests().auth(this.props);
 	}
 
 	changeOrClearState = (
@@ -68,7 +72,9 @@ class AddRecord extends React.Component {
 			sections: sections,
 		});
 		if (customerData === true) {
-			this.setState({ customerData: { completeName: "", age: "", genre: "" } });
+			this.setState({
+				customerData: { completeName: "", age: "", genre: "", cc: "" },
+			});
 		} else if (customerData) {
 			this.setState({ customerData: customerData });
 		}
@@ -86,15 +92,41 @@ class AddRecord extends React.Component {
 		}
 	};
 
-	addRecord = () => {
-		this.requests
+	addRecord = async () => {
+		await this.requests
 			.addRecord({
-				cc: this.state.finder,
+				cc: this.state.customerData.cc,
 				newRecord: this.state.dataComponents,
 			})
 			.then((res) => {
-				console.log(res);
+				if (res.data.success) {
+					this.changeOrClearState(false, true, false, "", [], true);
+					Toast.fire({
+						icon: "success",
+						title: "Registro Añadido",
+					});
+					this.setState({
+						serologicas: false,
+						cuadroHematico: false,
+						quimicaSanguinea: false,
+						coprologico: false,
+						parcialOrina: false,
+					});
+				} else {
+					Toast.fire({
+						icon: "error",
+						title: res.data.message,
+					});
+					this.setState({
+						serologicas: false,
+						cuadroHematico: false,
+						quimicaSanguinea: false,
+						coprologico: false,
+						parcialOrina: false,
+					});
+				}
 			});
+		return true;
 	};
 
 	changeData = (noComponentData, datos) => {
@@ -125,6 +157,13 @@ class AddRecord extends React.Component {
 				});
 				break;
 
+			case 5:
+				actualState.quimicaSanguinea = datos;
+				this.setState({
+					dataComponents: actualState,
+				});
+				break;
+
 			default:
 				break;
 		}
@@ -138,9 +177,13 @@ class AddRecord extends React.Component {
 					completeName: `${customer.name} ${customer.lastname}`,
 					age: customer.age,
 					genre: customer.genre,
+					cc: customer.cc,
 				});
 			} else {
-				this.changeOrClearState(false, false, false, res.data.message, []);
+				this.changeOrClearState(false, false, true, res.data.message, []);
+				setTimeout(() => {
+					this.setState({ message: "" });
+				}, 2000);
 			}
 		});
 	};
@@ -202,6 +245,20 @@ class AddRecord extends React.Component {
 					noExams: this.state.noExams + 1,
 					parcialOrina: true,
 				});
+
+			case "quimicaSanguinea":
+				return this.setState({
+					sections: [
+						...this.state.sections,
+						<QuimicaSanguinea
+							deleteComp={this.onClickDelete}
+							key={this.state.noExams}
+							changeData={this.changeData}
+						/>,
+					],
+					noExams: this.state.noExams + 1,
+					quimicaSanguinea: true,
+				});
 			default:
 				break;
 		}
@@ -218,19 +275,18 @@ class AddRecord extends React.Component {
 	};
 
 	onChangeFinder = (e) => {
-		this.setState({ finder: e.target.value }, () => {
-			this.setState({ showSections: false });
-			if (this.state.finder.length < 1) {
-				this.changeOrClearState(false, false, true, false, "", [], true);
-				this.ableButtons();
-			} else if (this.state.finder.length === 10) {
-				this.requestCustomer();
-			} else {
-				this.setState({ showSections: false });
-				this.ableButtons();
-				this.changeOrClearState(true, false, true, false, "", [], true);
-			}
-		});
+		if (e.target.value === "") {
+			this.setState({ finder: e.target.value });
+			this.setState({ loading: false });
+		}
+		if (!Number(e.target.value)) {
+			return;
+		}
+		this.setState({ finder: e.target.value });
+	};
+
+	onClickSearch = () => {
+		this.requestCustomer();
 	};
 
 	onClickAddSection = (e) => {
@@ -283,7 +339,7 @@ class AddRecord extends React.Component {
 										</Form.Label>
 										<FormControl
 											type="text"
-											name="name"
+											name="finder"
 											onChange={this.onChangeFinder}
 											value={this.state.finder}
 											autoComplete="off"
@@ -345,6 +401,13 @@ class AddRecord extends React.Component {
 							</Row>
 						</Form>
 					</Card.Body>
+					<Row>
+						<Col md={{ span: 4, offset: 4 }} xs={{ span: 8, offset: 2 }}>
+							<Button block variant="secondary" onClick={this.onClickSearch}>
+								Buscar
+							</Button>
+						</Col>
+					</Row>
 				</Card>
 				{this.state.sections})
 				{this.state.showSections && (
@@ -434,7 +497,6 @@ class AddRecord extends React.Component {
 				</Row>
 				{this.state.sections.length === 0 ? null : (
 					<ButtonSave
-						action="/pdf"
 						clearState={this.changeOrClearState}
 						addRecord={this.addRecord}
 					/>

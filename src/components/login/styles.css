@@ -75,11 +75,6 @@ body {
 		transform: rotate(360deg);
 	}
 }
-
-.btn:hover {
-	transform: translateY(-2px);
-}
-
 .icon-input{
 	text-indent: 20px;
 }

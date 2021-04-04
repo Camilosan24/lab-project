@@ -2,29 +2,27 @@ import React from "react";
 import { Col, Row, Card, Form, FormControl } from "react-bootstrap";
 import "../styles.css";
 
-class ParcialOrina extends React.Component {
+class QuimicaSanguinea extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			color: "",
-			aspecto: "",
-			densidad: "",
-			ph: "",
-			nitritos: "",
-			esterasas: "",
-			glucosa: "",
-			sangre: "",
-			proteinas:"",
-			celulas: "",
-			leucocitos: "",
-			bacterias: ""
+			acidoUrico: "",
+			bun: "",
+			creatinina: "",
+			glicemiaBasal: "",
+			colesterolTotal: "",
+			colesterolHDL: "",
+			colesterolLDL: "",
+			colesterolVLDL: "",
+			trigliceridos: "",
+			indiceAterogenico: "",
 		};
 	}
 
 	onChangeValues = (e) => {
 		let inputName = e.target;
 		this.setState({ [inputName.name]: inputName.value }, () => {
-			this.props.changeData(4, this.state);
+			this.props.changeData(5, this.state);
 		});
 	};
 	render() {
@@ -32,8 +30,8 @@ class ParcialOrina extends React.Component {
 			<Card className="p-4 mt-3">
 				<div
 					onClick={() => {
-						this.props.deleteComp(this, "parcialOrina");
-						this.props.changeData(4, {});
+						this.props.deleteComp(this, "quimicaSanguinea");
+						this.props.changeData(5, {});
 					}}
 					className="delete-exam rounded-circle"
 				>
@@ -41,7 +39,7 @@ class ParcialOrina extends React.Component {
 				</div>
 
 				<Card.Header className="m-auto">
-					<h5>Parcial Orina</h5>
+					<h5>Quimica Sanguinea</h5>
 				</Card.Header>
 				<Card.Body>
 					<Form onSubmit={this.handleOnSubmit}>
@@ -64,57 +62,45 @@ class ParcialOrina extends React.Component {
 						<Form.Group>
 							<Row>
 								<Col md="5">
-									<Form.Label>Color:</Form.Label>
+									<Form.Label>Acido Urico mg/dl:</Form.Label>
 								</Col>
 								<Col md={{ span: 4, offset: 2 }}>
 									<FormControl
-										as="select"
-										name="color"
-										value={this.state.color}
-										onChange={this.onChangeValues}
-										required
-									>
-										<option>Default...</option>
-										<option>AMARILLO</option>
-										<option>ROJO</option>
-									</FormControl>
-								</Col>
-							</Row>
-						</Form.Group>
-						<Form.Group>
-							<Row>
-								<Col md="5">
-									<Form.Label>Aspecto:</Form.Label>
-								</Col>
-								<Col md={{ span: 4, offset: 2 }}>
-									<FormControl
-										name="aspecto"
-										defaultValue="Default..."
-										value={this.state.aspecto}
-										onChange={this.onChangeValues}
-										required
-									/>
-								</Col>
-							</Row>
-						</Form.Group>
-						<hr />
-						<Row>
-							<Col>
-								<h6>Examen Quimico</h6>
-							</Col>
-						</Row>
-						<hr />
+										type="text"
+										name="acidoUrico"
 
+										value={this.state.acidoUrico}
+										onChange={this.onChangeValues}
+										required
+									></FormControl>
+								</Col>
+							</Row>
+						</Form.Group>
 						<Form.Group>
 							<Row>
 								<Col md="5">
-									<Form.Label>Densidad:</Form.Label>
+									<Form.Label>BUN mg/dl:</Form.Label>
+								</Col>
+								<Col md={{ span: 4, offset: 2 }}>
+									<FormControl
+										name="bun"
+										value={this.state.bun}
+										onChange={this.onChangeValues}
+										required
+									/>
+								</Col>
+							</Row>
+						</Form.Group>
+						<Form.Group>
+							<Row>
+								<Col md="5">
+									<Form.Label>Creatinina mg/dl:</Form.Label>
 								</Col>
 								<Col md={{ span: 4, offset: 2 }}>
 									<FormControl
 										type="text"
-										name="densidad"
-										value={this.state.densidad}
+										name="creatinina"
+										value={this.state.creatinina}
 										onChange={this.onChangeValues}
 									/>
 								</Col>
@@ -123,88 +109,13 @@ class ParcialOrina extends React.Component {
 						<Form.Group>
 							<Row>
 								<Col md="5">
-									<Form.Label>Nitritos:</Form.Label>
+									<Form.Label>Glicemia Basal mg/dl:</Form.Label>
 								</Col>
 								<Col md={{ span: 4, offset: 2 }}>
 									<FormControl
 										type="text"
-										name="nitritos"
-										value={this.state.nitritos}
-										onChange={this.onChangeValues}
-									/>
-								</Col>
-							</Row>
-						</Form.Group>
-						<Form.Group>
-							<Row>
-								<Col md="5">
-									<Form.Label>PH:</Form.Label>
-								</Col>
-								<Col md={{ span: 4, offset: 2 }}>
-									<FormControl
-										type="text"
-										name="ph"
-										value={this.state.ph}
-										onChange={this.onChangeValues}
-									/>
-								</Col>
-							</Row>
-						</Form.Group>
-						<Form.Group>
-							<Row>
-								<Col md="5">
-									<Form.Label>Esterasas:</Form.Label>
-								</Col>
-								<Col md={{ span: 4, offset: 2 }}>
-									<FormControl
-										type="text"
-										name="esterasas"
-										value={this.state.esterasas}
-										onChange={this.onChangeValues}
-									/>
-								</Col>
-							</Row>
-						</Form.Group>
-						<Form.Group>
-							<Row>
-								<Col md="5">
-									<Form.Label>Glucosa mg/dl:</Form.Label>
-								</Col>
-								<Col md={{ span: 4, offset: 2 }}>
-									<FormControl
-										type="text"
-										name="glucosa"
-										value={this.state.glucosa}
-										onChange={this.onChangeValues}
-									/>
-								</Col>
-							</Row>
-						</Form.Group>
-						<Form.Group>
-							<Row>
-								<Col md="5">
-									<Form.Label>Proteina mg/dl:</Form.Label>
-								</Col>
-								<Col md={{ span: 4, offset: 2 }}>
-									<FormControl
-										type="text"
-										name="proteina"
-										value={this.state.proteina}
-										onChange={this.onChangeValues}
-									/>
-								</Col>
-							</Row>
-						</Form.Group>
-						<Form.Group>
-							<Row>
-								<Col md="5">
-									<Form.Label>Sangre:</Form.Label>
-								</Col>
-								<Col md={{ span: 4, offset: 2 }}>
-									<FormControl
-										type="text"
-										name="sangre"
-										value={this.state.sangre}
+										name="glicemiaBasal"
+										value={this.state.glicemiaBasal}
 										onChange={this.onChangeValues}
 									/>
 								</Col>
@@ -213,21 +124,20 @@ class ParcialOrina extends React.Component {
 						<hr />
 						<Row>
 							<Col>
-								<h6>Examen Microscopico</h6>
+								<h6>Perfil Lipidico</h6>
 							</Col>
 						</Row>
 						<hr />
-
 						<Form.Group>
 							<Row>
 								<Col md="5">
-									<Form.Label>Celulas xcm:</Form.Label>
+									<Form.Label>Colesterol Total mg/dl:</Form.Label>
 								</Col>
 								<Col md={{ span: 4, offset: 2 }}>
 									<FormControl
 										type="text"
-										name="celulas"
-										value={this.state.celulas}
+										name="colesterolTotal"
+										value={this.state.colesterolTotal}
 										onChange={this.onChangeValues}
 									/>
 								</Col>
@@ -236,13 +146,13 @@ class ParcialOrina extends React.Component {
 						<Form.Group>
 							<Row>
 								<Col md="5">
-									<Form.Label>Bacterias xcm:</Form.Label>
+									<Form.Label>Colesterol HDL mg/dl:</Form.Label>
 								</Col>
 								<Col md={{ span: 4, offset: 2 }}>
 									<FormControl
 										type="text"
-										name="bacterias"
-										value={this.state.bacterias}
+										name="colesterolHDL"
+										value={this.state.colesterolHDL}
 										onChange={this.onChangeValues}
 									/>
 								</Col>
@@ -251,13 +161,58 @@ class ParcialOrina extends React.Component {
 						<Form.Group>
 							<Row>
 								<Col md="5">
-									<Form.Label>Leucocitos xcm:</Form.Label>
+									<Form.Label>Colesterol LDL mg/dl:</Form.Label>
 								</Col>
 								<Col md={{ span: 4, offset: 2 }}>
 									<FormControl
 										type="text"
-										name="leucocitos"
-										value={this.state.leucocitos}
+										name="colesterolLDL"
+										value={this.state.colesterolLDL}
+										onChange={this.onChangeValues}
+									/>
+								</Col>
+							</Row>
+						</Form.Group>
+						<Form.Group>
+							<Row>
+								<Col md="5">
+									<Form.Label>Colesterol VLDL mg/dl:</Form.Label>
+								</Col>
+								<Col md={{ span: 4, offset: 2 }}>
+									<FormControl
+										type="text"
+										name="colesterolVLDL"
+										value={this.state.colesterolVLDL}
+										onChange={this.onChangeValues}
+									/>
+								</Col>
+							</Row>
+						</Form.Group>
+						<Form.Group>
+							<Row>
+								<Col md="5">
+									<Form.Label>Trigliceridos mg/dl:</Form.Label>
+								</Col>
+								<Col md={{ span: 4, offset: 2 }}>
+									<FormControl
+										type="text"
+										name="trigliceridos"
+										value={this.state.trigliceridos}
+										onChange={this.onChangeValues}
+									/>
+								</Col>
+							</Row>
+						</Form.Group>
+						<Form.Group>
+							<Row>
+								<Col md="5">
+									<Form.Label>Indice Aterogenico:</Form.Label>
+								</Col>
+								<Col md={{ span: 4, offset: 2 }}>
+									<FormControl
+										type="text"
+										name="indiceAterogenico"
+										value={this.state.indiceAterogenico}
 										onChange={this.onChangeValues}
 									/>
 								</Col>
@@ -270,4 +225,4 @@ class ParcialOrina extends React.Component {
 	}
 }
 
-export default ParcialOrina;
+export default QuimicaSanguinea;
