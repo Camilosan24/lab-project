@@ -5,7 +5,7 @@ const config = require("../config/config").get(process.env.NODE_ENV);
 const SALT_I = 10;
 
 const userSchema = mongoose.Schema({
-	email: {
+	user: {
 		type: String,
 		required: true,
 		trim: true,

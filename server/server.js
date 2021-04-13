@@ -3,7 +3,6 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
-const cors = require("cors");
 const path = require("path");
 const userRouter = require("./routes/user.js");
 const customerRouter = require("./routes/customer.js");
@@ -28,12 +27,11 @@ app.set("port", process.env.PORT || 3001);
 
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(cors());
 
 app.use("/api/user", userRouter);
 app.use("/api/customer", customerRouter);
 
-app.get("/*", cors(),(req, res) => {
+app.get("/*", (req, res) => {
 	res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
 });
 

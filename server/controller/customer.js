@@ -4,7 +4,12 @@ const recordGenerator = require("../assets/recordGenerator");
 const fs = require("fs");
 const path = require("path");
 
-let getAge = (birthdate) => {
+
+const capitalize = (name)=>{
+	return name.trim().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
+}
+
+const getAge = (birthdate) => {
 	let date = new Date(birthdate);
 	let now = new Date();
 	let age = now.getFullYear() - date.getFullYear();
@@ -15,8 +20,8 @@ let getAge = (birthdate) => {
 
 customerControler.addCustomer = (req, res) => {
 	let dataCustomer = {
-		name: req.body.name,
-		lastname: req.body.lastname,
+		name: capitalize(req.body.name),
+		lastname: capitalize(req.body.lastname),
 		cc: req.body.cc,
 		direction: req.body.direction,
 		email: req.body.email,

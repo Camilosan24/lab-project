@@ -10,7 +10,7 @@ userControler.register = (req, res) => {
 };
 
 userControler.login = (req, res) => {
-	User.findOne({ email: req.body.user }, (err, user) => {
+	User.findOne({ user: req.body.user }, (err, user) => {
 		if (!user)
 			return res.json({
 				auth: false,
