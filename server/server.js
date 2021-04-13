@@ -32,7 +32,7 @@ app.use("/api/user", userRouter);
 app.use("/api/customer", customerRouter);
 
 app.get("/*", (req, res) => {
-	res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
+	res.sendFile(path.resolve(__dirname, "..","client","build", "index.html"));
 });
 
 app.listen(app.get("port"), () => {
