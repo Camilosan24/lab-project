@@ -1,0 +1,41 @@
+.main-layout {
+	max-height: 100vh;
+	max-width: 100vw;
+}
+.childrens-space {
+	max-height: 99vh;
+	overflow: scroll;
+}
+
+.childrens-space::-webkit-scrollbar {
+	display: none;
+}
+
+.card {
+	opacity: 0.8;
+}
+
+.fa-vial {
+	padding-left: 10px;
+   transition-duration: 5s;
+}
+
+.logo-animation {
+	transition-duration: 0.5s;
+	animation: logo-animation 0.5s;
+   animation-iteration-count: infinite;
+}
+
+@keyframes logo-animation {
+	0% {
+      transform: rotate(-45deg);
+	}
+
+	50% {
+		transform: rotate(-90deg);
+	}
+
+   100% {
+		transform: rotate(0deg);
+	}
+}
