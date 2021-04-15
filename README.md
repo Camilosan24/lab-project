@@ -9,6 +9,7 @@ Para correr el proyecto ejecutar:
     $ git clone https://github.com/Camilosan24/lab-project.git
     $ cd lab-project
     $ npm i
+    $ npm run build
     $ npm run server
     
 
