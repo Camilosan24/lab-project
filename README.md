@@ -30,4 +30,3 @@ Para correr el proyecto ejecutar:
     $ npm run server
     
 
-El proyecto corre sobre el puerto 3001, si deseas ver el codigo del lado del cliente, abrirlo en la rama [Client](https://github.com/Camilosan24/lab-project/tree/client)
