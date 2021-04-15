@@ -7,6 +7,7 @@ Este proyecto esta elabora usando React.js y Node.js para la elaboracion de pdfs
 Para correr el proyecto ejecutar:
     
     clonar:
+    
     $ git clone https://github.com/Camilosan24/lab-project.git
     
     instalar dependencias del servidor:
