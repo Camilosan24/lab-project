@@ -7,9 +7,23 @@ class ButtonSave extends React.Component {
 	};
 
 	sendData = async () => {
+		this.props.disableAllFields();
 		this.setState({ loading: !this.state.loading });
 		await this.props.addRecord();
 		this.setState({ loading: !this.state.loading });
+	};
+
+	generateAlert = (e) => {
+		let option;
+		if (e.target.name === "delete") {
+			option = window.confirm("¿Esta seguro de eliminar todo el formulario?");
+			if (option) this.props.clearState(false, false, true, "", []);
+		} else if (e.target.name === "send") {
+			option = window.confirm("¿Esta seguro de crear el registro?");
+			if (option) {
+				this.sendData();
+			}
+		}
 	};
 	render() {
 		return (
@@ -20,14 +34,11 @@ class ButtonSave extends React.Component {
 					className="d-flex justify-content-center"
 				>
 					<Button
+						name="delete"
 						variant="dark"
+						disabled={this.props.sendingInfoDisabled}
+						onClick={this.generateAlert}
 						block
-						onClick={() => {
-							let option = window.confirm(
-								"¿Esta seguro de eliminar todo el formulario?"
-							);
-							if (option) this.props.clearState(false, false, true, "", []);
-						}}
 					>
 						<i className="fas fa-times"></i>
 					</Button>
@@ -37,7 +48,13 @@ class ButtonSave extends React.Component {
 					md={{ span: 3, offset: 6 }}
 					className="d-flex justify-content-center"
 				>
-					<Button variant="dark" block onClick={this.sendData}>
+					<Button
+						name="send"
+						variant="dark"
+						onClick={this.generateAlert}
+						disabled={this.props.sendingInfoDisabled}
+						block
+					>
 						{!this.state.loading ? (
 							<i className="fas fa-check"></i>
 						) : (

@@ -2,6 +2,34 @@ const puppeteer = require("puppeteer");
 const ejs = require("ejs");
 const path = require("path");
 const record = require("../models/record");
+const AWS = require("aws-sdk");
+const s3 = new AWS.S3({
+	accessKeyId: "AKIATH5AVNFRD6QXEDGA",
+	secretAccessKey: "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",
+});
+
+const uploadFileToAWS = async (folder, body, url) => {
+	try {
+		s3.get;
+		s3.upload(
+			{
+				Bucket: "savefilesmarisolmgl",
+				Key: url,
+				Body: body,
+			},
+			(err, data) => {
+				if (err) throw err;
+				console.log(data)
+				return {
+					success: true,
+					message: "El archivo se guardo correctamente",
+				};
+			}
+		);
+	} catch (error) {
+		return new Error("Error al guardar el archivo");
+	}
+};
 
 const generatePdf = async (file, fileName, document) => {
 	try {
@@ -9,14 +37,7 @@ const generatePdf = async (file, fileName, document) => {
 		const page = await browser.newPage();
 		await page.setContent(file);
 		await page.emulateMediaType("print");
-		await page.pdf({
-			path: `${path.join(
-				__dirname,
-				"../public",
-				"pdfs",
-				`${document}`,
-				`${fileName}.pdf`
-			)}`,
+		const pdf = await page.pdf({
 			format: "A4",
 			printBackground: true,
 			margin: {
@@ -27,12 +48,9 @@ const generatePdf = async (file, fileName, document) => {
 			},
 		});
 		await browser.close();
-		return { success: true, message: "Creado Correctamente" };
+		return pdf;
 	} catch (err) {
-		return {
-			success: false,
-			message: "La creacion del PDF tuvo un error (PDF)",
-		};
+		return new Error("Error al crear el pdf");
 	}
 };
 
@@ -47,38 +65,43 @@ const createTemplate = async (customer, addSecitons, infoSections) => {
 			}
 		);
 	} catch (error) {
-		return {
-			record: null,
-			success: false,
-			message: "La creacion del PDF tuvo un error (Template)",
-		};
+		return new Error("Error al crear el template");
 	}
 };
 
 const recordGenerator = async (customer, dataRecord) => {
 	let newRecord = record(customer, dataRecord);
-	let templateGenerated = await createTemplate(customer, newRecord, dataRecord);
-	if (templateGenerated) {
-		let result = await generatePdf(
+	try {
+		let templateGenerated = await createTemplate(
+			customer,
+			newRecord,
+			dataRecord
+		);
+
+		let body = await generatePdf(
 			templateGenerated,
 			newRecord.metaData.fileName,
 			customer.cc
 		);
-		if (result.success) {
-			return {
-				record: newRecord.record,
-				success: true,
-				message: result.message,
-			};
-		}
-		return result;
-	}
 
-	return {
-		record: null,
-		success: false,
-		message: "El template no pudo ser generado correctamente",
-	};
+		await uploadFileToAWS(
+			customer.cc,
+			body,
+			newRecord.record.url
+		)
+
+		return {
+			success: true,
+			record: newRecord.record,
+			message: "El archivos se ha creado correctamente",
+		};
+	} catch (error) {
+		return {
+			record: null,
+			success: false,
+			message: "Lo sentimos, hubo un error en el proceso de creacion del PDF",
+		};
+	}
 };
 
 module.exports = recordGenerator;

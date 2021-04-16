@@ -26,9 +26,9 @@ class Login extends React.Component {
 
 	login = (e) => {
 		e.preventDefault();
-		this.setState({loading: true})
+		this.setState({ loading: true });
 		this.requests.login(this.state.userData).then((res) => {
-			this.setState({loading: false})
+			this.setState({ loading: false });
 			if (res.data.auth) {
 				this.props.history.push("/home");
 			} else if (res.data.message === "No existe el usuario") {
@@ -86,11 +86,12 @@ class Login extends React.Component {
 								</div>
 								<Card.Body>
 									<Form>
-										<Form.Group className="loginForm">
+										Usuario:
+										<Form.Group className="loginForm mt-2">
 											<i className="fas fa-user icon" ref={this.user}></i>
 											<Form.Control
 												type="text"
-												placeholder="Usuario"
+												placeholder="User1"
 												onChange={this.handleChange}
 												value={this.state.userData.user}
 												name="user"
@@ -104,11 +105,12 @@ class Login extends React.Component {
 												{this.state.messages.user}
 											</Form.Text>
 										</Form.Group>
-										<Form.Group className="mt-3">
+										Contraseña:
+										<Form.Group className="mt-2">
 											<i className="fas fa-lock icon"></i>
 											<Form.Control
 												type="password"
-												placeholder="Contraseña"
+												placeholder="123456"
 												onChange={this.handleChange}
 												value={this.state.userData.password}
 												name="password"
@@ -122,14 +124,13 @@ class Login extends React.Component {
 												{this.state.messages.password}
 											</Form.Text>
 										</Form.Group>
-
 										<Button
 											type="submit"
 											className="btn-block mb-3"
 											variant="secondary"
 											onClick={this.login}
 										>
-											{this.state.loading ? <SpinnerComponent />:"Entrar"}
+											{this.state.loading ? <SpinnerComponent /> : "Entrar"}
 										</Button>
 									</Form>
 								</Card.Body>

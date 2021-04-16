@@ -1,13 +1,12 @@
 const customerControler = {};
 const { Customer } = require("../models/customer");
 const recordGenerator = require("../assets/recordGenerator");
-const fs = require("fs");
-const path = require("path");
 
-
-const capitalize = (name)=>{
-	return name.trim().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
-}
+const capitalize = (name) => {
+	return name
+		.trim()
+		.replace(/\w\S*/g, (w) => w.replace(/^\w/, (c) => c.toUpperCase()));
+};
 
 const getAge = (birthdate) => {
 	let date = new Date(birthdate);
@@ -44,18 +43,6 @@ customerControler.addCustomer = (req, res) => {
 	Customer.findOne({ cc: req.body.cc }, (err, customer) => {
 		if (err) res.json({ message: "there is an error" });
 		if (!customer) {
-			fs.mkdir(
-				path.join(__dirname, "..", "public", "pdfs", `${req.body.cc}`),
-				(err) => {
-					if (err) {
-						return res.json({
-							success: false,
-							message: "No se pudo crear la carpeta, vuelvalo a intentar",
-							data: null,
-						});
-					}
-				}
-			);
 			newCustomer.save((err, doc) => {
 				if (err) {
 					res.json({ success: false, message: "Datos invalidos", data: null });
@@ -125,35 +112,37 @@ customerControler.getCustomer = (req, res) => {
 
 customerControler.addRecord = (req, res) => {
 	if (Number(req.body.cc)) {
-		Customer.findOne({ cc: req.body.cc }, async (err, customer) => {
-			if (err) {
-				return res.send(err);
-				throw err;
-			}
-			const recordGenerated = await recordGenerator(
-				customer,
-				req.body.newRecord
-			);
-			if (recordGenerated.success) {
-				const newRecord = [recordGenerated.record, ...customer.records];
+		try {
+			Customer.findOne({ cc: req.body.cc }, async (err, customer) => {
+				if (err) throw err;
 
-				Customer.findOneAndUpdate(
-					{ cc: req.body.cc },
-					{ records: newRecord },
-					{ new: true },
-					(err, doc) => {
-						if (err) {
-							return res.json({
-								success: false,
-								message: "Ocurrio un error",
-							});
-							throw err;
-						}
-						return res.send(recordGenerated);
-					}
+				const recordGenerated = await recordGenerator(
+					customer,
+					req.body.newRecord
 				);
-			}
-		});
+
+				if (recordGenerated.success) {
+					const newRecord = [recordGenerated.record, ...customer.records];
+					Customer.findOneAndUpdate(
+						{ cc: req.body.cc },
+						{ records: newRecord },
+						{ new: true },
+						(err, doc) => {
+							if (err) {
+								throw err;
+							}
+							return res.send(recordGenerated);
+						}
+					);
+				}
+			});
+		} catch (err) {
+			res.status(400).json({
+				success: false,
+				message: "Lo sentimos, ha ocurrido un error",
+			});
+			throw err;
+		}
 	} else {
 		return res.json({
 			success: false,

@@ -23,30 +23,11 @@ function record(customer, data) {
 				coprologico: isObjEmpty(data.coprologico),
 				parcialOrina: isObjEmpty(data.parcialOrina),
 				quimicaSanguinea: isObjEmpty(data.quimicaSanguinea),
-				url: `/pdfs/${customer.cc}/${fileName}.pdf`,
+				url: `pdfs/${customer.cc}/${fileName}.pdf`,
 			},
 		};
 	}
 	return {};
 }
-
-// const record = (customer ,data) => {
-// 	return {
-// 		metaData: {
-// 			fileName: "hola",
-// 		},
-// 		record: {
-// 			id: 1,
-// 			date: time.toLocaleDateString(),
-// 			time: `${time.getHours()}:${time.getMinutes()}`,
-// 			serologicas: false,
-// 			cuadroHematico: false,
-// 			coprologico: false,
-// 			parcialOrina: false,
-// 			quimicaSanguinea: false,
-// 			url: `/pdfs/hola.pdf`,
-// 		},
-// 	};
-// };
 
 module.exports = record;

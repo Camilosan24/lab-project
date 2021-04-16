@@ -11,7 +11,7 @@ class Coprologico extends React.Component {
 			leucocitos: "",
 			almidon: "",
 			floraBacteriana: "",
-			celilosa: "",
+			celulosa: "",
 			parasitos: "",
 		};
 	}
@@ -68,6 +68,7 @@ class Coprologico extends React.Component {
 										value={this.state.color}
 										onChange={this.onChangeValues}
 										required
+										disabled={this.props.sendingInfoDisabled}
 									>
 										<option defaultValue="Default...">Default...</option>
 										<option defaultValue="AMARILLO">AMARILLO</option>
@@ -87,6 +88,7 @@ class Coprologico extends React.Component {
 										value={this.state.consistencia}
 										onChange={this.onChangeValues}
 										required
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -110,6 +112,7 @@ class Coprologico extends React.Component {
 										name="leucocitos"
 										value={this.state.leucocitos}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -125,6 +128,7 @@ class Coprologico extends React.Component {
 										name="almidon"
 										value={this.state.almidon}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -140,6 +144,7 @@ class Coprologico extends React.Component {
 										name="floraBacteriana"
 										value={this.state.floraBacteriana}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -147,14 +152,15 @@ class Coprologico extends React.Component {
 						<Form.Group>
 							<Row>
 								<Col md="4">
-									<Form.Label>Celilosa:</Form.Label>
+									<Form.Label>Celulosa:</Form.Label>
 								</Col>
 								<Col md={{ span: 4, offset: 3 }}>
 									<FormControl
 										type="text"
-										name="celilosa"
-										value={this.state.celilosa}
+										name="celulosa"
+										value={this.state.celulosa}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -170,6 +176,7 @@ class Coprologico extends React.Component {
 										name="parasitos"
 										value={this.state.parasitos}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>

@@ -73,6 +73,7 @@ class ParcialOrina extends React.Component {
 										value={this.state.color}
 										onChange={this.onChangeValues}
 										required
+										disabled={this.props.sendingInfoDisabled}
 									>
 										<option>Default...</option>
 										<option>AMARILLO</option>
@@ -93,6 +94,7 @@ class ParcialOrina extends React.Component {
 										value={this.state.aspecto}
 										onChange={this.onChangeValues}
 										required
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -116,6 +118,7 @@ class ParcialOrina extends React.Component {
 										name="densidad"
 										value={this.state.densidad}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -131,6 +134,7 @@ class ParcialOrina extends React.Component {
 										name="nitritos"
 										value={this.state.nitritos}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -146,6 +150,7 @@ class ParcialOrina extends React.Component {
 										name="ph"
 										value={this.state.ph}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -161,6 +166,7 @@ class ParcialOrina extends React.Component {
 										name="esterasas"
 										value={this.state.esterasas}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -176,6 +182,7 @@ class ParcialOrina extends React.Component {
 										name="glucosa"
 										value={this.state.glucosa}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -191,6 +198,7 @@ class ParcialOrina extends React.Component {
 										name="proteina"
 										value={this.state.proteina}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -206,6 +214,7 @@ class ParcialOrina extends React.Component {
 										name="sangre"
 										value={this.state.sangre}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -229,6 +238,7 @@ class ParcialOrina extends React.Component {
 										name="celulas"
 										value={this.state.celulas}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -244,6 +254,7 @@ class ParcialOrina extends React.Component {
 										name="bacterias"
 										value={this.state.bacterias}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -259,6 +270,7 @@ class ParcialOrina extends React.Component {
 										name="leucocitos"
 										value={this.state.leucocitos}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>

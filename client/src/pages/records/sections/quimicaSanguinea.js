@@ -72,6 +72,7 @@ class QuimicaSanguinea extends React.Component {
 										value={this.state.acidoUrico}
 										onChange={this.onChangeValues}
 										required
+										disabled={this.props.sendingInfoDisabled}
 									></FormControl>
 								</Col>
 							</Row>
@@ -87,6 +88,7 @@ class QuimicaSanguinea extends React.Component {
 										value={this.state.bun}
 										onChange={this.onChangeValues}
 										required
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -102,6 +104,7 @@ class QuimicaSanguinea extends React.Component {
 										name="creatinina"
 										value={this.state.creatinina}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -117,6 +120,7 @@ class QuimicaSanguinea extends React.Component {
 										name="glicemiaBasal"
 										value={this.state.glicemiaBasal}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -139,6 +143,7 @@ class QuimicaSanguinea extends React.Component {
 										name="colesterolTotal"
 										value={this.state.colesterolTotal}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -154,6 +159,7 @@ class QuimicaSanguinea extends React.Component {
 										name="colesterolHDL"
 										value={this.state.colesterolHDL}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -169,6 +175,7 @@ class QuimicaSanguinea extends React.Component {
 										name="colesterolLDL"
 										value={this.state.colesterolLDL}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -184,6 +191,7 @@ class QuimicaSanguinea extends React.Component {
 										name="colesterolVLDL"
 										value={this.state.colesterolVLDL}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -199,6 +207,7 @@ class QuimicaSanguinea extends React.Component {
 										name="trigliceridos"
 										value={this.state.trigliceridos}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -214,6 +223,7 @@ class QuimicaSanguinea extends React.Component {
 										name="indiceAterogenico"
 										value={this.state.indiceAterogenico}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>

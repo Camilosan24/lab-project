@@ -65,6 +65,7 @@ class Serologicas extends React.Component {
 												name="astos"
 												value={this.state.astos}
 												onChange={this.onChangeValues}
+												disabled={this.props.sendingInfoDisabled}
 											/>
 										</Col>
 									</Row>
@@ -88,6 +89,7 @@ class Serologicas extends React.Component {
 												name="factorReumateo"
 												value={this.state.factorReumateo}
 												onChange={this.onChangeValues}
+												disabled={this.props.sendingInfoDisabled}
 											/>
 										</Col>
 									</Row>
@@ -111,6 +113,7 @@ class Serologicas extends React.Component {
 												name="PCR"
 												value={this.state.PCR}
 												onChange={this.onChangeValues}
+												disabled={this.props.sendingInfoDisabled}
 											/>
 										</Col>
 									</Row>

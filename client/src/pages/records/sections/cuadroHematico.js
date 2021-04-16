@@ -61,6 +61,7 @@ class CuadroHematico extends React.Component {
 										name="hematocrito"
 										value={this.state.hematocrito}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -76,6 +77,7 @@ class CuadroHematico extends React.Component {
 										name="hemoglobina"
 										value={this.state.hemoglobina}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -91,6 +93,7 @@ class CuadroHematico extends React.Component {
 										name="leucocitos"
 										value={this.state.leucocitos}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -115,6 +118,7 @@ class CuadroHematico extends React.Component {
 										name="neutrofilos"
 										value={this.state.neutrofilos}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -130,6 +134,7 @@ class CuadroHematico extends React.Component {
 										name="linfocitos"
 										value={this.state.linfocitos}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -145,6 +150,7 @@ class CuadroHematico extends React.Component {
 										name="recuentoPlaquetas"
 										value={this.state.recuentoPlaquetas}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -160,6 +166,7 @@ class CuadroHematico extends React.Component {
 										name="VSG"
 										value={this.state.VSG}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -178,6 +185,7 @@ class CuadroHematico extends React.Component {
 										name="frotisSangrePerisferica"
 										value={this.state.frotisSangrePerisferica}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -196,6 +204,7 @@ class CuadroHematico extends React.Component {
 										name="globulosRojos"
 										value={this.state.globulosRojos}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -214,6 +223,7 @@ class CuadroHematico extends React.Component {
 										name="globulosBlancos"
 										value={this.state.globulosBlancos}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>
@@ -232,6 +242,7 @@ class CuadroHematico extends React.Component {
 										name="plaquetas"
 										value={this.state.plaquetas}
 										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
 									/>
 								</Col>
 							</Row>

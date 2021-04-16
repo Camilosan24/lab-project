@@ -28,7 +28,7 @@ class AddRecord extends React.Component {
 			pdfGenerator: true,
 			addSection: false,
 			showSections: false,
-
+			sendingInfoDisabled: false,
 			saveSection: false,
 			noExams: 0,
 			message: "",
@@ -100,6 +100,7 @@ class AddRecord extends React.Component {
 				newRecord: this.state.dataComponents,
 			})
 			.then((res) => {
+				this.disableAllFields()
 				if (res.data.success) {
 					this.changeOrClearState(false, true, false, "", [], true);
 					Toast.fire({
@@ -172,7 +173,7 @@ class AddRecord extends React.Component {
 
 	requestCustomer = () => {
 		this.requests.getCustomerByCc(this.state.finder).then((res) => {
-			this.setState({searchingData: false})
+			this.setState({ searchingData: false });
 			const customer = res.data.customer;
 			if (customer) {
 				this.changeOrClearState(false, true, {
@@ -200,6 +201,7 @@ class AddRecord extends React.Component {
 							deleteComp={this.onClickDelete}
 							key={this.state.noExams}
 							changeData={this.changeData}
+							sendingInfoDisabled={this.state.sendingInfoDisabled}
 						/>,
 					],
 					noExams: this.state.noExams + 1,
@@ -214,6 +216,7 @@ class AddRecord extends React.Component {
 							deleteComp={this.onClickDelete}
 							key={this.state.noExams}
 							changeData={this.changeData}
+							sendingInfoDisabled={this.state.sendingInfoDisabled}
 						/>,
 					],
 					noExams: this.state.noExams + 1,
@@ -228,6 +231,7 @@ class AddRecord extends React.Component {
 							deleteComp={this.onClickDelete}
 							key={this.state.noExams}
 							changeData={this.changeData}
+							sendingInfoDisabled={this.state.sendingInfoDisabled}
 						/>,
 					],
 					noExams: this.state.noExams + 1,
@@ -242,6 +246,7 @@ class AddRecord extends React.Component {
 							deleteComp={this.onClickDelete}
 							key={this.state.noExams}
 							changeData={this.changeData}
+							sendingInfoDisabled={this.state.sendingInfoDisabled}
 						/>,
 					],
 					noExams: this.state.noExams + 1,
@@ -256,6 +261,7 @@ class AddRecord extends React.Component {
 							deleteComp={this.onClickDelete}
 							key={this.state.noExams}
 							changeData={this.changeData}
+							sendingInfoDisabled={this.state.sendingInfoDisabled}
 						/>,
 					],
 					noExams: this.state.noExams + 1,
@@ -288,7 +294,7 @@ class AddRecord extends React.Component {
 	};
 
 	onClickSearch = () => {
-		this.setState({searchingData: true})
+		this.setState({ searchingData: true });
 		this.requestCustomer();
 	};
 
@@ -311,6 +317,10 @@ class AddRecord extends React.Component {
 			});
 			this.setState({ sections: newComponents, [compName]: false });
 		}
+	};
+
+	disableAllFields = () => {
+		this.setState({sendingInfoDisabled: !this.state.sendingInfoDisabled})
 	};
 
 	render() {
@@ -502,6 +512,8 @@ class AddRecord extends React.Component {
 					<ButtonSave
 						clearState={this.changeOrClearState}
 						addRecord={this.addRecord}
+						sendingInfoDisabled={this.state.sendingInfoDisabled}
+						disableAllFields={this.disableAllFields}
 					/>
 				)}
 			</Col>
