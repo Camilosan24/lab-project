@@ -3,9 +3,10 @@ const ejs = require("ejs");
 const path = require("path");
 const record = require("../models/record");
 const AWS = require("aws-sdk");
+
 const s3 = new AWS.S3({
-	accessKeyId: "AKIATH5AVNFRD6QXEDGA",
-	secretAccessKey: "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",
+	accessKeyId: process.env.ACCESS_KEY_ID,
+	secretAccessKey: process.env.SECRET_ACCESS_KEY,
 });
 
 const uploadFileToAWS = async (folder, body, url) => {
