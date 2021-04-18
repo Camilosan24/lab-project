@@ -64,10 +64,7 @@ const recordGenerator = async (customer, dataRecord) => {
 				message: "Lo sentimos, hubo un error en la creacion del pdf",
 			};
 
-		let resultado = await uploadFileToAWS(
-			body,
-			newRecord.record.url
-		);
+		let resultado = await uploadFileToAWS(body, newRecord.record.url);
 		newRecord.record.url = resultado.Location;
 
 		return {
@@ -76,7 +73,11 @@ const recordGenerator = async (customer, dataRecord) => {
 			message: "El archivos se ha creado correctamente",
 		};
 	} catch (error) {
-		return error;
+		return {
+			success: false,
+			record: null,
+			message: "El archivos no se ha podido crear correctamente",
+		};
 	}
 };
 
