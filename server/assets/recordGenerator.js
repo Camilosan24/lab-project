@@ -2,14 +2,16 @@ const pdf = require("html-pdf");
 const path = require("path");
 const ejs = require("ejs");
 const record = require("../models/record");
-const { uploadFileToAWS } = require("./filesOperations.js");
-// const puppeteer = require("puppeteer");
-const generatePdf = async (file, fileName, document) => {
+// const { uploadFileToAWS } = require("./filesOperations.js");
+
+const generatePdf = async (file, url) => {
 	return new Promise((resolve, reject) => {
-		pdf.create(file, { format: "A4" }).toBuffer((err, res) => {
-			if (err) return reject("Hubo un error en la creacion del pdf");
-			return resolve(res);
-		});
+		pdf
+			.create(file, { format: "A4" })
+			.toFile(path.join(__dirname, "..", "public", `${url}`), (err, res) => {
+				if (err) return reject("Hubo un error en la creacion del pdf");
+				return resolve(res);
+			});
 	});
 };
 
@@ -38,19 +40,18 @@ const recordGenerator = async (customer, dataRecord) => {
 		);
 		let body = await generatePdf(
 			templateGenerated,
-			newRecord.metaData.fileName,
+			newRecord.record.url,
 			customer.cc
 		);
 		if (!body)
 			return {
 				success: false,
 				record: null,
-				file: null,
 				message: "Lo sentimos, hubo un error en la creacion del pdf",
 			};
 
-		let resultado = await uploadFileToAWS(body, newRecord.record.url);
-		newRecord.record.url = resultado.Location;
+		// let resultado = await uploadFileToAWS(body, newRecord.record.url);
+		// newRecord.record.url = resultado.Location;
 
 		return {
 			success: true,
