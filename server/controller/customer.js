@@ -117,26 +117,26 @@ customerControler.showRecord = async (req, res) => {
 				customer,
 				req.body.newRecord
 			);
-			// if (recordGenerated.success) {
-			// 	const newArrayRecord = [...customer.records, recordGenerated.record];
-			// 	Customer.findOneAndUpdate(
-			// 		{ cc: req.body.cc },
-			// 		{ records: newArrayRecord },
-			// 		{ new: true },
-			// 		(err, doc) => {
-			// 			if (err) {
-			// 				return res.status(400).json({
-			// 					success: false,
-			// 					message: "Lo sentimos, ha ocurrido un error",
-			// 				});
-			// 			}
-			return res.json({
-				message: "pdf generado",
-				success: true,
-			});
-			// 		}
-			// 	);
-			// }
+			if (recordGenerated.success) {
+				const newArrayRecord = [...customer.records, recordGenerated.record];
+				Customer.findOneAndUpdate(
+					{ cc: req.body.cc },
+					{ records: newArrayRecord },
+					{ new: true },
+					(err, doc) => {
+						if (err) {
+							return res.status(400).json({
+								success: false,
+								message: "Lo sentimos, ha ocurrido un error",
+							});
+						}
+						return res.json({
+							message: "pdf generado",
+							success: true,
+						});
+					}
+				);
+			}
 		} catch (err) {
 			return res.status(400).json({
 				success: false,
