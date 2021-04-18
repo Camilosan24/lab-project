@@ -1,30 +1,16 @@
-const puppeteer = require("puppeteer");
-const ejs = require("ejs");
+const pdf = require("html-pdf");
 const path = require("path");
+const ejs = require("ejs");
 const record = require("../models/record");
 const { uploadFileToAWS } = require("./filesOperations.js");
-
+// const puppeteer = require("puppeteer");
 const generatePdf = async (file, fileName, document) => {
-	try {
-		const browser = await puppeteer.launch();
-		const page = await browser.newPage();
-		await page.setContent(file);
-		await page.emulateMediaType("print");
-		const pdf = await page.pdf({
-			format: "A4",
-			printBackground: true,
-			margin: {
-				top: "1cm",
-				bottom: "1cm",
-				left: "1cm",
-				right: "1cm",
-			},
+	return new Promise((resolve, reject) => {
+		pdf.create(file, { format: "A4" }).toBuffer((err, res) => {
+			if (err) return reject("Hubo un error en la creacion del pdf");
+			return resolve(res);
 		});
-		await browser.close();
-		return pdf;
-	} catch (err) {
-		return false;
-	}
+	});
 };
 
 const createTemplate = async (customer, addSecitons, infoSections) => {
@@ -43,7 +29,6 @@ const createTemplate = async (customer, addSecitons, infoSections) => {
 };
 
 const recordGenerator = async (customer, dataRecord) => {
-	// return new Error("Lo sentimos, hubo un error en el proceso de creacion del PDF");
 	let newRecord = record(customer, dataRecord);
 	try {
 		let templateGenerated = await createTemplate(
