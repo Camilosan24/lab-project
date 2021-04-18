@@ -16,8 +16,11 @@ export default function requests(entorno) {
 		addCustomer: function (customerData) {
 			return axios.post(`${host}/api/customer/addcustomer`, customerData);
 		},
-		addRecord: function (recordData) {
-			return axios.post(`${host}/api/customer/addrecord`, recordData);
+		showRecord: function (recordData) {
+			return axios.post(`${host}/api/customer/showrecord`, recordData);
+		},
+		saveRecord: function (recordData) {
+			return axios.post(`${host}/api/customer/showrecord`, recordData);
 		},
 		login: function (info) {
 			return axios.post(`${host}/api/user/login`, info);

@@ -2,35 +2,7 @@ const puppeteer = require("puppeteer");
 const ejs = require("ejs");
 const path = require("path");
 const record = require("../models/record");
-const AWS = require("aws-sdk");
-
-const s3 = new AWS.S3({
-	accessKeyId: process.env.ACCESS_KEY_ID,
-	secretAccessKey: process.env.SECRET_ACCESS_KEY,
-});
-
-const uploadFileToAWS = async (folder, body, url) => {
-	try {
-		s3.get;
-		s3.upload(
-			{
-				Bucket: "savefilesmarisolmgl",
-				Key: url,
-				Body: body,
-			},
-			(err, data) => {
-				if (err) throw err;
-				console.log(data)
-				return {
-					success: true,
-					message: "El archivo se guardo correctamente",
-				};
-			}
-		);
-	} catch (error) {
-		return new Error("Error al guardar el archivo");
-	}
-};
+const { uploadFileToAWS } = require("./filesOperations.js");
 
 const generatePdf = async (file, fileName, document) => {
 	try {
@@ -51,7 +23,7 @@ const generatePdf = async (file, fileName, document) => {
 		await browser.close();
 		return pdf;
 	} catch (err) {
-		return new Error("Error al crear el pdf");
+		return false;
 	}
 };
 
@@ -66,11 +38,12 @@ const createTemplate = async (customer, addSecitons, infoSections) => {
 			}
 		);
 	} catch (error) {
-		return new Error("Error al crear el template");
+		return false;
 	}
 };
 
 const recordGenerator = async (customer, dataRecord) => {
+	// return new Error("Lo sentimos, hubo un error en el proceso de creacion del PDF");
 	let newRecord = record(customer, dataRecord);
 	try {
 		let templateGenerated = await createTemplate(
@@ -78,18 +51,24 @@ const recordGenerator = async (customer, dataRecord) => {
 			newRecord,
 			dataRecord
 		);
-
 		let body = await generatePdf(
 			templateGenerated,
 			newRecord.metaData.fileName,
 			customer.cc
 		);
+		if (!body)
+			return {
+				success: false,
+				record: null,
+				file: null,
+				message: "Lo sentimos, hubo un error en la creacion del pdf",
+			};
 
-		await uploadFileToAWS(
-			customer.cc,
+		let resultado = await uploadFileToAWS(
 			body,
 			newRecord.record.url
-		)
+		);
+		newRecord.record.url = resultado.Location;
 
 		return {
 			success: true,
@@ -97,11 +76,7 @@ const recordGenerator = async (customer, dataRecord) => {
 			message: "El archivos se ha creado correctamente",
 		};
 	} catch (error) {
-		return {
-			record: null,
-			success: false,
-			message: "Lo sentimos, hubo un error en el proceso de creacion del PDF",
-		};
+		return error;
 	}
 };
 

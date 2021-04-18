@@ -8,6 +8,10 @@ const capitalize = (name) => {
 		.replace(/\w\S*/g, (w) => w.replace(/^\w/, (c) => c.toUpperCase()));
 };
 
+const findCustomer = async (cc) => {
+	return await Customer.findOne({ cc: cc });
+};
+
 const getAge = (birthdate) => {
 	let date = new Date(birthdate);
 	let now = new Date();
@@ -17,7 +21,7 @@ const getAge = (birthdate) => {
 	return age;
 };
 
-customerControler.addCustomer = (req, res) => {
+customerControler.addCustomer = async (req, res) => {
 	let dataCustomer = {
 		name: capitalize(req.body.name),
 		lastname: capitalize(req.body.lastname),
@@ -40,27 +44,25 @@ customerControler.addCustomer = (req, res) => {
 	}
 
 	const newCustomer = new Customer(dataCustomer);
-	Customer.findOne({ cc: req.body.cc }, (err, customer) => {
-		if (err) res.json({ message: "there is an error" });
-		if (!customer) {
-			newCustomer.save((err, doc) => {
-				if (err) {
-					res.json({ success: false, message: "Datos invalidos", data: null });
-				}
-				return res.status(200).json({
-					success: true,
-					message: "Cliente añadido correctamente",
-					data: customer,
-				});
+	let customer = await findCustomer(req.body.cc);
+	if (!customer) {
+		newCustomer.save((err, doc) => {
+			if (err) {
+				res.json({ success: false, message: "Datos invalidos", data: null });
+			}
+			return res.status(200).json({
+				success: true,
+				message: "Cliente añadido correctamente",
+				data: customer,
 			});
-		} else {
-			return res.json({
-				success: false,
-				message: "El cliente ya existe",
-				data: null,
-			});
-		}
-	});
+		});
+	} else {
+		return res.json({
+			success: false,
+			message: "El cliente ya existe",
+			data: null,
+		});
+	}
 };
 
 customerControler.getCustomers = (req, res) => {
@@ -81,28 +83,25 @@ customerControler.getCustomers = (req, res) => {
 	});
 };
 
-customerControler.getCustomer = (req, res) => {
+customerControler.getCustomer = async (req, res) => {
 	if (Number(req.params.cc)) {
-		return Customer.findOne({ cc: req.params.cc }, (err, customer) => {
-			if (err) res.json({ message: "Hubo un error en la petición" });
-			if (customer) {
-				return res
-					.json({
-						success: true,
-						customer: customer,
-						records: customer.records,
-					})
-					.status(200);
-			}
-
+		let customer = await findCustomer(req.params.cc);
+		if (customer) {
 			return res
 				.json({
-					success: false,
+					success: true,
 					customer: customer,
-					message: "Lo sentimos, el cliente no existe",
+					records: customer.records,
 				})
 				.status(200);
-		});
+		}
+		return res
+			.json({
+				success: false,
+				customer: customer,
+				message: "Lo sentimos, el cliente no existe",
+			})
+			.status(200);
 	}
 	return res.json({
 		success: false,
@@ -110,38 +109,40 @@ customerControler.getCustomer = (req, res) => {
 	});
 };
 
-customerControler.addRecord = (req, res) => {
+customerControler.showRecord = async (req, res) => {
 	if (Number(req.body.cc)) {
 		try {
-			Customer.findOne({ cc: req.body.cc }, async (err, customer) => {
-				if (err) throw err;
-
-				const recordGenerated = await recordGenerator(
-					customer,
-					req.body.newRecord
-				);
-
-				if (recordGenerated.success) {
-					const newRecord = [recordGenerated.record, ...customer.records];
-					Customer.findOneAndUpdate(
-						{ cc: req.body.cc },
-						{ records: newRecord },
-						{ new: true },
-						(err, doc) => {
-							if (err) {
-								throw err;
-							}
-							return res.send(recordGenerated);
+			let customer = await findCustomer(req.body.cc);
+			const recordGenerated = await recordGenerator(
+				customer,
+				req.body.newRecord
+			);
+			if (recordGenerated.success) {
+				const newArrayRecord = [...customer.records, recordGenerated.record];
+				Customer.findOneAndUpdate(
+					{ cc: req.body.cc },
+					{ records: newArrayRecord },
+					{ new: true },
+					(err, doc) => {
+						if (err) {
+							return res.status(400).json({
+								success: false,
+								message: "Lo sentimos, ha ocurrido un error",
+							});
 						}
-					);
-				}
-			});
+						return res.json({
+							message: "pdf generado",
+							success: true,
+						});
+					}
+				);
+			}
 		} catch (err) {
-			res.status(400).json({
+			return res.status(400).json({
 				success: false,
 				message: "Lo sentimos, ha ocurrido un error",
+				file: null,
 			});
-			throw err;
 		}
 	} else {
 		return res.json({

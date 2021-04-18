@@ -9,7 +9,7 @@ class ButtonSave extends React.Component {
 	sendData = async () => {
 		this.props.disableAllFields();
 		this.setState({ loading: !this.state.loading });
-		await this.props.addRecord();
+		await this.props.showRecord();
 		this.setState({ loading: !this.state.loading });
 	};
 

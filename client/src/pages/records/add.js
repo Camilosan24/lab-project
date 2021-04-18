@@ -9,6 +9,7 @@ import SpinnerComponent from "../../components/utilComponents/spinner";
 import ButtonSave from "../../components/utilComponents/buttonSave";
 import QuimicaSanguinea from "./sections/quimicaSanguinea";
 import { Toast } from "../../components/alerts/alert";
+import { Document } from "react-pdf";
 import "./styles.css";
 
 class AddRecord extends React.Component {
@@ -24,7 +25,7 @@ class AddRecord extends React.Component {
 				let fechaActual = new Date(now);
 				return fechaActual.toLocaleDateString();
 			},
-
+			file: null,
 			pdfGenerator: true,
 			addSection: false,
 			showSections: false,
@@ -93,14 +94,14 @@ class AddRecord extends React.Component {
 		}
 	};
 
-	addRecord = async () => {
+	showRecord = async () => {
 		await this.requests
-			.addRecord({
+			.showRecord({
 				cc: this.state.customerData.cc,
 				newRecord: this.state.dataComponents,
 			})
 			.then((res) => {
-				this.disableAllFields()
+				this.disableAllFields();
 				if (res.data.success) {
 					this.changeOrClearState(false, true, false, "", [], true);
 					Toast.fire({
@@ -320,7 +321,7 @@ class AddRecord extends React.Component {
 	};
 
 	disableAllFields = () => {
-		this.setState({sendingInfoDisabled: !this.state.sendingInfoDisabled})
+		this.setState({ sendingInfoDisabled: !this.state.sendingInfoDisabled });
 	};
 
 	render() {
@@ -422,7 +423,7 @@ class AddRecord extends React.Component {
 						</Col>
 					</Row>
 				</Card>
-				{this.state.sections})
+				{this.state.sections}
 				{this.state.showSections && (
 					<Card className="mt-3">
 						<Card.Header className="m-auto">
@@ -511,11 +512,16 @@ class AddRecord extends React.Component {
 				{this.state.sections.length === 0 ? null : (
 					<ButtonSave
 						clearState={this.changeOrClearState}
-						addRecord={this.addRecord}
+						showRecord={this.showRecord}
 						sendingInfoDisabled={this.state.sendingInfoDisabled}
 						disableAllFields={this.disableAllFields}
 					/>
 				)}
+				{/* {this.state.file && (
+					<Document file={{}}>
+
+					</Document>
+				)} */}
 			</Col>
 		);
 	}

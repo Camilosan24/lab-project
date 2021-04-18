@@ -45,9 +45,9 @@ class Fields extends React.Component {
 				<td>{this.props.info.time}</td>
 
 				<td className="justify-content-center">
-					<Link to={this.props.info.url} target="_blank" >
+					<a href={this.props.info.url} target="_blank" >
 						<i className="fas fa-file-pdf"></i>
-					</Link>
+					</a>
 				</td>
 			</tr>
 		);
