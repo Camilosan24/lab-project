@@ -7,7 +7,7 @@ const generatePdf = async (file, url) => {
 	return new Promise((resolve, reject) => {
 		pdf
 			.create(file, {
-				format: "A3",
+				format: "A4",
 			})
 			.toFile(path.join(__dirname, "..", "public", `${url}`), (err, res) => {
 				if (err) return reject("Hubo un error en la creacion del pdf");
