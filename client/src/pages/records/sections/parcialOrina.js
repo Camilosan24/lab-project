@@ -14,10 +14,10 @@ class ParcialOrina extends React.Component {
 			esterasas: "",
 			glucosa: "",
 			sangre: "",
-			proteinas:"",
+			proteinas: "",
 			celulas: "",
 			leucocitos: "",
-			bacterias: ""
+			bacterias: "",
 		};
 	}
 
@@ -246,13 +246,13 @@ class ParcialOrina extends React.Component {
 						<Form.Group>
 							<Row>
 								<Col md="5">
-									<Form.Label>Bacterias xcm:</Form.Label>
+									<Form.Label>Leucocitos xcm:</Form.Label>
 								</Col>
 								<Col md={{ span: 4, offset: 2 }}>
 									<FormControl
 										type="text"
-										name="bacterias"
-										value={this.state.bacterias}
+										name="leucocitos"
+										value={this.state.leucocitos}
 										onChange={this.onChangeValues}
 										disabled={this.props.sendingInfoDisabled}
 									/>
@@ -262,13 +262,13 @@ class ParcialOrina extends React.Component {
 						<Form.Group>
 							<Row>
 								<Col md="5">
-									<Form.Label>Leucocitos xcm:</Form.Label>
+									<Form.Label>Bacterias xcm:</Form.Label>
 								</Col>
 								<Col md={{ span: 4, offset: 2 }}>
 									<FormControl
 										type="text"
-										name="leucocitos"
-										value={this.state.leucocitos}
+										name="bacterias"
+										value={this.state.bacterias}
 										onChange={this.onChangeValues}
 										disabled={this.props.sendingInfoDisabled}
 									/>

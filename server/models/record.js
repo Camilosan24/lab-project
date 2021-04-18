@@ -7,7 +7,7 @@ function isObjEmpty(obj) {
 }
 
 function record(customer, data) {
-	let time = new Date(Date.now());
+	let time = new Date(Date.now())
 	let fileName = `${customer.cc}-${customer.records.length}-${time.getMilliseconds()}`;
 	if (data) {
 		return {
@@ -17,7 +17,7 @@ function record(customer, data) {
 			record: {
 				id: customer.records.length,
 				date: time.toLocaleDateString(),
-				time: `${time.getHours()}:${time.getMinutes()}`,
+				time: `${time.getUTCHours()}:${time.getMinutes()}`,
 				serologicas: isObjEmpty(data.serologicas),
 				cuadroHematico: isObjEmpty(data.cuadroHematico),
 				coprologico: isObjEmpty(data.coprologico),

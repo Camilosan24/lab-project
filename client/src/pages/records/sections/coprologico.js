@@ -100,23 +100,6 @@ class Coprologico extends React.Component {
 							</Col>
 						</Row>
 						<hr />
-
-						<Form.Group>
-							<Row>
-								<Col md="4">
-									<Form.Label>Leucocitos XCM:</Form.Label>
-								</Col>
-								<Col md={{ span: 4, offset: 3 }}>
-									<FormControl
-										type="text"
-										name="leucocitos"
-										value={this.state.leucocitos}
-										onChange={this.onChangeValues}
-										disabled={this.props.sendingInfoDisabled}
-									/>
-								</Col>
-							</Row>
-						</Form.Group>
 						<Form.Group>
 							<Row>
 								<Col md="4">
@@ -136,13 +119,13 @@ class Coprologico extends React.Component {
 						<Form.Group>
 							<Row>
 								<Col md="4">
-									<Form.Label>Flora Bacteriana:</Form.Label>
+									<Form.Label>Celulosa:</Form.Label>
 								</Col>
 								<Col md={{ span: 4, offset: 3 }}>
 									<FormControl
 										type="text"
-										name="floraBacteriana"
-										value={this.state.floraBacteriana}
+										name="celulosa"
+										value={this.state.celulosa}
 										onChange={this.onChangeValues}
 										disabled={this.props.sendingInfoDisabled}
 									/>
@@ -152,13 +135,30 @@ class Coprologico extends React.Component {
 						<Form.Group>
 							<Row>
 								<Col md="4">
-									<Form.Label>Celulosa:</Form.Label>
+									<Form.Label>Leucocitos XCM:</Form.Label>
 								</Col>
 								<Col md={{ span: 4, offset: 3 }}>
 									<FormControl
 										type="text"
-										name="celulosa"
-										value={this.state.celulosa}
+										name="leucocitos"
+										value={this.state.leucocitos}
+										onChange={this.onChangeValues}
+										disabled={this.props.sendingInfoDisabled}
+									/>
+								</Col>
+							</Row>
+						</Form.Group>
+
+						<Form.Group>
+							<Row>
+								<Col md="4">
+									<Form.Label>Flora Bacteriana:</Form.Label>
+								</Col>
+								<Col md={{ span: 4, offset: 3 }}>
+									<FormControl
+										type="text"
+										name="floraBacteriana"
+										value={this.state.floraBacteriana}
 										onChange={this.onChangeValues}
 										disabled={this.props.sendingInfoDisabled}
 									/>
