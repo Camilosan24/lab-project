@@ -3,25 +3,47 @@
 
 <head>
    <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta httpequiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Document</title>
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+      integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 </head>
 
 <style>
+
    .border-space {
-      border: .5px solid black;
-      border-left: 1px solid black;
-      border-right: 1px solid black;
+      border: 1px solid black;
+      /* border-left: 1px solid black;
+      border-right: 1px solid black; */
       padding: 5px;
    }
 
-   html {
+   .row {
+      padding: 0;
+      margin: 0;
+      /* width: 100%; */
+   }
+
+   .col-xs-1,
+   .col-xs-2,
+   .col-xs-3,
+   .col-xs-4,
+   .col-xs-5,
+   .col-xs-6,
+   .col-xs-7,
+   .col-xs-8,
+   .col-xs-9,
+   .col-xs-10,
+   .col-xs-11,
+   .col-xs-12 {
+      padding: 0;
+   }
+
+   /* html {
       font-size: 12px;
       max-height: 70vh;
-   }
+   } */
 
    td {
       border: 1px solid black;
@@ -41,580 +63,583 @@
       font-size: 14px;
       padding-left: 10px;
    }
+
 </style>
 
 <body>
-   <div class="p-3">
+   <div class="container-fluid" style="padding: 20px;">
       <div class="row">
-         <div class="col-6">
+         <div class="col-xs-6 hola">
             NOMBRE:<%= customer.name %>
                <%= customer.lastname %>
          </div>
-         <div class="col-6">
+         <div class="col-xs-6">
             DOCUMENTO:<%= customer.cc %>
          </div>
-         <div class="col-6">
+         <div class="col-xs-6">
             FECHA: <%= addSection.date %>
          </div>
-         <div class="col-6">
+         <div class="col-xs-6">
             EDAD/SEXO: <%=customer.age%>/<%= customer.genre%>
          </div>
-
       </div>
-      <div class="row border-space mt-4">
-         <div class="col-12">
-            <% if(addSection.coprologico !==false){%>
-               <div class="row p-1">
-                  <center>
-                     <label>
-                        <h5>COPROLOGICO</h5>
-                     </label>
-                  </center>
-                  <table>
-                     <tbody>
-                        <tr>
-                           <th colspan="2">EXAMEN FISICO</th>
-                        </tr>
-                        <tr>
-                           <td style="width: 25%;">COLOR</td>
-                           <td style="width: 25%; ">
-                              <strong>
+      <div class="row border-space" style="margin-top: 2em;">
+         <div class="col-xs-12">
+            <div class="container-fluid" style="padding: 10px;">
+               <% if(addSection.coprologico !==false){%>
+                  <div class="col-xs-12">
+                     <center>
+                        <label>
+                           <h5>COPROLOGICO</h5>
+                        </label>
+                     </center>
+                     <table class="col-xs-12" style="padding: 5px; margin: 0%;">
+                        <tbody>
+                           <tr>
+                              <th colspan="2">EXAMEN FISICO</th>
+                           </tr>
+                           <tr>
+                              <td style="width: 25%;">COLOR</td>
+                              <td style="width: 25%; ">
+                                 <strong>
+                                    <span class="results">
+                                       <%= info.coprologico.color %>
+                                    </span>
+                                 </strong>
+                              </td>
+                              <td style="width: 25%;">CONSISTENCIA</td>
+                              <td style="width: 25%; ">
+                                 <strong>
+                                    <span class="results">
+                                       <%= info.coprologico.consistencia %>
+                                    </span>
+                                 </strong>
+                              </td>
+                           </tr>
+                           <tr>
+                              <th colspan="2">EXAMEN MICROSCOPICO</th>
+                           </tr>
+                           <tr style="background:rgb(202, 204, 202) !important">
+                              <td>LEUCOCITOS XCM</td>
+                              <td>
+
                                  <span class="results">
-                                    <%= info.coprologico.color %>
+                                    <%= info.coprologico.leucocitos %>
                                  </span>
-                              </strong>
-                           </td>
-                           <td style="width: 25%;">CONSISTENCIA</td>
-                           <td style="width: 25%; ">
-                              <strong>
+
+                              </td>
+                              <td>FLORA BACTERIANA</td>
+                              <td>
+
                                  <span class="results">
-                                    <%= info.coprologico.consistencia %>
+                                    <%= info.coprologico.floraBacteriana %>
                                  </span>
-                              </strong>
-                           </td>
-                        </tr>
-                        <tr>
-                           <th colspan="2">EXAMEN MICROSCOPICO</th>
-                        </tr>
-                        <tr style="background:rgb(202, 204, 202)">
-                           <td>LEUCOCITOS XCM</td>
-                           <td>
 
-                              <span class="results">
-                                 <%= info.coprologico.leucocitos %>
-                              </span>
+                              </td>
+                           </tr>
+                           <tr style="background:rgb(202, 204, 202) !important">
+                              <td>ALMIDON</td>
+                              <td>
 
-                           </td>
-                           <td>FLORA BACTERIANA</td>
-                           <td>
+                                 <span class="results">
+                                    <%= info.coprologico.almidon %>
+                                 </span>
 
-                              <span class="results">
-                                 <%= info.coprologico.floraBacteriana %>
-                              </span>
+                              </td>
+                              <td>CELULOSA</td>
+                              <td>
+                                 <span class="results">
+                                    <%= info.coprologico.celulosa %>
+                                 </span>
 
-                           </td>
-                        </tr>
-                        <tr style="background:rgb(202, 204, 202)">
-                           <td>ALMIDON</td>
-                           <td>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>PARASITOS</td>
+                              <td colSpan="3">
 
-                              <span class="results">
-                                 <%= info.coprologico.almidon %>
-                              </span>
+                                 <span class="results">
+                                    <%= info.coprologico.parasitos %>
+                                 </span>
 
-                           </td>
-                           <td>CELULOSA</td>
-                           <td>
-                              <span class="results">
-                                 <%= info.coprologico.celulosa %>
-                              </span>
+                              </td>
+                           </tr>
 
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>PARASITOS</td>
-                           <td colSpan="3">
+                        </tbody>
+                     </table>
+                  </div>
+                  <% } %>
 
-                              <span class="results">
-                                 <%= info.coprologico.parasitos %>
-                              </span>
+                     <% if(addSection.serologicas){ %>
+                        <div class="row">
+                           <center>
+                              <label>
+                                 <h5>PRUEBAS SEROLOGICAS</h5>
+                              </label>
+                           </center>
+                           <table class="col-xs-12">
+                              <tbody>
+                                 <tr>
+                                    <td style="width: 25%;"></td>
+                                    <td style="width: 25%;"><strong> RESULTADO</strong></td>
+                                    <td style="width: 25%;"><strong> VALOR REFERENCIA</strong></td>
+                                    <td style="width: 25%;"><strong> METODO</strong></td>
+                                 </tr>
 
-                           </td>
-                        </tr>
+                                 <tr>
+                                    <td>ASTOS</td>
+                                    <td>
+                                       <span class="results">
+                                          <%= info.serologicas.astos %>
+                                       </span>
+                                    </td>
+                                    <td>0- 200 U.I/mL</td>
+                                    <td>Aglutinación por latex
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td>FACTOR REUMATEO</td>
+                                    <td>
+                                       <span class="results">
+                                          <%= info.serologicas.factorReumateo %>
+                                       </span>
+                                    </td>
+                                    <td>0- 8 U.I./ml </td>
+                                    <td>Aglutinación por latex
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td>PCR</td>
+                                    <td>
+                                       <span class="results">
+                                          <%= info.serologicas.PCR %>
+                                       </span>
+                                    </td>
+                                    <td>0- 6 mg/ L</td>
+                                    <td>Aglutinación por latex
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                        <% } %>
 
-                     </tbody>
-                  </table>
-               </div>
-               <% } %>
+                           <% if(addSection.cuadroHematico){%>
+                              <div class="row ">
+                                 <center>
+                                    <label>
+                                       <h5>CUADRO HEMATICO</h5>
+                                    </label>
+                                 </center>
+                                 <table class="col-xs-12">
+                                    <tbody>
+                                       <tr>
+                                          <td style="width: 40%;"></td>
+                                          <td style="width: 20%;"><strong> RESULTADO</strong></td>
+                                          <td colspan="2"><strong> VALOR NORMAL</strong></td>
+                                       </tr>
+                                       <tr>
+                                          <td style="width: 40%;">HEMATOCRITO %</td>
+                                          <td style="width: 20%;">
+                                             <span class="results">
+                                                <%= info.cuadroHematico.hematocrito %>
+                                             </span>
+                                          </td>
+                                          <td style="width: 20%;">HOMBRES: 40-54</td>
+                                          <td style="width: 20%;">MUJERES: 38-47</td>
+                                       </tr>
+                                       <tr style="background:rgb(202, 204, 202) !important">
+                                          <td style="width: 40%;">HEMOGLOBINA %</td>
+                                          <td style="width: 20%;">
+                                             <span class="results">
+                                                <%= info.cuadroHematico.hemoglobina %>
+                                             </span>
+                                          </td>
+                                          <td style="width: 20%;">HOMBRES: 13,5-18</td>
+                                          <td style="width: 20%;">MUJERES: 12-16</td>
+                                       </tr>
+                                       <tr>
+                                          <td style="width: 40%;">RECUENTO TOTAL DE LUCOCITOS /mm3</td>
+                                          <td style="width: 20%;">
+                                             <span class="results">
+                                                <%= info.cuadroHematico.leucocitos %>
+                                             </span>
+                                          </td>
+                                          <td colspan="2">4.500-11.000</td>
+                                       </tr>
+                                       <tr>
+                                          <th colspan="2">RECUENTO DIFERENCIAL</th>
+                                       </tr>
 
-                  <% if(addSection.serologicas){ %>
-                     <div class="row p-1">
-                        <center>
-                           <label>
-                              <h5>PRUEBAS SEROLOGICAS</h5>
-                           </label>
-                        </center>
-                        <table>
-                           <tbody>
-                              <tr>
-                                 <td style="width: 25%;"></td>
-                                 <td style="width: 25%;"><strong> RESULTADO</strong></td>
-                                 <td style="width: 25%;"><strong> VALOR REFERENCIA</strong></td>
-                                 <td style="width: 25%;"><strong> METODO</strong></td>
-                              </tr>
-
-                              <tr>
-                                 <td>ASTOS</td>
-                                 <td>
-                                    <span class="results">
-                                       <%= info.serologicas.astos %>
-                                    </span>
-                                 </td>
-                                 <td>0- 200 U.I/mL</td>
-                                 <td>Aglutinación por latex
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>FACTOR REUMATEO</td>
-                                 <td>
-                                    <span class="results">
-                                       <%= info.serologicas.factorReumateo %>
-                                    </span>
-                                 </td>
-                                 <td>0- 8 U.I./ml </td>
-                                 <td>Aglutinación por latex
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>PCR</td>
-                                 <td>
-                                    <span class="results">
-                                       <%= info.serologicas.PCR %>
-                                    </span>
-                                 </td>
-                                 <td>0- 6 mg/ L</td>
-                                 <td>Aglutinación por latex
-                                 </td>
-                              </tr>
-                           </tbody>
-                        </table>
-                     </div>
-                     <% } %>
-
-                        <% if(addSection.cuadroHematico){%>
-                           <div class="row p-1">
-                              <center>
-                                 <label>
-                                    <h5>CUADRO HEMATICO</h5>
-                                 </label>
-                              </center>
-                              <table>
-                                 <tbody>
-                                    <tr>
-                                       <td style="width: 40%;"></td>
-                                       <td style="width: 20%;"><strong> RESULTADO</strong></td>
-                                       <td colspan="2"><strong> VALOR NORMAL</strong></td>
-                                    </tr>
-                                    <tr>
-                                       <td style="width: 40%;">HEMATOCRITO %</td>
-                                       <td style="width: 20%;">
-                                          <span class="results">
-                                             <%= info.cuadroHematico.hematocrito %>
-                                          </span>
-                                       </td>
-                                       <td style="width: 20%;">HOMBRES: 40-54</td>
-                                       <td style="width: 20%;">MUJERES: 38-47</td>
-                                    </tr>
-                                    <tr style="background:rgb(202, 204, 202)">
-                                       <td style="width: 40%;">HEMOGLOBINA %</td>
-                                       <td style="width: 20%;">
-                                          <span class="results">
-                                             <%= info.cuadroHematico.hemoglobina %>
-                                          </span>
-                                       </td>
-                                       <td style="width: 20%;">HOMBRES: 13,5-18</td>
-                                       <td style="width: 20%;">MUJERES: 12-16</td>
-                                    </tr>
-                                    <tr>
-                                       <td style="width: 40%;">RECUENTO TOTAL DE LUCOCITOS /mm3</td>
-                                       <td style="width: 20%;">
-                                          <span class="results">
-                                             <%= info.cuadroHematico.leucocitos %>
-                                          </span>
-                                       </td>
-                                       <td colspan="2">4.500-11.000</td>
-                                    </tr>
-                                    <tr>
-                                       <th colspan="2">RECUENTO DIFERENCIAL</th>
-                                    </tr>
-
-                                    <tr>
-                                       <td>NEUTROFILOS %</td>
-                                       <td colSpan="3">
-                                          <span class="results">
-                                             <%= info.cuadroHematico.neutrofilos %>
-                                          </span>
-                                       </td>
-                                    </tr>
-                                    <tr>
-                                       <td>LINFOCITOS</td>
-                                       <td colSpan="3">
-                                          <span class="results">
-                                             <%= info.cuadroHematico.linfocitos %>
-                                          </span>
-                                       </td>
-                                    </tr>
-                                    <tr style="height: 15px;">
-                                       <td style="border: none;"></td>
-                                       <td style="border: none;"></td>
-                                    </tr>
-                                    <tr>
-                                       <td style="width: 40%;"><strong> RECUENTO DE PLAQUETAS/mm3 </strong></td>
-                                       <td style="width: 20%;">
-                                          <span class="results">
-                                             <%= info.cuadroHematico.recuentoPlaquetas %>
-                                          </span>
-                                       </td>
-                                       <td colspan="2">50.000 – 450.000</td>
-                                    </tr>
-                                    <tr>
-                                       <td><strong>VSG mm A LA HORA</strong></td>
-                                       <td colSpan="3">
-                                          <span class="results">
-                                             <%= info.cuadroHematico.VSG %>
-                                          </span>
-                                       </td>
-                                    </tr </tbody>
-                              </table>
-                              <div class="row mt-2">
-                                 <div class="col-4">
-                                    <strong colspan="4">FROTIS DE SANGRE PERIFERICA:</strong>
+                                       <tr>
+                                          <td>NEUTROFILOS %</td>
+                                          <td colSpan="3" style="border: 1px solid black;">
+                                             <span class="results">
+                                                <%= info.cuadroHematico.neutrofilos %>
+                                             </span>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td>LINFOCITOS</td>
+                                          <td colSpan="3">
+                                             <span class="results">
+                                                <%= info.cuadroHematico.linfocitos %>
+                                             </span>
+                                          </td>
+                                       </tr>
+                                       <tr style="height: 15px;">
+                                          <td style="border: none;"></td>
+                                          <td style="border: none;"></td>
+                                       </tr>
+                                       <tr>
+                                          <td style="width: 40%;"><strong> RECUENTO DE PLAQUETAS/mm3 </strong></td>
+                                          <td style="width: 20%;">
+                                             <span class="results">
+                                                <%= info.cuadroHematico.recuentoPlaquetas %>
+                                             </span>
+                                          </td>
+                                          <td colspan="2">50.000 – 450.000</td>
+                                       </tr>
+                                       <tr>
+                                          <td><strong>VSG mm A LA HORA</strong></td>
+                                          <td colSpan="3">
+                                             <span class="results">
+                                                <%= info.cuadroHematico.VSG %>
+                                             </span>
+                                          </td>
+                                       </tr </tbody>
+                                 </table>
+                                 <div class="row mt-2">
+                                    <div class="col-xs-4">
+                                       <strong colspan="4">FROTIS DE SANGRE PERIFERICA:</strong>
+                                    </div>
+                                    <div class="col-xs-8  m-0 ">
+                                       <span class="results">
+                                          <%= info.cuadroHematico.frotisSangrePerisferica %>
+                                       </span>
+                                    </div>
                                  </div>
-                                 <div class="col-8  m-0 p-0">
-                                    <span class="results">
-                                       <%= info.cuadroHematico.frotisSangrePerisferica %>
-                                    </span>
-                                 </div>
-                              </div>
 
-                              <div class="row">
-                                 <div class="col-3">
-                                    <strong colspan="4">
-                                       GLOBULOS ROJOS:
-                                    </strong>
+                                 <div class="row">
+                                    <div class="col-xs-3">
+                                       <strong colspan="4">
+                                          GLOBULOS ROJOS:
+                                       </strong>
+                                    </div>
+                                    <div class="col-xs-8  m-0 ">
+                                       <span class="results">
+                                          <%= info.cuadroHematico.globulosRojos %>
+                                       </span>
+                                    </div>
                                  </div>
-                                 <div class="col-8  m-0 p-0">
-                                    <span class="results">
-                                       <%= info.cuadroHematico.globulosRojos %>
-                                    </span>
-                                 </div>
-                              </div>
 
-                              <div class="row">
-                                 <div class="col-3">
-                                    <strong colspan="4">
-                                       GLOBULOS BLANCOS:
-                                    </strong>
+                                 <div class="row">
+                                    <div class="col-xs-3">
+                                       <strong colspan="4">
+                                          GLOBULOS BLANCOS:
+                                       </strong>
+                                    </div>
+                                    <div class="col-xs-8  m-0 ">
+                                       <span class="results">
+                                          <%= info.cuadroHematico.globulosBlancos %>
+                                       </span>
+                                    </div>
                                  </div>
-                                 <div class="col-8  m-0 p-0">
-                                    <span class="results">
-                                       <%= info.cuadroHematico.globulosBlancos %>
-                                    </span>
+
+                                 <div class="row">
+                                    <div class="col-xs-3">
+                                       <strong colspan="4">
+                                          PLAQUETAS:
+                                       </strong>
+                                    </div>
+                                    <div class="col-xs-8  m-0 ">
+                                       <span class="results">
+                                          <%= info.cuadroHematico.plaquetas %>
+                                       </span>
+                                    </div>
                                  </div>
                               </div>
+                              <% }%>
 
-                              <div class="row">
-                                 <div class="col-3">
-                                    <strong colspan="4">
-                                       PLAQUETAS:
-                                    </strong>
-                                 </div>
-                                 <div class="col-8  m-0 p-0">
-                                    <span class="results">
-                                       <%= info.cuadroHematico.plaquetas %>
-                                    </span>
-                                 </div>
-                              </div>
-                           </div>
-                           <% }%>
+                                 <% if(addSection.parcialOrina){%>
+                                    <div class="row" style="margin-bottom: 50px;">
+                                       <center>
+                                          <label>
+                                             <h5>PARCIAL ORINA</h5>
+                                          </label>
+                                       </center>
+                                       <table class="col-xs-12">
+                                          <tbody>
+                                             <tr>
+                                                <th colspan="2">EXAMEN FISICO</th>
+                                             </tr>
+                                             <tr>
+                                                <td style="width: 25%;" colspan="2">COLOR</td>
+                                                <td style="width: 25%;" colspan="2">
+                                                   <strong>
+                                                      <span class="results">
+                                                         <%= info.parcialOrina.color %>
+                                                      </span>
+                                                   </strong>
+                                                </td>
+                                             </tr>
+                                             <tr style="background:rgb(202, 204, 202) !important">
+                                                <td style="width: 25%;" colspan="2">ASPECTO</td>
+                                                <td style="width: 25%;" colspan="2">
+                                                   <strong>
+                                                      <span class="results">
+                                                         <%= info.parcialOrina.aspecto %>
+                                                      </span>
+                                                   </strong>
+                                                </td>
+                                             </tr>
+                                             <tr>
+                                                <th colspan="2">EXAMEN QUIMICO</th>
+                                             </tr>
+                                             <tr>
+                                                <td>DENSIDAD</td>
+                                                <td>
 
-                              <% if(addSection.parcialOrina){%>
-                                 <div class="row p-1 mb-5">
-                                    <center>
-                                       <label>
-                                          <h5>PARCIAL ORINA</h5>
-                                       </label>
-                                    </center>
-                                    <table>
-                                       <tbody>
-                                          <tr>
-                                             <th colspan="2">EXAMEN FISICO</th>
-                                          </tr>
-                                          <tr>
-                                             <td style="width: 25%;" colspan="2">COLOR</td>
-                                             <td style="width: 25%;" colspan="2">
-                                                <strong>
                                                    <span class="results">
-                                                      <%= info.parcialOrina.color %>
+                                                      <%= info.parcialOrina.densidad %>
                                                    </span>
-                                                </strong>
-                                             </td>
-                                          </tr>
-                                          <tr style="background:rgb(202, 204, 202)">
-                                             <td style="width: 25%;" colspan="2">ASPECTO</td>
-                                             <td style="width: 25%;" colspan="2">
-                                                <strong>
+
+                                                </td>
+                                                <td><strong> NITRITOS</strong></td>
+                                                <td>
+
                                                    <span class="results">
-                                                      <%= info.parcialOrina.aspecto %>
+                                                      <%= info.parcialOrina.nitritos %>
                                                    </span>
-                                                </strong>
-                                             </td>
-                                          </tr>
-                                          <tr>
-                                             <th colspan="2">EXAMEN QUIMICO</th>
-                                          </tr>
-                                          <tr>
-                                             <td>DENSIDAD</td>
-                                             <td>
 
-                                                <span class="results">
-                                                   <%= info.parcialOrina.densidad %>
-                                                </span>
+                                                </td>
+                                             </tr>
+                                             <tr style="background:rgb(202, 204, 202) !important">
+                                                <td>PH</td>
+                                                <td>
 
-                                             </td>
-                                             <td><strong> NITRITOS</strong></td>
-                                             <td>
+                                                   <span class="results">
+                                                      <%= info.parcialOrina.ph %>
+                                                   </span>
 
-                                                <span class="results">
-                                                   <%= info.parcialOrina.nitritos %>
-                                                </span>
+                                                </td>
+                                                <td><strong> ESTERASAS</strong></td>
+                                                <td>
 
-                                             </td>
-                                          </tr>
-                                          <tr style="background:rgb(202, 204, 202)">
-                                             <td>PH</td>
-                                             <td>
+                                                   <span class="results">
+                                                      <%= info.parcialOrina.esterasas %>
+                                                   </span>
 
-                                                <span class="results">
-                                                   <%= info.parcialOrina.ph %>
-                                                </span>
+                                                </td>
+                                             </tr>
+                                             <tr>
+                                                <td>GLUCOSA mg/dl</td>
+                                                <td>
 
-                                             </td>
-                                             <td><strong> ESTERASAS</strong></td>
-                                             <td>
+                                                   <span class="results">
+                                                      <%= info.parcialOrina.glucosa %>
+                                                   </span>
 
-                                                <span class="results">
-                                                   <%= info.parcialOrina.esterasas %>
-                                                </span>
+                                                </td>
+                                                <td><strong> SANGRE</strong></td>
+                                                <td>
+                                                   <span class="results">
+                                                      <%= info.parcialOrina.sangre %>
+                                                   </span>
+                                                </td>
+                                             </tr>
+                                             <tr style="background:rgb(202, 204, 202) !important">
+                                                <td>PROTEINAS mg/dl</td>
+                                                <td colspan="3">
 
-                                             </td>
-                                          </tr>
-                                          <tr>
-                                             <td>GLUCOSA mg/dl</td>
-                                             <td>
+                                                   <span class="results">
+                                                      <%= info.parcialOrina.proteina %>
+                                                   </span>
 
-                                                <span class="results">
-                                                   <%= info.parcialOrina.glucosa %>
-                                                </span>
+                                                </td>
 
-                                             </td>
-                                             <td><strong> SANGRE</strong></td>
-                                             <td>
-                                                <span class="results">
-                                                   <%= info.parcialOrina.sangre %>
-                                                </span>
-                                             </td>
-                                          </tr>
-                                          <tr style="background:rgb(202, 204, 202)">
-                                             <td>PROTEINAS mg/dl</td>
-                                             <td colspan="3">
+                                             </tr>
+                                             <tr>
+                                                <th colspan="2">EXAMEN MICROSCOPICO</th>
+                                             </tr>
+                                             <tr>
+                                                <td>CELULAS xcm</td>
+                                                <td>
 
-                                                <span class="results">
-                                                   <%= info.parcialOrina.proteina %>
-                                                </span>
+                                                   <span class="results">
+                                                      <%= info.parcialOrina.celulas %>
+                                                   </span>
 
-                                             </td>
+                                                </td>
+                                                <td><strong> BACTERIAS</strong></td>
+                                                <td>
+                                                   <span class="results">
+                                                      <%= info.parcialOrina.bacterias %>
+                                                   </span>
+                                                </td>
+                                             </tr>
+                                             <tr style="background:rgb(202, 204, 202) !important">
+                                                <td>LEUCOCITOS xcm</td>
+                                                <td colspan="3">
+                                                   <span class="results">
+                                                      <%= info.parcialOrina.leucocitos %>
+                                                   </span>
+                                                </td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                    <% } %>
 
-                                          </tr>
-                                          <tr>
-                                             <th colspan="2">EXAMEN MICROSCOPICO</th>
-                                          </tr>
-                                          <tr>
-                                             <td>CELULAS xcm</td>
-                                             <td>
-
-                                                <span class="results">
-                                                   <%= info.parcialOrina.celulas %>
-                                                </span>
-
-                                             </td>
-                                             <td><strong> BACTERIAS</strong></td>
-                                             <td>
-                                                <span class="results">
-                                                   <%= info.parcialOrina.bacterias %>
-                                                </span>
-                                             </td>
-                                          </tr>
-                                          <tr style="background:rgb(202, 204, 202)">
-                                             <td>LEUCOCITOS xcm</td>
-                                             <td colspan="3">
-                                                <span class="results">
-                                                   <%= info.parcialOrina.leucocitos %>
-                                                </span>
-                                             </td>
-                                          </tr>
-                                       </tbody>
-                                    </table>
-                                 </div>
-                                 <% } %>
-
-                                    <% if(addSection.quimicaSanguinea){%>
-                                       <div class="row p-4">
-                                          <center>
-                                             <label>
-                                                <h5>QUIMICA SANGUINEA</h5>
-                                             </label>
-                                          </center>
-                                          <table>
-                                             <tbody>
-                                                <tr>
-                                                   <td style="width: 25%;"><strong> EXAMEN </strong></td>
-                                                   <td style="width: 15%; text-align: center;"><strong>
-                                                         RESULTADO</strong></td>
-                                                   <td style="width: 40%; text-align: center;" colspan="2"><strong>VR
-                                                         NORMAL</strong></td>
-                                                   <td style="width: 20%; text-align: center;"><strong> METODO</strong>
-                                                   </td>
-                                                </tr>
-                                                <tr>
-                                                   <td>ACIDO URICO mg/dl</td>
-                                                   <td>
-                                                      <span class="results">
-                                                         <%= info.quimicaSanguinea.acidoUrico %>
-                                                      </span>
-                                                   </td>
-                                                   <td>HOMBRES: 2,5-6,0</td>
-                                                   <td>MUJERES: 2,5-5</td>
-                                                   <td>COLORIMETRICO</td>
-                                                </tr>
-                                                <tr style="background:rgb(202, 204, 202)">
-                                                   <td>BUN mg/dl</td>
-                                                   <td>
-                                                      <span class="results">
-                                                         <%= info.quimicaSanguinea.bun %>
-                                                      </span>
-                                                   </td>
-                                                   <td colspan="2">7-18</td>
-                                                   <td>CINETICO</td>
-                                                </tr>
-                                                <tr>
-                                                   <td>CREATININA mg/dl</td>
-                                                   <td>
-                                                      <span class="results">
-                                                         <%= info.quimicaSanguinea.creatinina %>
-                                                      </span>
-                                                   </td>
-                                                   <td>HOMBRES:0,9-1,3</td>
-                                                   <td>MUJERES: 0,6-1,1</td>
-                                                   <td>CINETICO</td>
-                                                </tr>
-                                                <tr style="background:rgb(202, 204, 202)">
-                                                   <td>GLICEMIA BASAL mg/dl %</td>
-                                                   <td>
-                                                      <span class="results">
-                                                         <%= info.quimicaSanguinea.glicemiaBasal %>
-                                                      </span>
-                                                   </td>
-                                                   <td colspan="2">
-                                                      75-115
-                                                   </td>
-                                                   <td>COLORIMETRICO</td>
-                                                </tr>
-                                                <tr>
-                                                   <th colspan="2">PERFIL LIPIDICO</th>
-                                                </tr>
-                                                <tr>
-                                                   <td>COLESTEROL TOTAL mg/dl</td>
-                                                   <td>
-                                                      <span class="results">
-                                                         <%= info.quimicaSanguinea.colesterolTotal %>
-                                                      </span>
-                                                   </td>
-                                                   <td>
-                                                      SOSPECHOSO > 220
-                                                   </td>
-                                                   <td>
-                                                      ELEVADO > 160
-                                                   </td>
-                                                   <td>COLORIMETRICO</td>
-                                                </tr>
-                                                <tr style="background:rgb(202, 204, 202)">
-                                                   <td>COLESTEROL HDL mg/dl</td>
-                                                   <td>
-                                                      <span class="results">
-                                                         <%= info.quimicaSanguinea.colesterolHDL %>
-                                                      </span>
-                                                   </td>
-                                                   <td>
-                                                      FAVORABLE > 55
-                                                   </td>
-                                                   <td>
-                                                      RIESGO > 35 - 55
-                                                   </td>
-                                                   <td>COLORIMETRICO</td>
-                                                </tr>
-                                                <tr>
-                                                   <td>COLESTEROL LDL mg/dl</td>
-                                                   <td>
-                                                      <span class="results">
-                                                         <%= info.quimicaSanguinea.colesterolLDL %>
-                                                      </span>
-                                                   </td>
-                                                   <td colspan="2">
-                                                      HASTA 145
-                                                   </td>
-                                                   <td>COLORIMETRICO</td>
-                                                </tr>
-                                                <tr style="background:rgb(202, 204, 202)">
-                                                   <td>COLESTEROL VLDL mg/dl</td>
-                                                   <td>
-                                                      <span class="results">
-                                                         <%= info.quimicaSanguinea.colesterolVLDL %>
-                                                      </span>
-                                                   </td>
-                                                   <td colspan="2">
-                                                      0-40
-                                                   </td>
-                                                   <td>COLORIMETRICO</td>
-                                                </tr>
-                                                <tr>
-                                                   <td>TRIGLICERIDOS mg/dl</td>
-                                                   <td>
-                                                      <span class="results">
-                                                         <%= info.quimicaSanguinea.trigliceridos %>
-                                                      </span>
-                                                   </td>
-                                                   <td colspan="2">
-                                                      HASTA 150
-                                                   </td>
-                                                   <td>COLORIMETRICO</td>
-                                                </tr>
-                                                <tr style="background:rgb(202, 204, 202)">
-                                                   <td>INDICE ATEROGENICO</td>
-                                                   <td>
-                                                      <span class="results">
-                                                         <%= info.quimicaSanguinea.indiceAterogenico %>
-                                                      </span>
-                                                   </td>
-                                                   <td colspan="2">
-                                                      0-4
-                                                   </td>
-                                                   <td></td>
-                                                </tr>
-                                             </tbody>
-                                          </table>
-                                          <% }%>
-                                       </div>
+                                       <% if(addSection.quimicaSanguinea){%>
+                                          <div class="row ">
+                                             <center>
+                                                <label>
+                                                   <h5>QUIMICA SANGUINEA</h5>
+                                                </label>
+                                             </center>
+                                             <table class="col-xs-12">
+                                                <tbody>
+                                                   <tr>
+                                                      <td style="width: 25%;"><strong> EXAMEN </strong></td>
+                                                      <td style="width: 15%; text-align: center;"><strong>
+                                                            RESULTADO</strong></td>
+                                                      <td style="width: 40%; text-align: center;" colspan="2"><strong>VR
+                                                            NORMAL</strong></td>
+                                                      <td style="width: 20%; text-align: center;"><strong>
+                                                            METODO</strong>
+                                                      </td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td>ACIDO URICO mg/dl</td>
+                                                      <td>
+                                                         <span class="results">
+                                                            <%= info.quimicaSanguinea.acidoUrico %>
+                                                         </span>
+                                                      </td>
+                                                      <td>HOMBRES: 2,5-6,0</td>
+                                                      <td>MUJERES: 2,5-5</td>
+                                                      <td>COLORIMETRICO</td>
+                                                   </tr>
+                                                   <tr style="background:rgb(202, 204, 202) !important">
+                                                      <td>BUN mg/dl</td>
+                                                      <td>
+                                                         <span class="results">
+                                                            <%= info.quimicaSanguinea.bun %>
+                                                         </span>
+                                                      </td>
+                                                      <td colspan="2">7-18</td>
+                                                      <td>CINETICO</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td>CREATININA mg/dl</td>
+                                                      <td>
+                                                         <span class="results">
+                                                            <%= info.quimicaSanguinea.creatinina %>
+                                                         </span>
+                                                      </td>
+                                                      <td>HOMBRES:0,9-1,3</td>
+                                                      <td>MUJERES: 0,6-1,1</td>
+                                                      <td>CINETICO</td>
+                                                   </tr>
+                                                   <tr style="background:rgb(202, 204, 202) !important">
+                                                      <td>GLICEMIA BASAL mg/dl %</td>
+                                                      <td>
+                                                         <span class="results">
+                                                            <%= info.quimicaSanguinea.glicemiaBasal %>
+                                                         </span>
+                                                      </td>
+                                                      <td colspan="2">
+                                                         75-115
+                                                      </td>
+                                                      <td>COLORIMETRICO</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <th colspan="2">PERFIL LIPIDICO</th>
+                                                   </tr>
+                                                   <tr>
+                                                      <td>COLESTEROL TOTAL mg/dl</td>
+                                                      <td>
+                                                         <span class="results">
+                                                            <%= info.quimicaSanguinea.colesterolTotal %>
+                                                         </span>
+                                                      </td>
+                                                      <td>
+                                                         SOSPECHOSO > 220
+                                                      </td>
+                                                      <td>
+                                                         ELEVADO > 160
+                                                      </td>
+                                                      <td>COLORIMETRICO</td>
+                                                   </tr>
+                                                   <tr style="background:rgb(202, 204, 202) !important">
+                                                      <td>COLESTEROL HDL mg/dl</td>
+                                                      <td>
+                                                         <span class="results">
+                                                            <%= info.quimicaSanguinea.colesterolHDL %>
+                                                         </span>
+                                                      </td>
+                                                      <td>
+                                                         FAVORABLE > 55
+                                                      </td>
+                                                      <td>
+                                                         RIESGO > 35 - 55
+                                                      </td>
+                                                      <td>COLORIMETRICO</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td>COLESTEROL LDL mg/dl</td>
+                                                      <td>
+                                                         <span class="results">
+                                                            <%= info.quimicaSanguinea.colesterolLDL %>
+                                                         </span>
+                                                      </td>
+                                                      <td colspan="2">
+                                                         HASTA 145
+                                                      </td>
+                                                      <td>COLORIMETRICO</td>
+                                                   </tr>
+                                                   <tr style="background:rgb(202, 204, 202) !important">
+                                                      <td>COLESTEROL VLDL mg/dl</td>
+                                                      <td>
+                                                         <span class="results">
+                                                            <%= info.quimicaSanguinea.colesterolVLDL %>
+                                                         </span>
+                                                      </td>
+                                                      <td colspan="2">
+                                                         0-40
+                                                      </td>
+                                                      <td>COLORIMETRICO</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td>TRIGLICERIDOS mg/dl</td>
+                                                      <td>
+                                                         <span class="results">
+                                                            <%= info.quimicaSanguinea.trigliceridos %>
+                                                         </span>
+                                                      </td>
+                                                      <td colspan="2">
+                                                         HASTA 150
+                                                      </td>
+                                                      <td>COLORIMETRICO</td>
+                                                   </tr>
+                                                   <tr style="background:rgb(202, 204, 202) !important">
+                                                      <td>INDICE ATEROGENICO</td>
+                                                      <td>
+                                                         <span class="results">
+                                                            <%= info.quimicaSanguinea.indiceAterogenico %>
+                                                         </span>
+                                                      </td>
+                                                      <td colspan="2">
+                                                         0-4
+                                                      </td>
+                                                      <td></td>
+                                                   </tr>
+                                                </tbody>
+                                             </table>
+                                             <% }%>
+                                          </div>
+            </div>
          </div>
       </div>
 </body>

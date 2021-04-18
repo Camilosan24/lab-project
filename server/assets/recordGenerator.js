@@ -1,13 +1,15 @@
-const pdf = require("html-pdf");
+const record = require("../models/record");
 const path = require("path");
 const ejs = require("ejs");
-const record = require("../models/record");
-// const { uploadFileToAWS } = require("./filesOperations.js");
+const pdf = require("html-pdf");
 
 const generatePdf = async (file, url) => {
 	return new Promise((resolve, reject) => {
 		pdf
-			.create(file, { format: "A4" })
+			.create(file, {
+				format: "A4",
+				format: "Letter",
+			})
 			.toFile(path.join(__dirname, "..", "public", `${url}`), (err, res) => {
 				if (err) return reject("Hubo un error en la creacion del pdf");
 				return resolve(res);
@@ -49,9 +51,6 @@ const recordGenerator = async (customer, dataRecord) => {
 				record: null,
 				message: "Lo sentimos, hubo un error en la creacion del pdf",
 			};
-
-		// let resultado = await uploadFileToAWS(body, newRecord.record.url);
-		// newRecord.record.url = resultado.Location;
 
 		return {
 			success: true,

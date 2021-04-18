@@ -1,8 +1,9 @@
 const express = require("express");
 const app = express();
+// const pdf = require("express-pdf");
 
-if(process.env.NODE_ENV !== "production"){
-	require("dotenv").config()
+if (process.env.NODE_ENV !== "production") {
+	require("dotenv").config();
 }
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -29,6 +30,7 @@ app.use(express.static("client/build"));
 //MIDDLEWARES
 app.set("port", process.env.PORT || 3001);
 
+// app.use(pdf);
 app.use(bodyParser.json());
 app.use(cookieParser());
 
