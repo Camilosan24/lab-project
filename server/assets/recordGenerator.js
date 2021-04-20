@@ -16,12 +16,12 @@ const generatePdf = async (file, url) => {
 	});
 };
 
-const createTemplate = async (customer, addSecitons, infoSections) => {
+const createTemplate = async (customer, addSections, infoSections) => {
 	try {
 		return await ejs.renderFile(
 			path.join(__dirname, "templates", "index.ejs"),
 			{
-				addSection: addSecitons.record,
+				addSection: addSections,
 				info: infoSections,
 				customer,
 			}
@@ -31,8 +31,8 @@ const createTemplate = async (customer, addSecitons, infoSections) => {
 	}
 };
 
-const recordGenerator = async (customer, dataRecord) => {
-	let newRecord = record(customer, dataRecord);
+const recordGenerator = async (customer, dataRecord, colombiaTime) => {
+	let newRecord = record(customer, dataRecord, colombiaTime);
 	try {
 		let templateGenerated = await createTemplate(
 			customer,
@@ -41,7 +41,7 @@ const recordGenerator = async (customer, dataRecord) => {
 		);
 		let body = await generatePdf(
 			templateGenerated,
-			newRecord.record.url,
+			newRecord.url,
 			customer.cc
 		);
 		if (!body)
@@ -53,7 +53,7 @@ const recordGenerator = async (customer, dataRecord) => {
 
 		return {
 			success: true,
-			record: newRecord.record,
+			record: newRecord,
 			message: "El archivos se ha creado correctamente",
 		};
 	} catch (error) {

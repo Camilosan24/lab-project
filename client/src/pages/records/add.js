@@ -21,9 +21,8 @@ class AddRecord extends React.Component {
 			loading: false,
 			searchingData: false,
 			date: () => {
-				let now = Date.now();
-				let fechaActual = new Date(now);
-				return fechaActual.toLocaleDateString();
+				let colombiaTime = new Date(Date.now() - 300 * 60000);
+				return colombiaTime.toLocaleDateString();
 			},
 			file: null,
 			pdfGenerator: true,

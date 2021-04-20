@@ -9,6 +9,7 @@ class Field extends React.Component {
 				<td>{this.props.info.cc}</td>
 				<td>{this.props.info.name}</td>
 				<td>{this.props.info.lastname}</td>
+				<td>{this.props.info.email}</td>
 				<td>{this.props.info.direction}</td>
 				<td>{this.props.info.birthdate}</td>
 				<td>{this.props.info.age}</td>

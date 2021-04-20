@@ -14,19 +14,19 @@ class List extends React.Component {
 		};
 	}
 	async componentDidMount() {
-		let response = await requests().auth(this.props);
-		if (response) {
+		// let response = await requests().auth(this.props);
+		// if (response) {
 			this.requests.getCustomers().then((res) => {
 				if (res.data.customers.length > 0)
 					return this.setState({ fields: res.data.customers });
 				return this.setState({ fields: null });
 			});
-		}
+		// }
 	}
 	render() {
 		return (
-			<Col md={{ span: 8, offset: 2 }} xs={{ span: 12 }} className="mt-5 pb-5">
-				<Card className="p-md-5 p-2">
+			<Col md={{ span: 10, offset: 1 }} xs={{ span: 12 }} className="mt-5 pb-5">
+				<Card className="p-md-3 p-2">
 					<h2>Listado de Clientes</h2>
 					<hr />
 					<Card.Body className="p-1 p-md-2">
@@ -37,6 +37,7 @@ class List extends React.Component {
 									<th>Cedula</th>
 									<th>Nombres</th>
 									<th>Apellidos</th>
+									<th>Correo</th>
 									<th>Direccion</th>
 									<th>Fecha de nacimiento</th>
 									<th>Edad</th>
