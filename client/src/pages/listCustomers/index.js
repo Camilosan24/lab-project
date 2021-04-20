@@ -3,7 +3,6 @@ import { Col, Table, Card } from "react-bootstrap";
 import Field from "./field";
 import requests from "../../components/utilComponents/requests";
 import NoData from "../../components/utilComponents/noData";
-// import getAuth from "../../components/utilComponents/getAuth";
 
 class List extends React.Component {
 	constructor(props) {
