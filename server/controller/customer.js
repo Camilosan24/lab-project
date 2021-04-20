@@ -1,7 +1,6 @@
 const customerControler = {};
 const { Customer } = require("../models/customer");
 const recordGenerator = require("../assets/recordGenerator");
-let colombiaTime = new Date(Date.now() - 300 * 60000);
 
 const capitalize = (name) => {
 	return name
@@ -14,6 +13,7 @@ const findCustomer = async (cc) => {
 };
 
 const getAge = (birthdate) => {
+	let colombiaTime = new Date(Date.now() - 300 * 60000);
 	let date = new Date(birthdate);
 	let age = colombiaTime.getFullYear() - date.getFullYear();
 	let month = colombiaTime.getMonth() - date.getMonth();
@@ -110,6 +110,7 @@ customerControler.getCustomer = async (req, res) => {
 };
 
 customerControler.showRecord = async (req, res) => {
+	let colombiaTime = new Date(Date.now() - 300 * 60000);
 	if (Number(req.body.cc)) {
 		try {
 			let customer = await findCustomer(req.body.cc);

@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-// const pdf = require("express-pdf");
 
 if (process.env.NODE_ENV !== "production") {
 	require("dotenv").config();
