@@ -133,7 +133,7 @@ customerControler.showRecord = async (req, res) => {
 							});
 						}
 						return res.json({
-							message: "pdf generado",
+							message: "pdf generado correctamente",
 							success: true,
 						});
 					}
