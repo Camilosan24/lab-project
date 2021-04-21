@@ -157,7 +157,6 @@ customerControler.showRecord = async (req, res) => {
 };
 
 customerControler.deleteCustomer = (req, res) => {
-	console.log(req.params.cc)
 	Customer.findOneAndRemove({ cc: req.params.cc }, (err, doc) => {
 		if(err) return res.json({succes: false, message: "Ocurrio un error al eliminar el cliente"})
 		return res.json({success: true, message: "Cliente eliminado correctamente"})

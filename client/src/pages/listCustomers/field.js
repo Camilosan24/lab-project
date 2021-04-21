@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 
 class Field extends React.Component {
 	render() {
+		// console.log(this.props.key)
 		return (
 			<tr>
 				<td>{this.props.number}</td>
@@ -15,10 +16,13 @@ class Field extends React.Component {
 				<td>{this.props.info.age}</td>
 				<td className="d-flex justify-content-center">
 					<Button
-					className="trash-button"
+						className="trash-button"
 						variant="danger"
 						onClick={() => {
-							this.props.tempDeleteCustomer(this.props.info.cc);
+							this.props.tempDeleteCustomer({
+								cc: this.props.info.cc,
+								key: this.props.number,
+							});
 						}}
 					>
 						<i className="fas fa-trash"></i>

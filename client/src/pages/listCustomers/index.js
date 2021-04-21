@@ -1,9 +1,11 @@
 import React from "react";
-import { Col, Table, Card, Button, Form } from "react-bootstrap";
+import { Col, Table, Card, Button } from "react-bootstrap";
 import Field from "./field";
 import requests from "../../components/utilComponents/requests";
 import NoData from "../../components/utilComponents/noData";
 import SpinnerComponent from "../../components/utilComponents/spinner";
+import DeleteConfirmation from "../../components/deleteConfirmations/deleteConfirmartion";
+import InputSearchCustomer from "../../components/inputSearchCustomer/inputSearchCustomer";
 import { Toast } from "../../components/alerts/alert";
 import "./styles.css";
 
@@ -18,7 +20,8 @@ class List extends React.Component {
 			deleteCustomerButton: true,
 			deleteCustomerInput: "",
 			deleteCustomer: false,
-			tempCustomerToDelete: "",
+			tempCustomerToDelete: {},
+			fieldsCount: 1,
 		};
 	}
 	async componentDidMount() {
@@ -40,17 +43,17 @@ class List extends React.Component {
 
 	onClickDelete = () => {
 		requests()
-			.deleteCustomerByCC(this.state.tempCustomerToDelete)
+			.deleteCustomerByCC(this.state.tempCustomerToDelete.cc)
 			.then((res) => {
 				if (res.data.success) {
-					this.addCustomers();
 					Toast.fire({
 						icon: "success",
 						title: res.data.message,
 					});
-					setTimeout(() => {
-						return this.tempDeleteCustomer();
-					}, 1500);
+					this.tempDeleteCustomer();
+					return this.setState({ fieldsCount: 1, skip: 0, fields: [] }, () => {
+						this.addCustomers();
+					});
 				}
 				return Toast.fire({
 					icon: "error",
@@ -61,115 +64,118 @@ class List extends React.Component {
 
 	addCustomers = () => {
 		this.requests.getCustomers(this.state.skip).then((res) => {
-			if (res.data.customers.length > 0) {
-				this.setState({ skip: this.state.skip + 10 });
-				return res.data.customers.map((customer) => {
-					return this.setState({ fields: [...this.state.fields, customer] });
-				});
-			} else if (this.state.fields === []) {
-				return this.setState({ fields: null });
+			console.log(res);
+			if (res.data.customers) {
+				if (res.data.customers.length) {
+					this.setState({ skip: this.state.skip + 10 });
+					return res.data.customers.map((info) => {
+						this.setState({
+							fields: [
+								...this.state.fields,
+								<Field
+									info={info}
+									key={this.state.fieldsCount}
+									number={this.state.fieldsCount}
+									tempDeleteCustomer={this.tempDeleteCustomer}
+								/>,
+							],
+							fieldsCount: this.state.fieldsCount + 1,
+						});
+					});
+				}
+				return;
 			}
+			return this.setState({ fields: null });
 		});
 	};
 
-	tempDeleteCustomer = (value = "") => {
-		console.log(this.state.fields);
+	tempDeleteCustomer = (infoToDelete = "") => {
 		this.setState({
 			deleteCustomer: !this.state.deleteCustomer,
-			tempCustomerToDelete: value,
-			deleteCustomerButton: value === "" ? false : true,
+			tempCustomerToDelete: infoToDelete,
+			deleteCustomerButton: infoToDelete?.cc === "" ? false : true,
 		});
 
 		if (!this.state.deleteCustomer) {
 			this.setState({ deleteCustomerInput: "" });
 		}
 	};
+
+	editCustomerData = (data) => {
+		this.setState({ skip: 0 });
+		if (data !== null) {
+			return this.setState({
+				fields: [
+					<Field
+						key={1}
+						info={data.customer}
+						number={1}
+						tempDeleteCustomer={this.tempDeleteCustomer}
+					/>,
+				],
+			});
+		}
+		this.setState({ fields: [], fieldsCount: 1 });
+		return this.addCustomers();
+	};
 	render() {
-		return !this.state.deleteCustomer ? (
-			<Col md={{ span: 12 }} xs={{ span: 12 }} className="mt-5 pb-5">
-				<Card className="p-md-5 p-2">
-					<h2>Listado de Clientes</h2>
-					<hr />
-					<Card.Body className="p-1">
-						<Table striped bordered hover size="lg" responsive={true}>
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>Cedula</th>
-									<th>Nombres</th>
-									<th>Apellidos</th>
-									<th>Correo</th>
-									<th>Direccion</th>
-									<th>Fecha de nacimiento</th>
-									<th>Edad</th>
-									<th>ELIMINAR</th>
-								</tr>
-							</thead>
-							<tbody>
-								{this.state.fields !== null ? (
-									this.state.fields.map((info, index) => (
-										<Field
-											info={info}
-											key={index}
-											number={index + 1}
-											tempDeleteCustomer={this.tempDeleteCustomer}
-										/>
-									))
-								) : (
-									<NoData cols="8" />
-								)}
-							</tbody>
-						</Table>
-						{this.state.fields.length >= 10 && (
-							<Col md={{ span: 2, offset: 5 }}>
-								<Button
-									id="showMore"
-									block
-									variant="secondary"
-									onClick={this.addCustomers}
-								>
-									{this.state.loading ? <SpinnerComponent /> : "Mostrar mas"}
-								</Button>
-							</Col>
-						)}
-					</Card.Body>
-				</Card>
-			</Col>
-		) : (
-			<Col md={{ span: 4, offset: 4 }} xs={{ span: 12 }}>
-				<div className="mt-5">
-					<Card className=" justify-content-center">
-						<Card.Header>
-							Escriba <i className="text-muted">confirmar</i> para eliminar el
-							cliente
-						</Card.Header>
-						<Card.Body className="d-flex flex-column">
-							<Form.Control
-								type="text"
-								onChange={this.handleOnChange}
-								value={this.state.deleteCustomerInput}
-							/>
-							<div className="d-flex justify-content-end confirmation-buttons">
-								<Button
-									variant="light"
-									className="mt-3 mr-3"
-									onClick={() => this.tempDeleteCustomer()}
-								>
-									Cancelar
-								</Button>
-								<Button
-									variant="danger"
-									disabled={this.state.deleteCustomerButton}
-									className="mt-3"
-									onClick={this.onClickDelete}
-								>
-									Eliminar
-								</Button>
-							</div>
+		return (
+			<>
+				<Col md={{ span: 12 }} xs={{ span: 12 }} className="mt-5 pb-5">
+					<Card className="p-md-5 p-2">
+						<h2>Listado de Clientes</h2>
+						<hr />
+						<Card.Body className="p-1">
+							<InputSearchCustomer editCustomerData={this.editCustomerData} />
+							<Table striped bordered hover size="lg" responsive={true}>
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Cedula</th>
+										<th>Nombres</th>
+										<th>Apellidos</th>
+										<th>Correo</th>
+										<th>Direccion</th>
+										<th>Fecha de nacimiento</th>
+										<th>Edad</th>
+										<th>ELIMINAR</th>
+									</tr>
+								</thead>
+								<tbody>
+									{this.state.fields !== null ? (
+										this.state.fields
+									) : (
+										<NoData cols="9" />
+									)}
+								</tbody>
+							</Table>
+							{this.state.fields !== null && this.state.fields.length >= 10 && (
+								<Col md={{ span: 2, offset: 5 }}>
+									<Button
+										id="showMore"
+										block
+										variant="secondary"
+										onClick={this.addCustomers}
+									>
+										{this.state.loading ? <SpinnerComponent /> : "Mostrar mas"}
+									</Button>
+								</Col>
+							)}
 						</Card.Body>
 					</Card>
-				</div>
-			</Col>
+				</Col>
+				{this.state.deleteCustomer && (
+					<DeleteConfirmation
+						handleOnChange={this.handleOnChange}
+						componentState={{
+							deleteCustomerButton: this.state.deleteCustomerButton,
+							deleteCustomerInput: this.state.deleteCustomerInput,
+						}}
+						onClickDelete={this.onClickDelete}
+						tempDeleteCustomer={this.tempDeleteCustomer}
+					/>
+				)}
+			</>
 		);
 	}
 }
