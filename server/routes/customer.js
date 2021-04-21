@@ -6,10 +6,13 @@ const router = express.Router();
 //POST ROUTES
 router.post("/addcustomer", customerControler.addCustomer);
 router.post("/showrecord", customerControler.showRecord);
-// router.post("/saverecord", customerControler.saveRecord);
 
 //GET ROUTES
 router.get("/getcustomer/:cc", customerControler.getCustomer);
-router.get("/getcustomers", customerControler.getCustomers);
+router.post("/getcustomers", customerControler.getCustomers);
+
+//DELETE ROUTES
+router.delete("/deletecustomer/:cc", customerControler.deleteCustomer);
+
 
 module.exports = router;

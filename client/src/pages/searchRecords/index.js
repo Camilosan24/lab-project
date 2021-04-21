@@ -28,9 +28,9 @@ class SearchCustomer extends React.Component {
 		};
 	}
 
-	async componentDidMount() {
-		return await requests().auth(this.props);
-	}
+	// async componentDidMount() {
+	// 	return await requests().auth(this.props);
+	// }
 
 	getCustomer = () => {
 		this.requests.getCustomerByCc(this.state.searchInput).then((res) => {

@@ -1,8 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 class Fields extends React.Component {
 	render() {
+		console.log("desde arriba",this.props)
 		return (
 			<tr>
 				<td colSpan="2">{this.props.info.id}</td>
@@ -45,7 +45,7 @@ class Fields extends React.Component {
 				<td>{this.props.info.time}</td>
 
 				<td className="justify-content-center">
-					<a href={this.props.info.url} target="_blank" >
+					<a href={this.props.info.url} target="_blank" rel="noreferrer">
 						<i className="fas fa-file-pdf"></i>
 					</a>
 				</td>

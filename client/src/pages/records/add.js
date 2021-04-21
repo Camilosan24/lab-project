@@ -9,7 +9,6 @@ import SpinnerComponent from "../../components/utilComponents/spinner";
 import ButtonSave from "../../components/utilComponents/buttonSave";
 import QuimicaSanguinea from "./sections/quimicaSanguinea";
 import { Toast } from "../../components/alerts/alert";
-import { Document } from "react-pdf";
 import "./styles.css";
 
 class AddRecord extends React.Component {

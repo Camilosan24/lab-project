@@ -1,14 +1,17 @@
 import axios from "axios";
 
-export default function requests(entorno) {
+export default function requests(entorno = "dev") {
 	let host = "";
-	if (entorno === "dev") {
-		host = "http://localhost:3001";
-	}
+	host = "http://localhost:3001";
+	// if (entorno === "dev") {
+	// }
 
 	return {
-		getCustomers: function () {
-			return axios.get(`${host}/api/customer/getcustomers`);
+		getCustomers: function (skip) {
+			return axios.post(`${host}/api/customer/getcustomers`, { skip: skip });
+		},
+		deleteCustomerByCC: function (cc) {
+			return axios.delete(`${host}/api/customer/deletecustomer/${cc}`);
 		},
 		getCustomerByCc: function (params) {
 			return axios.get(`${host}/api/customer/getcustomer/${params}`);
@@ -29,12 +32,12 @@ export default function requests(entorno) {
 			return axios.get(`${host}/api/user/logout`);
 		},
 		auth: async function (props) {
-			return await axios.get(`${host}/api/user/auth`).then(res => {
-				if(res.data.auth){
-					return true
+			return await axios.get(`${host}/api/user/auth`).then((res) => {
+				if (res.data.auth) {
+					return true;
 				}
-				return  props.history.push('/')
-			})
+				return props.history.push("/");
+			});
 		},
 	};
 }

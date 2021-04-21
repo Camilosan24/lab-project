@@ -24,9 +24,9 @@ class AddCustomer extends React.Component {
 			buttonVariant: "primary",
 		};
 	}
-	async componentDidMount(){
-		return await requests().auth(this.props)
-	}
+	// async componentDidMount(){
+	// 	return await requests().auth(this.props)
+	// }
 
 	changeState = (e) => {
 		let value = e.target.value;

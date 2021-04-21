@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require('cors')
 
 if (process.env.NODE_ENV !== "production") {
 	require("dotenv").config();
@@ -28,8 +29,7 @@ app.use(express.static("client/build"));
 
 //MIDDLEWARES
 app.set("port", process.env.PORT || 3001);
-
-// app.use(pdf);
+app.use(cors())
 app.use(bodyParser.json());
 app.use(cookieParser());
 

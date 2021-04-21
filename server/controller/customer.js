@@ -17,7 +17,8 @@ const getAge = (birthdate) => {
 	let date = new Date(birthdate);
 	let age = colombiaTime.getFullYear() - date.getFullYear();
 	let month = colombiaTime.getMonth() - date.getMonth();
-	if (month < 0 || (month === 0 && colombiaTime.getDate() < date.getDate())) age--;
+	if (month < 0 || (month === 0 && colombiaTime.getDate() < date.getDate()))
+		age--;
 	return age;
 };
 
@@ -80,7 +81,9 @@ customerControler.getCustomers = (req, res) => {
 				customers: null,
 			});
 		}
-	});
+	})
+		.skip(req.body.skip)
+		.limit(10);
 };
 
 customerControler.getCustomer = async (req, res) => {
@@ -153,4 +156,11 @@ customerControler.showRecord = async (req, res) => {
 	}
 };
 
+customerControler.deleteCustomer = (req, res) => {
+	console.log(req.params.cc)
+	Customer.findOneAndRemove({ cc: req.params.cc }, (err, doc) => {
+		if(err) return res.json({succes: false, message: "Ocurrio un error al eliminar el cliente"})
+		return res.json({success: true, message: "Cliente eliminado correctamente"})
+	});
+};
 module.exports = customerControler;
