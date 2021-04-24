@@ -68,20 +68,19 @@ class List extends React.Component {
 			if (res.data?.customers?.length > 0) {
 				this.setState({
 					skip: this.state.skip + 10,
-					fieldsCount: this.state.fieldsCount + 1,
 				});
-				const data = res.data.customers.map((info) => {
+				const data = res.data.customers.map((info, index) => {
 					return (
 						<Field
 							info={info}
 							key={this.state.fieldsCount}
-							number={this.state.fieldsCount}
+							number={index + 1}
 							tempDeleteCustomer={this.tempDeleteCustomer}
 						/>
 					);
 				});
 				return this.setState({
-					fields: [...this.state.fields, data],
+					fields: [...this.state.fields, data]
 				});
 			}
 			return this.setState({ fields: null });
@@ -148,7 +147,7 @@ class List extends React.Component {
 									)}
 								</tbody>
 							</Table>
-							{this.state.fields !== null && this.state.fields.length >= 10 && (
+							{this.state.fields !== null && this.state.fields.length >= 10 (
 								<Col md={{ span: 2, offset: 5 }}>
 									<Button
 										id="showMore"
