@@ -14,7 +14,7 @@ const findCustomer = (cc) => {
 	return new Promise((resolve, reject) => {
 		Customer.find({ cc: cc }, (err, doc) => {
 			if (err) reject(err);
-			if(doc.length > 0) return resolve(doc);
+			if(doc.length > 0) return resolve(doc[0]);
 			return resolve(false);
 		});
 	});
@@ -141,15 +141,15 @@ customerControler.getCustomer = async (req, res) => {
 			return res
 				.json({
 					success: true,
-					customer: customer[0],
-					records: customer[0].records,
+					customer: customer,
+					records: customer.records,
 				})
 				.status(200);
 		}
 		return res
 			.json({
 				success: false,
-				customer: customer[0],
+				customer: customer,
 				message: "Lo sentimos, el cliente no existe",
 			})
 			.status(200);
