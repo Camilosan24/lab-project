@@ -137,20 +137,19 @@ customerControler.getCustomers = (req, res) => {
 customerControler.getCustomer = async (req, res) => {
 	if (Number(req.params.cc)) {
 		let customer = await findCustomer(req.params.cc);
-		console.log(customer)
 		if (customer) {
 			return res
 				.json({
 					success: true,
-					customer: customer,
-					records: customer.records,
+					customer: customer[0],
+					records: customer[0].records,
 				})
 				.status(200);
 		}
 		return res
 			.json({
 				success: false,
-				customer: customer,
+				customer: customer[0],
 				message: "Lo sentimos, el cliente no existe",
 			})
 			.status(200);
