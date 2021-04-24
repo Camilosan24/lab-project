@@ -49,8 +49,8 @@ const deleteFolder = (folderPath) => {
 		fs.readdir(folderPath, async (err, files) => {
 			if (err) return reject("Hubo un error al encontrar los archivos");
 			if (files.length) {
-				const res = await deleteFiles(files, folderPath);
-				if (!res) return { succes: false, message: "Error" };
+				const res = await deleteFiles(files, folderPath).catch( err )
+				if (!res) return reject({ succes: false, message: "Error" });
 			}
 			return fs.rmdir(folderPath, (err) => {
 				if (err) reject("Hubo un error al eliminar la carpeta");
