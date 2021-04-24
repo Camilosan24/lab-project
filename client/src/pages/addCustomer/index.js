@@ -56,7 +56,7 @@ class AddCustomer extends React.Component {
 				icon: "success",
 				title: "Cliente añadido correctamente",
 			});
-			this.setState({ buttonVariant: "success" });
+			return this.setState({ buttonVariant: "success" });
 		} else {
 			Toast.fire({
 				icon: "error",
