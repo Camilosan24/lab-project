@@ -20,7 +20,8 @@
       padding: 5px;
    }
 
-   .space-quimica{
+
+   .space-quimica {
       margin-top: 170px !important;
    }
 
@@ -510,7 +511,8 @@
                                     <% } %>
 
                                        <% if(addSection.quimicaSanguinea){%>
-                                          <div class="row space-quimica">
+                                          <div
+                                             class="row <% if (addSection.coprologico && addSection.serologicas && addSection.cuadroHematico && addSection.parcialOrina){ %>space-quimica<% } %>">
                                              <center>
                                                 <label>
                                                    <h5>QUIMICA SANGUINEA</h5>
