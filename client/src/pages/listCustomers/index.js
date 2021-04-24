@@ -66,7 +66,10 @@ class List extends React.Component {
 	addCustomers = () => {
 		this.requests.getCustomers(this.state.skip).then((res) => {
 			if (res.data?.customers?.length > 0) {
-				this.setState({ skip: this.state.skip + 10 });
+				this.setState({
+					skip: this.state.skip + 10,
+					fieldsCount: this.state.fieldsCount + 1,
+				});
 				const data = res.data.customers.map((info) => {
 					return (
 						<Field
@@ -79,7 +82,6 @@ class List extends React.Component {
 				});
 				return this.setState({
 					fields: [...this.state.fields, data],
-					fieldsCount: this.state.fieldsCount + 1,
 				});
 			}
 			return this.setState({ fields: null });
