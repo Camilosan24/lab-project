@@ -27,7 +27,7 @@ class Login extends React.Component {
 	login = (e) => {
 		e.preventDefault();
 		this.setState({ loading: true });
-		this.requests.login(this.state.userData).then((res) => {
+		this.requests.register(this.state.userData).then((res) => {
 			this.setState({ loading: false });
 			if (res.data.auth) {
 				this.props.history.push("/home");

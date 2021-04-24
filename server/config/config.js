@@ -5,7 +5,7 @@ const config = {
    },
    default:{
        SECRET: 'SUPERSECRETPASSWORD123',
-       DATABASE: 'mongodb://localhost:27017/testdb',
+       DATABASE: 'mongodb+srv://camilo_userdb:kHYIRc5yhcNriY5q@lab-project.hsxdt.mongodb.net/labproject?retryWrites=true&w=majority',
    }
 }
 

@@ -28,6 +28,9 @@ export default function requests(entorno = "dev") {
 		login: function (info) {
 			return axios.post(`${host}/api/user/login`, info);
 		},
+		register: function (info) {
+			return axios.post(`${host}/api/user/register`, info);
+		},
 		logout: function () {
 			return axios.get(`${host}/api/user/logout`);
 		},
