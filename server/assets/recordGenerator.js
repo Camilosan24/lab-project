@@ -3,7 +3,7 @@ const path = require("path");
 const ejs = require("ejs");
 const pdf = require("html-pdf");
 
-const generatePdf = async (file, url) => {
+const generatePdf = (file, url) => {
 	return new Promise((resolve, reject) => {
 		pdf
 			.create(file, {

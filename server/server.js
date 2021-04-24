@@ -21,7 +21,7 @@ try {
 		useFindAndModify: false,
 	});
 } catch (error) {
-	console.error(error);
+	console.error("lo siento",error);
 }
 
 app.use(express.static("server/public"));
