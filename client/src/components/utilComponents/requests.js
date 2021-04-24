@@ -2,9 +2,6 @@ import axios from "axios";
 
 export default function requests(entorno = "dev") {
 	let host = "";
-	host = "http://localhost:3001";
-	// if (entorno === "dev") {
-	// }
 
 	return {
 		getCustomers: function (skip) {
