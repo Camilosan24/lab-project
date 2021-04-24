@@ -1,10 +1,10 @@
 import React from "react";
-
 import { Col, Row, Card, Table, FormLabel } from "react-bootstrap";
 import "./styles.css";
 import Field from "../../components/utilComponents/field";
 import NoData from "../../components/utilComponents/noData";
 import InputSearchCustomer from "../../components/inputSearchCustomer/inputSearchCustomer";
+import requests from "../../components/utilComponents/requests";
 
 class SearchCustomer extends React.Component {
 	constructor(props) {
@@ -15,9 +15,9 @@ class SearchCustomer extends React.Component {
 		};
 	}
 
-	// async componentDidMount() {
-	// 	return await requests().auth(this.props);
-	// }
+	async componentDidMount() {
+		return await requests().auth(this.props);
+	}
 
 	editCustomerData = (data) => {
 		if (data !== null) {

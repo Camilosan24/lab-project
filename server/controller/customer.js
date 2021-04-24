@@ -1,6 +1,8 @@
 const customerControler = {};
 const { Customer } = require("../models/customer");
 const recordGenerator = require("../assets/recordGenerator");
+const fs = require("fs");
+const path = require("path");
 
 const capitalize = (name) => {
 	return name
@@ -20,6 +22,34 @@ const getAge = (birthdate) => {
 	if (month < 0 || (month === 0 && colombiaTime.getDate() < date.getDate()))
 		age--;
 	return age;
+};
+
+function fileExists(path) {
+	try {
+		if (fs.lstatSync(path)) return true;
+	} catch (e) {
+		return false;
+	}
+}
+
+const deleteFolder = (folderPath) => {
+	if (!fileExists(folderPath)) return;
+	return new Promise((resolve, reject) => {
+		fs.readdir(folderPath, async (err, files) => {
+			if (err) return reject("Hubo un error al encontrar los archivos");
+			if (files.length) {
+				for (const file of files) {
+					fs.unlink(path.join(folderPath, file), (err) => {
+						if (err) throw err;
+					});
+				}
+			}
+			return fs.rmdir(folderPath, (err) => {
+				if (err) reject("Hubo un error al eliminar la carpeta");
+				return resolve("Eliminado satisfactoriamente");
+			});
+		});
+	});
 };
 
 customerControler.addCustomer = async (req, res) => {
@@ -49,7 +79,11 @@ customerControler.addCustomer = async (req, res) => {
 	if (!customer) {
 		newCustomer.save((err, doc) => {
 			if (err) {
-				res.json({ success: false, message: "Datos invalidos", data: null });
+				return res.json({
+					success: false,
+					message: "Datos invalidos",
+					data: null,
+				});
 			}
 			return res.status(200).json({
 				success: true,
@@ -156,10 +190,19 @@ customerControler.showRecord = async (req, res) => {
 	}
 };
 
-customerControler.deleteCustomer = (req, res) => {
-	Customer.findOneAndRemove({ cc: req.params.cc }, (err, doc) => {
-		if(err) return res.json({succes: false, message: "Ocurrio un error al eliminar el cliente"})
-		return res.json({success: true, message: "Cliente eliminado correctamente"})
-	});
+customerControler.deleteCustomer = async (req, res) => {
+	const directory = path.join(__dirname, "..", "public", "pdfs", req.params.cc);
+	await deleteFolder(directory);
+	// Customer.findOneAndRemove({ cc: req.params.cc }, (err, doc) => {
+	// 	if (err)
+	// 		return res.json({
+	// 			succes: false,
+	// 			message: "Ocurrio un error al eliminar el cliente",
+	// 		});
+	// 	return res.json({
+	// 		success: true,
+	// 		message: "Cliente eliminado correctamente",
+	// 	});
+	// });
 };
 module.exports = customerControler;

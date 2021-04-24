@@ -18,6 +18,10 @@
 	z-index: 500;
 }
 
+.buttonConfirmation{
+	font-size: 4px;
+}
+
 #confirmationToDelete .card-confirmation {
 	transform: translateY(-100px);
 }

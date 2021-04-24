@@ -4,9 +4,9 @@ import Carousel from "../carousel/index";
 import requests from "../utilComponents/requests";
 
 class Home extends React.Component {
-	// async componentDidMount() {
-	// 	return await requests().auth(this.props);
-	// }
+	async componentDidMount() {
+		return await requests().auth(this.props);
+	}
 
 	render() {
 		return (

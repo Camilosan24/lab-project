@@ -1,7 +1,11 @@
 import React from "react";
-import {Card, Form, Button} from 'react-bootstrap'
+import { Card, Form, Button } from "react-bootstrap";
+import SpinnerComponent from "../utilComponents/spinner";
 
 class DeleteConfirmation extends React.Component {
+	state = {
+		loading: false,
+	};
 	render() {
 		return (
 			<div id="confirmationToDelete">
@@ -28,10 +32,15 @@ class DeleteConfirmation extends React.Component {
 								<Button
 									variant="danger"
 									disabled={this.props.componentState.deleteCustomerButton}
-									className="mt-3"
-									onClick={this.props.onClickDelete}
+									className={`mt-3 ${
+										this.state.loading && "buttonConfirmation"
+									}`}
+									onClick={() => {
+										this.setState({ loading: true });
+										this.props.onClickDelete();
+									}}
 								>
-									Eliminar
+									{this.state.loading ? <SpinnerComponent /> : "Eliminar"}
 								</Button>
 							</div>
 						</Card.Body>

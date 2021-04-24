@@ -25,10 +25,10 @@ class List extends React.Component {
 		};
 	}
 	async componentDidMount() {
-		// let response = await requests().auth(this.props);
-		// if (response) {
-		this.addCustomers();
-		// }
+		let response = await requests().auth(this.props);
+		if (response) {
+			this.addCustomers();
+		}
 	}
 
 	handleOnChange = (e) => {
@@ -55,6 +55,7 @@ class List extends React.Component {
 						this.addCustomers();
 					});
 				}
+
 				return Toast.fire({
 					icon: "error",
 					title: res.data.message,
@@ -64,26 +65,22 @@ class List extends React.Component {
 
 	addCustomers = () => {
 		this.requests.getCustomers(this.state.skip).then((res) => {
-			console.log(res);
-			if (res.data.customers) {
-				if (res.data.customers.length) {
-					this.setState({ skip: this.state.skip + 10 });
-					return res.data.customers.map((info) => {
-						this.setState({
-							fields: [
-								...this.state.fields,
-								<Field
-									info={info}
-									key={this.state.fieldsCount}
-									number={this.state.fieldsCount}
-									tempDeleteCustomer={this.tempDeleteCustomer}
-								/>,
-							],
-							fieldsCount: this.state.fieldsCount + 1,
-						});
-					});
-				}
-				return;
+			if (res.data?.customers?.length > 0) {
+				this.setState({ skip: this.state.skip + 10 });
+				const data = res.data.customers.map((info) => {
+					return (
+						<Field
+							info={info}
+							key={this.state.fieldsCount}
+							number={this.state.fieldsCount}
+							tempDeleteCustomer={this.tempDeleteCustomer}
+						/>
+					);
+				});
+				return this.setState({
+					fields: [...this.state.fields, data],
+					fieldsCount: this.state.fieldsCount + 1,
+				});
 			}
 			return this.setState({ fields: null });
 		});
