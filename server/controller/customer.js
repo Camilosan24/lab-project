@@ -10,8 +10,14 @@ const capitalize = (name) => {
 		.replace(/\w\S*/g, (w) => w.replace(/^\w/, (c) => c.toUpperCase()));
 };
 
-const findCustomer = async (cc) => {
-	return await Customer.findOne({ cc: cc });
+const findCustomer = (cc) => {
+	return new Promise((resolve, reject) => {
+		Customer.find({ cc: cc }, (err, doc) => {
+			if (err) reject(err);
+			if(doc.length > 0) return resolve(doc);
+			return resolve(false);
+		});
+	});
 };
 
 const getAge = (birthdate) => {
@@ -49,7 +55,7 @@ const deleteFolder = (folderPath) => {
 		fs.readdir(folderPath, async (err, files) => {
 			if (err) return reject("Hubo un error al encontrar los archivos");
 			if (files.length) {
-				const res = await deleteFiles(files, folderPath).catch( err )
+				const res = await deleteFiles(files, folderPath).catch(err);
 				if (!res) return reject({ succes: false, message: "Error" });
 			}
 			return fs.rmdir(folderPath, (err) => {
@@ -131,6 +137,7 @@ customerControler.getCustomers = (req, res) => {
 customerControler.getCustomer = async (req, res) => {
 	if (Number(req.params.cc)) {
 		let customer = await findCustomer(req.params.cc);
+		console.log(customer)
 		if (customer) {
 			return res
 				.json({

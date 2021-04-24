@@ -56,7 +56,7 @@ class AddCustomer extends React.Component {
 				icon: "success",
 				title: "Cliente añadido correctamente",
 			});
-			return this.setState({ buttonVariant: "success" });
+			this.setState({ buttonVariant: "success" });
 		} else {
 			Toast.fire({
 				icon: "error",
@@ -98,6 +98,7 @@ class AddCustomer extends React.Component {
 			} else {
 				this.setState({ submitingData: true });
 				this.requests.addCustomer(this.state.customerData).then((res) => {
+					console.log(res)
 					this.showMessageAndClean(res);
 				});
 			}
