@@ -64,24 +64,31 @@ class List extends React.Component {
 	};
 
 	addCustomers = () => {
+		if (this.state.skip !== this.state.fields.length)
+			return this.setState({ loading: false });
 		this.requests.getCustomers(this.state.skip).then((res) => {
-			if (res.data?.customers?.length > 0) {
+			if (!res.data.customers.length > 0) return this.setState({ loading: false });;
+			this.setState({ loading: false });
+			if (res.data.customers.length > 0) {
 				this.setState({
 					skip: this.state.skip + 10,
 				});
-				const data = res.data.customers.map((info, index) => {
-					return (
-						<Field
-							info={info}
-							key={this.state.fieldsCount}
-							number={index + 1}
-							tempDeleteCustomer={this.tempDeleteCustomer}
-						/>
-					);
+				res.data.customers.map((info, index) => {
+					return this.setState({
+						fieldsCount: this.state.fieldsCount + 1,
+						fields: [
+							...this.state.fields,
+							<Field
+								info={info}
+								key={this.state.fieldsCount}
+								number={this.state.fieldsCount}
+								tempDeleteCustomer={this.tempDeleteCustomer}
+							/>,
+						],
+					});
 				});
-				return this.setState({
-					fields: [...this.state.fields, data]
-				});
+				console.log(this.state.fields);
+				return;
 			}
 			return this.setState({ fields: null });
 		});
@@ -147,13 +154,16 @@ class List extends React.Component {
 									)}
 								</tbody>
 							</Table>
-							{this.state.fields !== null && this.state.fields.length >= 10 (
+							{this.state.fields.length >= 10 && (
 								<Col md={{ span: 2, offset: 5 }}>
 									<Button
 										id="showMore"
 										block
 										variant="secondary"
-										onClick={this.addCustomers}
+										onClick={() => {
+											this.setState({ loading: true });
+											this.addCustomers();
+										}}
 									>
 										{this.state.loading ? <SpinnerComponent /> : "Mostrar mas"}
 									</Button>
