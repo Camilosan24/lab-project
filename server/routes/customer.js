@@ -6,10 +6,10 @@ const router = express.Router();
 //POST ROUTES
 router.post("/addcustomer", customerControler.addCustomer);
 router.post("/showrecord", customerControler.showRecord);
+router.post("/getcustomers", customerControler.getCustomers);
 
 //GET ROUTES
 router.get("/getcustomer/:cc", customerControler.getCustomer);
-router.post("/getcustomers", customerControler.getCustomers);
 
 //DELETE ROUTES
 router.delete("/deletecustomer/:cc", customerControler.deleteCustomer);
